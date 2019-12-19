@@ -18,7 +18,7 @@ public class ChessGame {
         this.board = new Board();
     }
 
-    public void select (int row, int column) {
+    public PossibleActions select (int row, int column) {
 
         currentlySelected = board.getPiece(row, column);
 
@@ -31,6 +31,7 @@ public class ChessGame {
         } catch (NullPointerException e) {
             System.out.println(row + "\t" +  column +  "\t there is no piece on this position!");
         }
+        return possibleActions;
     }
 
     public void newPiecePositionByMove (Position newPosition) {
@@ -80,7 +81,30 @@ public class ChessGame {
 
         ChessGame game = new ChessGame();
 
-        game.select(4, 1);
-        game.newPiecePositionByCapture(new Position(6,2));
+        game.select(4, 4);
+        game.newPiecePositionByMove(new Position(2,2));
+
+//        ArrayList<String> fieldsToMark = new ArrayList<>();
+//
+//        ArrayList<Position> allPossibleActions = new ArrayList<>();
+//
+//
+//        game.select(Field.getFieldByString("A2").getRow(), Field.getFieldByString("A2").getColumn());
+//
+//        ArrayList<Position> possibleMovesToMake  = game.possibleActions.possibleMoves;
+//        ArrayList<Position> possibleCapturesToMake = game.possibleActions.possibleCaptures;
+//
+//        allPossibleActions.addAll(possibleCapturesToMake);
+//        allPossibleActions.addAll(possibleMovesToMake);
+//
+//        for (Position position: allPossibleActions) {
+//            fieldsToMark.add(Field.getFieldByPosition(position.getRow(), position.getColumn()));
+//        }
+//
+//        System.out.println(fieldsToMark.contains("A3"));
+//        System.out.println(fieldsToMark.size());
+//        for (String string: fieldsToMark){
+//            System.out.println(string);
+//        }
     }
 }

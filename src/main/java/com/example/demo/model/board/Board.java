@@ -115,6 +115,8 @@ public class Board {
         this.boardOfPieces[0][5] = new Bishop(new Position(0, 5), Color.BLACK);
         this.boardOfPieces[7][2] = new Bishop(new Position(7, 2), Color.WHITE);
         this.boardOfPieces[7][5] = new Bishop(new Position(7, 5), Color.WHITE);
+        this.boardOfPieces[4][4] = new Bishop(new Position(4, 4), Color.WHITE);
+        this.boardOfPieces[3][4] = new Bishop(new Position(3, 4), Color.BLACK);
 
         this.boardOfPieces[1][0] = new Pawn(new Position(1, 0), Color.BLACK);
         this.boardOfPieces[1][1] = new Pawn(new Position(1, 1), Color.BLACK);
@@ -130,7 +132,7 @@ public class Board {
         this.boardOfPieces[6][2] = new Pawn(new Position(6, 2), Color.WHITE);
         this.boardOfPieces[6][3] = new Pawn(new Position(6, 3), Color.WHITE);
         this.boardOfPieces[6][4] = new Pawn(new Position(6, 4), Color.WHITE);
-        this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE);
+//        this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE);
         this.boardOfPieces[6][6] = new Pawn(new Position(6, 6), Color.WHITE);
         this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE);
 

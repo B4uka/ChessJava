@@ -26,7 +26,7 @@ public class Bishop extends Piece {
         /** ALL POSSIBLE MOVES */
         outloop:{
             for (int i = 1; i < 8; i++) {
-                if (!bishopMove[0].isOnBoard()) {
+                if (!bishopMove[0].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[0], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[0], Color.WHITE))) {
                     break;
                 } else if (!board.isOccupied(bishopMove[0])) {
                     possibleActions.addPossibleMove(bishopMove[0]);
@@ -37,17 +37,17 @@ public class Bishop extends Piece {
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[0], Color.BLACK)) {
                     possibleActions.addPossibleCapture(bishopMove[0]);
                     break;
-                } else if (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[0], Color.WHITE)) {
-                    possibleActions.addPossibleCapture(bishopMove[0]);
-                    break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(bishopMove[0], Color.WHITE)) {
                     possibleActions.addPossibleChecks(bishopMove[0]);
                     System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
+                } else if (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[0], Color.WHITE)) {
+                    possibleActions.addPossibleCapture(bishopMove[0]);
+                    break;
                 }bishopMove[0] = this.position.getNewPositionByVector(1 + i, 1 + i);
             }
             for (int i = 1; i < 8; i++) {
-                if (!bishopMove[1].isOnBoard()) {
+                if (!bishopMove[1].isOnBoard()|| (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[1], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[1], Color.WHITE))) {
                     break;
                 } else if (!board.isOccupied(bishopMove[1])) {
                     possibleActions.addPossibleMove(bishopMove[1]);
@@ -58,17 +58,17 @@ public class Bishop extends Piece {
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[1], Color.BLACK)) {
                     possibleActions.addPossibleCapture(bishopMove[1]);
                     break;
-                } else if (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[1], Color.WHITE)) {
-                    possibleActions.addPossibleCapture(bishopMove[1]);
-                    break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(bishopMove[1], Color.WHITE)) {
                     possibleActions.addPossibleChecks(bishopMove[1]);
                     System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
+                } else if (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[1], Color.WHITE)) {
+                    possibleActions.addPossibleCapture(bishopMove[1]);
+                    break;
                 }bishopMove[1] = this.position.getNewPositionByVector(1 + i, -1 - i);
             }
             for (int i = 1; i < 8; i++) {
-                if (!bishopMove[2].isOnBoard()) {
+                if (!bishopMove[2].isOnBoard()|| (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[2], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[2], Color.WHITE))) {
                     break;
                 } else if (!board.isOccupied(bishopMove[2])) {
                     possibleActions.addPossibleMove(bishopMove[2]);
@@ -90,7 +90,7 @@ public class Bishop extends Piece {
             }
 
             for (int i = 1; i < 8; i++) {
-                if (!bishopMove[3].isOnBoard()) {
+                if (!bishopMove[3].isOnBoard()|| (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[3], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[3], Color.WHITE))) {
                     break;
                 }
                 else if (!board.isOccupied(bishopMove[3])) {

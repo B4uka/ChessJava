@@ -97,4 +97,12 @@ public enum Field {
         }
         return null;
     }
+
+    public static String getFieldByPosition(int row, int column) {
+        Field[] fields = Field.values();
+        for (Field field: fields) {
+            if(row == field.getRow() && column == field.getColumn())
+                return field.toString();
+        }return null;
+    }
 }
