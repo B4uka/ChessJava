@@ -44,7 +44,7 @@ public class Queen extends Piece {
         outloop:
         {
             for (int i = 1; i < 8; i++) {
-                if (!queenMove[0].isOnBoard()) {
+                if (!queenMove[0].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[0], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[0], Color.WHITE))) {
                     break;
                 } else if (!board.isOccupied(queenMove[0])) {
                     possibleActions.addPossibleMove(queenMove[0]);
@@ -55,17 +55,17 @@ public class Queen extends Piece {
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[0], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[0]);
                     break;
-                } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[0], Color.WHITE)) {
-                    possibleActions.addPossibleCapture(queenMove[0]);
-                    break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[0], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[0]);
                     System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
+                } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[0], Color.WHITE)) {
+                    possibleActions.addPossibleCapture(queenMove[0]);
+                    break;
                 }queenMove[0] = this.position.getNewPositionByVector(1 + i, 1 + i);
             }
             for (int i = 1; i < 8; i++) {
-                if (!queenMove[1].isOnBoard()) {
+                if (!queenMove[1].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[1], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[1], Color.WHITE))) {
                     break;
                 } else if (!board.isOccupied(queenMove[1])) {
                     possibleActions.addPossibleMove(queenMove[1]);
@@ -76,17 +76,17 @@ public class Queen extends Piece {
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[1], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[1]);
                     break;
-                } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[1], Color.WHITE)) {
-                    possibleActions.addPossibleCapture(queenMove[1]);
-                    break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[1], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[1]);
                     System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
+                } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[1], Color.WHITE)) {
+                    possibleActions.addPossibleCapture(queenMove[1]);
+                    break;
                 }queenMove[1] = this.position.getNewPositionByVector(1 + i, -1 - i);
             }
             for (int i = 1; i < 8; i++) {
-                if (!queenMove[2].isOnBoard()) {
+                if (!queenMove[2].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[2], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[2], Color.WHITE))) {
                     break;
                 } else if (!board.isOccupied(queenMove[2])) {
                     possibleActions.addPossibleMove(queenMove[2]);
@@ -108,7 +108,7 @@ public class Queen extends Piece {
             }
 
             for (int i = 1; i < 8; i++) {
-                if (!queenMove[3].isOnBoard()) {
+                if (!queenMove[3].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[3], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[3], Color.WHITE))) {
                     break;
                 }
                 else if (!board.isOccupied(queenMove[3])) {
@@ -132,7 +132,7 @@ public class Queen extends Piece {
             }
 
             for (int i = 1; i < 8; i++) {
-                if (!queenMove[4].isOnBoard()) {
+                if (!queenMove[4].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[4], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[4], Color.WHITE))) {
                     break;
                 }
                 else if (!board.isOccupied(queenMove[4])) {
@@ -155,7 +155,7 @@ public class Queen extends Piece {
             }
 
             for (int i = 1; i < 8; i++) {
-                if (!queenMove[5].isOnBoard()) {
+                if (!queenMove[5].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[5], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[5], Color.WHITE))) {
                     break;
                 }
                 else if (!board.isOccupied(queenMove[5])) {
@@ -177,7 +177,7 @@ public class Queen extends Piece {
                 }queenMove[5] = this.position.getNewPositionByVector(0, -1 - i);
             }
             for (int i = 1; i < 8; i++) {
-                if (!queenMove[6].isOnBoard()) {
+                if (!queenMove[6].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[6], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[6], Color.WHITE))) {
                     break;
                 }
                 if (!board.isOccupied(queenMove[6])) {
@@ -200,7 +200,7 @@ public class Queen extends Piece {
             }
 
             for (int i = 1; i < 8; i++) {
-                if (!queenMove[7].isOnBoard()) {
+                if (!queenMove[7].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[7], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[7], Color.WHITE))) {
                     break;
                 }
                 else if (!board.isOccupied(queenMove[7])) {

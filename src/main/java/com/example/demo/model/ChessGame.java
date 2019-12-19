@@ -81,7 +81,7 @@ public class ChessGame {
 
         ChessGame game = new ChessGame();
 
-        game.select(4, 4);
+        game.select(7, 3);
         game.newPiecePositionByMove(new Position(2,2));
 
 //        ArrayList<String> fieldsToMark = new ArrayList<>();
