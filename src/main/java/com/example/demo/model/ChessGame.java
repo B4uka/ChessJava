@@ -2,7 +2,9 @@ package com.example.demo.model;
 
 import com.example.demo.model.board.Board;
 import com.example.demo.model.board.PossibleActions;
+import com.example.demo.model.piece_properties.Color;
 import com.example.demo.model.piece_properties.Position;
+import com.example.demo.model.pieces.Pawn;
 import com.example.demo.model.pieces.Piece;
 
 import java.io.IOException;
@@ -12,16 +14,43 @@ public class ChessGame {
     public static Board board;
     public Piece currentlySelected;
     public PossibleActions possibleActions;
-    public Position position;
+    public Position position, piecePositionNEW;
+    public Color color;
 
     public ChessGame () {
         this.board = new Board();
     }
 
+    public PossibleActions selectWhitePiece (int row, int column) {
+
+            currentlySelected = board.getWhitePiece(row, column);
+            try {
+                possibleActions = currentlySelected.generatePossibleActions(board);
+                System.out.println("Piece from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
+                possibleActions.printPossibleMoves();
+                possibleActions.printPossibleCaptures();
+                possibleActions.printPossibleChecks();
+            } catch (NullPointerException e) {
+                System.out.println(row + "\t" + column + "\t there is no piece on this position!");
+            }
+        return possibleActions;
+    }
+
+    public PossibleActions selectBlackPiece (int row, int column) {
+            currentlySelected = board.getBlackPiece(row, column);
+            try {
+                possibleActions = currentlySelected.generatePossibleActions(board);
+                System.out.println("Piece from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
+                possibleActions.printPossibleMoves();
+                possibleActions.printPossibleCaptures();
+                possibleActions.printPossibleChecks();
+            } catch (NullPointerException e) {
+                System.out.println(row + "\t" + column + "\t there is no piece on this position!");
+            }
+        return possibleActions;
+    }
     public PossibleActions select (int row, int column) {
-
         currentlySelected = board.getPiece(row, column);
-
         try {
             possibleActions = currentlySelected.generatePossibleActions(board);
             System.out.println("Piece from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
@@ -29,20 +58,27 @@ public class ChessGame {
             possibleActions.printPossibleCaptures();
             possibleActions.printPossibleChecks();
         } catch (NullPointerException e) {
-            System.out.println(row + "\t" +  column +  "\t there is no piece on this position!");
+            System.out.println(row + "\t" + column + "\t there is no piece on this position!");
         }
         return possibleActions;
     }
 
     public void newPiecePositionByMove (Position newPosition) {
 
-        if(possibleActions.getPossibleMoves().contains(newPosition)) {
-            board.setEmpty(currentlySelected.getPosition());
-            currentlySelected.setPosition(newPosition);
-            board.setPiece(currentlySelected);
+        if (this.possibleActions.getPossibleMoves().contains(newPosition)) {
+            board.setEmpty(this.currentlySelected.getPosition());
+            this.currentlySelected.setPosition(newPosition);
+            board.setPiece(this.currentlySelected);
+
+            this.piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
 
             System.out.println("------------------------------");
-            select(newPosition.getRow(), newPosition.getColumn());
+
+            // We will not checking if opposite king will be under check if we will make our next move - PAWN PROMOTION
+            // To not get out of the board
+            if (currentlySelected.getClass() != Pawn.class && (currentlySelected.getPosition().getRow() != 0 || currentlySelected.getPosition().getRow() != 7)) {
+                select(newPosition.getRow(), newPosition.getColumn());
+            }
 
         } else {
             System.out.println("cant move there");
@@ -54,14 +90,21 @@ public class ChessGame {
     }
 
     public void newPiecePositionByCapture (Position newPosition) {
-        if(possibleActions.getPossibleCaptures().contains(newPosition)) {
+        if (possibleActions.getPossibleCaptures().contains(newPosition)) {
             board.setEmpty(currentlySelected.getPosition());
             currentlySelected.setPosition(newPosition);
             board.setPiece(currentlySelected);
-            System.out.println();
 
+            this.piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+
+            System.out.println();
             System.out.println("------------------------------");
-            select(newPosition.getRow(), newPosition.getColumn());
+            // We will not checking if opposite king will be under check if we will make our next move - PAWN PROMOTION
+            // To not get out of the board
+            if (currentlySelected.getClass() != Pawn.class && (currentlySelected.getPosition().getRow() != 7 || currentlySelected.getPosition().getRow() != 0)) {
+                select(newPosition.getRow(), newPosition.getColumn());
+            }
+
         } else {
             System.out.println("cant move there");
         }
@@ -70,7 +113,10 @@ public class ChessGame {
 
         this.board.getWhiteKingPosition();
         this.board.getBlackKingPosition();
-        System.out.println(board.whiteKingPosition.getRow());
+        System.out.println("White King row: " + board.whiteKingPosition.getRow());
+        System.out.println("White King column: " + board.whiteKingPosition.getColumn());
+        System.out.println("Black King row: " + board.blackKingPosition.getRow());
+        System.out.println("Black King column: " + board.blackKingPosition.getColumn());
 
 
         System.out.println(possibleActions.isChecked());
@@ -81,8 +127,9 @@ public class ChessGame {
 
         ChessGame game = new ChessGame();
 
-        game.select(7, 3);
-        game.newPiecePositionByMove(new Position(2,2));
+        game.select(4, 4);
+
+        game.newPiecePositionByCapture(new Position(1, 3));
 
 //        ArrayList<String> fieldsToMark = new ArrayList<>();
 //

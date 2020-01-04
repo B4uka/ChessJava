@@ -81,6 +81,7 @@ public enum Field {
         this.column = column;
     }
 
+
     public int getRow () {
         return row;
     }

@@ -19,6 +19,10 @@ public class Board {
         return boardOfPieces;
     }
 
+    public Color getColorFromTheBoardOnCurrentPosition(Position position){
+        return this.boardOfPieces[position.getRow()][position.getColumn()].getColor();
+    }
+
     public boolean isOccupied (Position position) {
 
         return this.boardOfPieces[position.getRow()][position.getColumn()] != null;
@@ -80,6 +84,17 @@ public class Board {
         return false;
     }
 
+    public Piece getWhitePiece (int row, int column) {
+        if (this.boardOfPieces[row][column].getColor() == Color.WHITE) {
+            return boardOfPieces[row][column];
+        }return null;
+    }
+    public Piece getBlackPiece (int row, int column) {
+        if (this.boardOfPieces[row][column].getColor() == Color.BLACK) {
+            return boardOfPieces[row][column];
+        }return null;
+    }
+
     public Piece getPiece (int row, int column) {
         return boardOfPieces[row][column];
     }
@@ -94,9 +109,8 @@ public class Board {
 
     private void fillBoardWithPieces () {
 
-        this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK);
+        this.boardOfPieces[3][3] = new King(new Position(3, 3), Color.BLACK);
         this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE);
-        this.boardOfPieces[4][1] = new Knight(new Position(4, 1), Color.BLACK);
 
         this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK);
         this.boardOfPieces[7][3] = new Queen(new Position(7, 3), Color.WHITE);
@@ -115,8 +129,6 @@ public class Board {
         this.boardOfPieces[0][5] = new Bishop(new Position(0, 5), Color.BLACK);
         this.boardOfPieces[7][2] = new Bishop(new Position(7, 2), Color.WHITE);
         this.boardOfPieces[7][5] = new Bishop(new Position(7, 5), Color.WHITE);
-        this.boardOfPieces[4][4] = new Bishop(new Position(4, 4), Color.WHITE);
-        this.boardOfPieces[3][4] = new Bishop(new Position(3, 4), Color.BLACK);
 
         this.boardOfPieces[1][0] = new Pawn(new Position(1, 0), Color.BLACK);
         this.boardOfPieces[1][1] = new Pawn(new Position(1, 1), Color.BLACK);
@@ -131,12 +143,10 @@ public class Board {
         this.boardOfPieces[6][1] = new Pawn(new Position(6, 1), Color.WHITE);
         this.boardOfPieces[6][2] = new Pawn(new Position(6, 2), Color.WHITE);
         this.boardOfPieces[6][3] = new Pawn(new Position(6, 3), Color.WHITE);
-        this.boardOfPieces[6][4] = new Pawn(new Position(6, 4), Color.WHITE);
-//        this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE);
+        this.boardOfPieces[4][4] = new Pawn(new Position(4, 4), Color.WHITE);
+        this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE);
         this.boardOfPieces[6][6] = new Pawn(new Position(6, 6), Color.WHITE);
         this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE);
-
-        this.boardOfPieces[2][1] = new Pawn(new Position(2, 1), Color.WHITE);
     }
 
     public void printBoard () {
