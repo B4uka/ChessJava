@@ -36,7 +36,7 @@ public class Knight extends Piece {
                 }
             }
         }
-        if (this.color == Color.BLACK) {
+        else if (this.color == Color.BLACK) {
             Position[] knightsPossibleMove = new Position[8];
             knightsPossibleMove[0] = this.position.getNewPositionByVector(1, 2);
             knightsPossibleMove[1] = this.position.getNewPositionByVector(1, -2);

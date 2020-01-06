@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 public class PossibleActions {
 
-    public ArrayList<Position> possibleCaptures;
-    public ArrayList<Position> possibleMoves;
-    public ArrayList<Position> possibleChecks;
+    public ArrayList<Position> possibleMoves, possibleCaptures, possibleChecks, listOfPiecesPositionsWhichAreCheckingTheKing;
     public Color color;
 
     public Position position;
@@ -18,6 +16,7 @@ public class PossibleActions {
         this.possibleCaptures = new ArrayList<>();
         this.possibleMoves = new ArrayList<>();
         this.possibleChecks = new ArrayList<>();
+        this.listOfPiecesPositionsWhichAreCheckingTheKing = new ArrayList<>();
     }
     public boolean isChecked(){
         return !this.possibleChecks.isEmpty();

@@ -20,30 +20,28 @@ public class King extends Piece {
 
         kingMove[0] = this.position.getNewPositionByVector(0, 1);
         kingMove[1] = this.position.getNewPositionByVector(0, -1);
-
         kingMove[2] = this.position.getNewPositionByVector(1, 0);
         kingMove[3] = this.position.getNewPositionByVector(-1, 0);
-
         kingMove[4] = this.position.getNewPositionByVector(1, 1);
         kingMove[5] = this.position.getNewPositionByVector(1, -1);
-
         kingMove[6] = this.position.getNewPositionByVector(-1, 1);
         kingMove[7] = this.position.getNewPositionByVector(-1, -1);
 
         for (Position test : kingMove) {
             if (test.isOnBoard()) {
-                if (this.color == Color.WHITE && board.isOccupiedByColor(test, Color.BLACK) && !board.cantKillTheKing(test)) {
+                if (this.color == Color.WHITE && board.isOccupiedByColor(test, Color.BLACK)) {
                     possibleActions.addPossibleCapture(test);
-                } else if (this.color == Color.BLACK && board.isOccupiedByColor(test, Color.WHITE) && !board.cantKillTheKing(test)) {
+                }else if (this.color == Color.WHITE && !board.isOccupiedByColor(test, Color.BLACK) && !board.isOccupiedByKing((test), Color.BLACK)) {
+                    possibleActions.addPossibleMove(test);
+                }else if (this.color == Color.WHITE && board.isOccupiedByColor(test, Color.WHITE)) {
+                    continue;
+
+                }else if (this.color == Color.BLACK && !board.isOccupiedByColor(test, Color.WHITE)) {
+                    possibleActions.addPossibleMove(test);
+                }else if (this.color == Color.BLACK && board.isOccupiedByColor(test, Color.WHITE) && !board.isOccupiedByKing((test), Color.BLACK)) {
                     possibleActions.addPossibleCapture(test);
-                } else if (this.color == Color.WHITE && board.isOccupiedByColor(test, Color.WHITE)) {
+                }else if (this.color == Color.BLACK && board.isOccupiedByColor(test, Color.BLACK)) {
                     continue;
-                } else if (this.color == Color.BLACK && board.isOccupiedByColor(test, Color.BLACK)) {
-                    continue;
-                } else if (this.color == Color.WHITE && !board.isOccupied(test)) {
-                    possibleActions.addPossibleMove(test);
-                } else if (this.color == Color.BLACK && !board.isOccupied(test)) {
-                    possibleActions.addPossibleMove(test);
                 }
             }
         }return possibleActions;

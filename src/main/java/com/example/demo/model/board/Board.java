@@ -12,7 +12,6 @@ public class Board {
     public Board () {
         this.boardOfPieces = new Piece[8][8];
         fillBoardWithPieces();
-        printBoard();
     }
 
     public Piece[][] getBoard () {
@@ -35,7 +34,7 @@ public class Board {
         }
         return false;
     }
-
+    // There is also less specific method: isOccupiedByKing which is not including color of the King
     public boolean isOccupiedByKing (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
         if (piece.getClass() == King.class && piece.getColor() == color) {
@@ -75,8 +74,8 @@ public class Board {
         }
         return whiteKingPosition;
     }
-
-    public boolean cantKillTheKing (Position position) {
+    // There is more specific method: isOccupiedByKing that also includes color of the King
+    public boolean isOccupiedByKingOfAnyColor (Position position) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
         if (piece.getClass() == King.class) {
             return true;
@@ -109,7 +108,7 @@ public class Board {
 
     private void fillBoardWithPieces () {
 
-        this.boardOfPieces[3][3] = new King(new Position(3, 3), Color.BLACK);
+        this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK);
         this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE);
 
         this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK);
@@ -143,7 +142,7 @@ public class Board {
         this.boardOfPieces[6][1] = new Pawn(new Position(6, 1), Color.WHITE);
         this.boardOfPieces[6][2] = new Pawn(new Position(6, 2), Color.WHITE);
         this.boardOfPieces[6][3] = new Pawn(new Position(6, 3), Color.WHITE);
-        this.boardOfPieces[4][4] = new Pawn(new Position(4, 4), Color.WHITE);
+        this.boardOfPieces[6][4] = new Pawn(new Position(6, 4), Color.WHITE);
         this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE);
         this.boardOfPieces[6][6] = new Pawn(new Position(6, 6), Color.WHITE);
         this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE);

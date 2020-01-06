@@ -59,7 +59,12 @@ public class ChessGame {
             possibleActions.printPossibleChecks();
         } catch (NullPointerException e) {
             System.out.println(row + "\t" + column + "\t there is no piece on this position!");
+
         }
+        printActualPositionAndGetPositionOfBothKings();
+        System.out.println("----------");
+        areKingsUnderCheck(this.possibleActions);
+        System.out.println("----------");
         return possibleActions;
     }
 
@@ -76,16 +81,22 @@ public class ChessGame {
 
             // We will not checking if opposite king will be under check if we will make our next move - PAWN PROMOTION
             // To not get out of the board
-            if (currentlySelected.getClass() != Pawn.class && (currentlySelected.getPosition().getRow() != 0 || currentlySelected.getPosition().getRow() != 7)) {
-                select(newPosition.getRow(), newPosition.getColumn());
+            if (currentlySelected.getClass() == Pawn.class) {
+                if (currentlySelected.getPosition().getRow() != 0 || currentlySelected.getPosition().getRow() != 7) {
+                    select(newPosition.getRow(), newPosition.getColumn());
+                }else {
+                    System.out.println("Problem");
+                }
+            }else {
+                System.out.println("Problem");
             }
 
         } else {
             System.out.println("cant move there");
         }
-        board.printBoard();
+        printActualPositionAndGetPositionOfBothKings();
         System.out.println("----------");
-        System.out.println(possibleActions.isChecked());
+        areKingsUnderCheck(this.possibleActions);
         System.out.println("----------");
     }
 
@@ -108,18 +119,29 @@ public class ChessGame {
         } else {
             System.out.println("cant move there");
         }
+        printActualPositionAndGetPositionOfBothKings();
+        System.out.println("----------");
+        areKingsUnderCheck(this.possibleActions);
+        System.out.println("----------");
+
+    }
+    public static boolean areKingsUnderCheck(PossibleActions possibleActions){
+        possibleActions.getPossibleChecks();
+        System.out.println(possibleActions.isChecked());
+        return possibleActions.isChecked();
+    }
+
+    public static void printActualPositionAndGetPositionOfBothKings(){
         board.printBoard();
         System.out.println("----------");
 
-        this.board.getWhiteKingPosition();
-        this.board.getBlackKingPosition();
+        board.getWhiteKingPosition();
+        board.getBlackKingPosition();
         System.out.println("White King row: " + board.whiteKingPosition.getRow());
         System.out.println("White King column: " + board.whiteKingPosition.getColumn());
         System.out.println("Black King row: " + board.blackKingPosition.getRow());
         System.out.println("Black King column: " + board.blackKingPosition.getColumn());
 
-
-        System.out.println(possibleActions.isChecked());
         System.out.println("----------");
     }
 
@@ -127,9 +149,9 @@ public class ChessGame {
 
         ChessGame game = new ChessGame();
 
-        game.select(4, 4);
+        game.select(1, 3);
 
-        game.newPiecePositionByCapture(new Position(1, 3));
+        game.newPiecePositionByMove(new Position(2, 3));
 
 //        ArrayList<String> fieldsToMark = new ArrayList<>();
 //
