@@ -21,74 +21,20 @@ public class PossibleActions {
     public boolean isChecked(){
         return !this.possibleChecks.isEmpty();
     }
-    public PossibleActions isWhiteKingChecked(Board board) {
-
-        PossibleActions possibleActions = new PossibleActions();
-        Position[] kingedCheckedByKnight = new Position[8];
-        if (this.color == Color.WHITE) {
-            Position[] knightsPossibleMove = new Position[8];
-            knightsPossibleMove[0] = this.position.getNewPositionByVector(1, 2);
-            knightsPossibleMove[1] = this.position.getNewPositionByVector(1, -2);
-            knightsPossibleMove[2] = this.position.getNewPositionByVector(2, 1);
-            knightsPossibleMove[3] = this.position.getNewPositionByVector(2, -1);
-            knightsPossibleMove[4] = this.position.getNewPositionByVector(-1, 2);
-            knightsPossibleMove[5] = this.position.getNewPositionByVector(-1, -2);
-            knightsPossibleMove[6] = this.position.getNewPositionByVector(-2, 1);
-            knightsPossibleMove[7] = this.position.getNewPositionByVector(-2, -1);
-            for (Position test : knightsPossibleMove) {
-                if (test.isOnBoard() && !board.isOccupiedByColor(test, Color.WHITE) && !board.isOccupiedByColor(test, Color.BLACK)) {
-                    possibleActions.addPossibleMove(test);
-                } else if (test.isOnBoard() && board.isOccupiedByColor(test, Color.BLACK) && !board.isOccupiedByKing(test, Color.BLACK)) {
-                    possibleActions.addPossibleCapture(test);
-                } else if (test.isOnBoard() && board.isOccupiedByKing(test, Color.BLACK)) {
-                    possibleActions.addPossibleChecks(test);
-                    System.out.println("CHECK!!!!!!!!!!!");
-                }
-            }
-        }
-        return possibleActions;
-
-    }    public PossibleActions isBlackKingChecked(Board board) {
-
-        PossibleActions possibleActions = new PossibleActions();
-        Position[] kingedCheckedByKnight = new Position[8];
-
-        if (this.color == Color.WHITE) {
-            Position[] knightsPossibleMove = new Position[8];
-            knightsPossibleMove[0] = this.position.getNewPositionByVector(1, 2);
-            knightsPossibleMove[1] = this.position.getNewPositionByVector(1, -2);
-            knightsPossibleMove[2] = this.position.getNewPositionByVector(2, 1);
-            knightsPossibleMove[3] = this.position.getNewPositionByVector(2, -1);
-            knightsPossibleMove[4] = this.position.getNewPositionByVector(-1, 2);
-            knightsPossibleMove[5] = this.position.getNewPositionByVector(-1, -2);
-            knightsPossibleMove[6] = this.position.getNewPositionByVector(-2, 1);
-            knightsPossibleMove[7] = this.position.getNewPositionByVector(-2, -1);
-            for (Position test : knightsPossibleMove) {
-                if (test.isOnBoard() && !board.isOccupiedByColor(test, Color.WHITE) && !board.isOccupiedByColor(test, Color.BLACK)) {
-                    possibleActions.addPossibleMove(test);
-                } else if (test.isOnBoard() && board.isOccupiedByColor(test, Color.BLACK) && !board.isOccupiedByKing(test, Color.BLACK)) {
-                    possibleActions.addPossibleCapture(test);
-                } else if (test.isOnBoard() && board.isOccupiedByKing(test, Color.BLACK)) {
-                    possibleActions.addPossibleChecks(test);
-                    System.out.println("CHECK!!!!!!!!!!!");
-                }
-            }
-        }
-        return possibleActions;
-    }
 
     public void addPossibleCapture (Position position) {
         this.possibleCaptures.add(position);
     }
 
     public void addPossibleMove (Position position) {
-
         this.possibleMoves.add(position);
     }
 
     public void addPossibleChecks (Position position) {
-
         this.possibleChecks.add(position);
+    }
+    public void addPiecesPositionsWhichAreCheckingTheKing (Position position){
+        this.listOfPiecesPositionsWhichAreCheckingTheKing.add(position);
     }
 
     public ArrayList<Position> getPossibleCaptures () {
@@ -122,6 +68,11 @@ public class PossibleActions {
     public void printPossibleChecks () {
         for (Position position : possibleChecks) {
             System.out.println("Possible checks: " + position.getRow() + "\t" + position.getColumn());
+        }
+    }
+    public void printPositionsofPiecesThatAreCheckingKing () {
+        for (Position position : listOfPiecesPositionsWhichAreCheckingTheKing) {
+            System.out.println("Row: " + position.getRow() + "\t Column: " + position.getColumn());
         }
     }
 }

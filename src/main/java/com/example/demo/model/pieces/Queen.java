@@ -26,20 +26,6 @@ public class Queen extends Piece {
         queenMove[6] = this.position.getNewPositionByVector(1, 0);
         queenMove[7] = this.position.getNewPositionByVector(-1, 0);
 
-//        /** POSSIBLE WHITE CAPTURES */
-//        if (this.color == Color.WHITE){
-//            for (int i = 0; i < 8; i++) {
-//                queenMove[2] = this.position.getNewPositionByVector(1 + i, 1 + i);
-//                if (queenMove[2].isOnBoard() && board.isOccupiedByColor(queenMove[2], Color.BLACK)) {
-//                    possibleActions.addPossibleCapture(queenMove[2]);
-//                }
-//            }
-//        }
-//        /** POSSIBLE BLACK CAPTURES */
-//            if (this.color == Color.BLACK) {
-//                while (bishopMove[0].isOnBoard()) {
-//                }
-//            }
         /** POSSIBLE MOVES */
         outloop:
         {

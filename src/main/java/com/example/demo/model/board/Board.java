@@ -18,7 +18,7 @@ public class Board {
         return boardOfPieces;
     }
 
-    public Color getColorFromTheBoardOnCurrentPosition(Position position){
+    public Color getColorFromTheBoardOnCurrentPosition (Position position) {
         return this.boardOfPieces[position.getRow()][position.getColumn()].getColor();
     }
 
@@ -34,10 +34,47 @@ public class Board {
         }
         return false;
     }
+
     // There is also less specific method: isOccupiedByKing which is not including color of the King
     public boolean isOccupiedByKing (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
         if (piece.getClass() == King.class && piece.getColor() == color) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isOccupiedByKnight (Position position, Color color) {
+        Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
+        if (piece.getClass() == Knight.class && piece.getColor() == color) {
+            return true;
+        }
+        return false;
+    }
+    public boolean isOccupiedByRook (Position position, Color color) {
+        Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
+        if (piece.getClass() == Rook.class && piece.getColor() == color) {
+            return true;
+        }
+        return false;
+    }
+    public boolean isOccupiedByBishop (Position position, Color color) {
+        Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
+        if (piece.getClass() == Bishop.class && piece.getColor() == color) {
+            return true;
+        }
+        return false;
+    }
+    public boolean isOccupiedByQueen (Position position, Color color) {
+        Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
+        if (piece.getClass() == Queen.class && piece.getColor() == color) {
+            return true;
+        }
+        return false;
+    }
+    public boolean isOccupiedByPawn (Position position, Color color) {
+        Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
+        if (piece.getClass() == Pawn.class && piece.getColor() == color) {
             return true;
         }
         return false;
@@ -74,6 +111,7 @@ public class Board {
         }
         return whiteKingPosition;
     }
+
     // There is more specific method: isOccupiedByKing that also includes color of the King
     public boolean isOccupiedByKingOfAnyColor (Position position) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
@@ -86,12 +124,15 @@ public class Board {
     public Piece getWhitePiece (int row, int column) {
         if (this.boardOfPieces[row][column].getColor() == Color.WHITE) {
             return boardOfPieces[row][column];
-        }return null;
+        }
+        return null;
     }
+
     public Piece getBlackPiece (int row, int column) {
         if (this.boardOfPieces[row][column].getColor() == Color.BLACK) {
             return boardOfPieces[row][column];
-        }return null;
+        }
+        return null;
     }
 
     public Piece getPiece (int row, int column) {
@@ -109,7 +150,7 @@ public class Board {
     private void fillBoardWithPieces () {
 
         this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK);
-        this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE);
+        this.boardOfPieces[7][4] = new King(new Position(4, 3), Color.WHITE);
 
         this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK);
         this.boardOfPieces[7][3] = new Queen(new Position(7, 3), Color.WHITE);
@@ -120,7 +161,7 @@ public class Board {
         this.boardOfPieces[7][7] = new Rook(new Position(7, 7), Color.WHITE);
 
         this.boardOfPieces[0][1] = new Knight(new Position(0, 1), Color.BLACK);
-        this.boardOfPieces[0][6] = new Knight(new Position(0, 6), Color.BLACK);
+        this.boardOfPieces[0][6] = new Knight(new Position(2, 4), Color.BLACK);
         this.boardOfPieces[7][1] = new Knight(new Position(7, 1), Color.WHITE);
         this.boardOfPieces[7][6] = new Knight(new Position(7, 6), Color.WHITE);
 
