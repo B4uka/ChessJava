@@ -30,19 +30,15 @@ public class King extends Piece {
 
         for (Position test : kingMove) {
             if (test.isOnBoard()) {
-                if (this.color == Color.WHITE && board.isOccupiedByColor(test, Color.BLACK)) {
-                    possibleActions.addPossibleCapture(test);
-                } else if (this.color == Color.WHITE && !board.isOccupiedByColor(test, Color.BLACK) && !board.isOccupiedByKing((test), Color.BLACK)) {
+                if (this.color == Color.WHITE && !board.isOccupied(test)) {
                     possibleActions.addPossibleMove(test);
-                } else if (this.color == Color.WHITE && board.isOccupiedByColor(test, Color.WHITE)) {
-                    continue;
+                } else if (this.color == Color.WHITE && !board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedByColor((test), Color.BLACK)) {
+                    possibleActions.addPossibleCapture(test);
 
-                } else if (this.color == Color.BLACK && !board.isOccupiedByColor(test, Color.WHITE)) {
+                } else if (this.color == Color.BLACK && !board.isOccupied(test)) {
                     possibleActions.addPossibleMove(test);
-                } else if (this.color == Color.BLACK && board.isOccupiedByColor(test, Color.WHITE) && !board.isOccupiedByKing((test), Color.BLACK)) {
+                } else if (this.color == Color.BLACK && !board.isOccupiedByColor(test, Color.BLACK) && board.isOccupiedByColor((test), Color.WHITE)) {
                     possibleActions.addPossibleCapture(test);
-                } else if (this.color == Color.BLACK && board.isOccupiedByColor(test, Color.BLACK)) {
-                    continue;
                 }
             }
         }

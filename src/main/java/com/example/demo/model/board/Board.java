@@ -149,8 +149,8 @@ public class Board {
 
     private void fillBoardWithPieces () {
 
-        this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK);
-        this.boardOfPieces[7][4] = new King(new Position(4, 3), Color.WHITE);
+        this.boardOfPieces[2][0] = new King(new Position(2, 0), Color.BLACK);
+        this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE);
 
         this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK);
         this.boardOfPieces[7][3] = new Queen(new Position(7, 3), Color.WHITE);
@@ -161,7 +161,7 @@ public class Board {
         this.boardOfPieces[7][7] = new Rook(new Position(7, 7), Color.WHITE);
 
         this.boardOfPieces[0][1] = new Knight(new Position(0, 1), Color.BLACK);
-        this.boardOfPieces[0][6] = new Knight(new Position(2, 4), Color.BLACK);
+        this.boardOfPieces[0][6] = new Knight(new Position(0, 6), Color.BLACK);
         this.boardOfPieces[7][1] = new Knight(new Position(7, 1), Color.WHITE);
         this.boardOfPieces[7][6] = new Knight(new Position(7, 6), Color.WHITE);
 
