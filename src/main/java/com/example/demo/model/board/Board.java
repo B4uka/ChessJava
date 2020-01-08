@@ -149,7 +149,7 @@ public class Board {
 
     private void fillBoardWithPieces () {
 
-        this.boardOfPieces[2][0] = new King(new Position(2, 0), Color.BLACK);
+        this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK);
         this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE);
 
         this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK);

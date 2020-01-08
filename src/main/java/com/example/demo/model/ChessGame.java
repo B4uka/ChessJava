@@ -7,15 +7,14 @@ import com.example.demo.model.piece_properties.Position;
 import com.example.demo.model.pieces.King;
 import com.example.demo.model.pieces.Piece;
 
-import java.io.IOException;
-
 public class ChessGame {
 
     public static Board board;
     public Piece currentlySelected, currentWhiteKing, currentBlackKing;
     public PossibleActions possibleActions, whiteKingCheckedPositions, blackKingCheckedPositions;
-    public Position position, piecePositionNEW;
+    public Position position, piecePositionNEW, piecePositionOLD;
     public Color color;
+    public Piece piece;
 
     public ChessGame () {
         this.board = new Board();
@@ -114,70 +113,60 @@ public class ChessGame {
         return possibleActions;
     }
 
-    public void newPiecePositionByMove (Position newPosition) {
+    public void newPiecePositionByMove (Position newPosition) throws Exception {
         System.out.println("NEXT MOVE: ");
         if (this.possibleActions.getPossibleMoves().contains(newPosition)) {
+            piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+
             board.setEmpty(this.currentlySelected.getPosition());
             this.currentlySelected.setPosition(newPosition);
             board.setPiece(this.currentlySelected);
+            piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+            System.out.println("wierszNowa:" + piecePositionNEW.getRow() + "kolumnaNowa: " + piecePositionNEW.getColumn());
+            System.out.println("wierszStara:" + piecePositionOLD.getRow() + "kolumnaStara: " + piecePositionOLD.getColumn());
+            isWhiteKingChecked(board);
+            isBlackKingChecked(board);
+            if ((!whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty() && currentlySelected.getColor() == Color.WHITE)
+                    || (!blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty() && currentlySelected.getColor() == Color.BLACK)) {
+                piecePositionNEW = piecePositionOLD;
+                board.setEmpty(this.currentlySelected.getPosition());
+                currentlySelected.setPosition(piecePositionNEW);
+                board.setPiece(currentlySelected);
 
-            this.piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+                System.out.println("wierszNowa:" + piecePositionNEW.getRow() + "kolumnaNowa: " + piecePositionNEW.getColumn());
+                System.out.println("wierszStara:" + piecePositionOLD.getRow() + "kolumnaStara: " + piecePositionOLD.getColumn());
 
-            System.out.println("------------------------------");
-
-            // We will not checking if opposite king will be under check if we will make our next move - PAWN PROMOTION
-            // To not get out of the board
-//            if (currentlySelected.getClass() == Pawn.class) {
-//                if (currentlySelected.getPosition().getRow() != 0 || currentlySelected.getPosition().getRow() != 7) {
-//                    select(newPosition.getRow(), newPosition.getColumn());
-//                } else {
-//                    System.out.println("Problem1");
-//                }
-//            } else {
-//                select(newPosition.getRow(), newPosition.getColumn());
-//            }
-
-        } else {
-            System.out.println("cant move there");
+            }
+            board.printBoard();
         }
-        board.printBoard();
-//        printActualPositionAndGetPositionOfBothKings();
-        System.out.println("----------");
-        areKingsUnderCheck(possibleActions);
-        System.out.println("----------");
-
-        isWhiteKingChecked(board);
-        isBlackKingChecked(board);
     }
 
-    public void newPiecePositionByCapture (Position newPosition) {
+    public void newPiecePositionByCapture (Position newPosition) throws Exception {
         System.out.println("NEXT MOVE: ");
-        if (possibleActions.getPossibleCaptures().contains(newPosition)) {
-            board.setEmpty(currentlySelected.getPosition());
-            currentlySelected.setPosition(newPosition);
-            board.setPiece(currentlySelected);
+        if (this.possibleActions.getPossibleCaptures().contains(newPosition)) {
+            piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
 
-            this.piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+            board.setEmpty(this.currentlySelected.getPosition());
+            this.currentlySelected.setPosition(newPosition);
+            board.setPiece(this.currentlySelected);
+            piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+            System.out.println("wierszNowa:" + piecePositionNEW.getRow() + "kolumnaNowa: " + piecePositionNEW.getColumn());
+            System.out.println("wierszStara:" + piecePositionOLD.getRow() + "kolumnaStara: " + piecePositionOLD.getColumn());
+            isWhiteKingChecked(board);
+            isBlackKingChecked(board);
+            if ((!whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty() && currentlySelected.getColor() == Color.WHITE)
+                    || (!blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty() && currentlySelected.getColor() == Color.BLACK)) {
+                piecePositionNEW = piecePositionOLD;
+                board.setEmpty(this.currentlySelected.getPosition());
+                currentlySelected.setPosition(piecePositionNEW);
+                board.setPiece(currentlySelected);
 
-            System.out.println();
-            System.out.println("------------------------------");
-            // We will not checking if opposite king will be under check if we will make our next move - PAWN PROMOTION
-            // To not get out of the board
-//            if (currentlySelected.getClass() != Pawn.class && (currentlySelected.getPosition().getRow() != 7 || currentlySelected.getPosition().getRow() != 0)) {
-//                select(newPosition.getRow(), newPosition.getColumn());
-//            }
+                System.out.println("wierszNowa:" + piecePositionNEW.getRow() + "kolumnaNowa: " + piecePositionNEW.getColumn());
+                System.out.println("wierszStara:" + piecePositionOLD.getRow() + "kolumnaStara: " + piecePositionOLD.getColumn());
 
-        } else {
-            System.out.println("cant move there");
+            }
+            board.printBoard();
         }
-        board.printBoard();
-//        printActualPositionAndGetPositionOfBothKings();
-        System.out.println("----------");
-        areKingsUnderCheck(this.possibleActions);
-        System.out.println("----------");
-
-        isWhiteKingChecked(board);
-        isBlackKingChecked(board);
     }
 
     public static boolean areKingsUnderCheck (PossibleActions possibleActions) {
@@ -198,42 +187,76 @@ public class ChessGame {
         System.out.println("Black King column: " + board.blackKingPosition.getColumn());
     }
 
-    public static void main (String[] args) throws IOException {
+    public static void main (String[] args) throws Exception {
 
         ChessGame game = new ChessGame();
+        printActualPositionAndGetPositionOfBothKings();
 
-        game.selectBlackPiece(0, 1);
-        game.newPiecePositionByMove(new Position(2, 2));
-
-        game.selectWhitePiece(6, 4);
-        game.newPiecePositionByMove(new Position(4, 4));
-
-        game.selectBlackPiece(2, 2);
-        game.newPiecePositionByMove(new Position(0, 1));
-
-        game.select(7, 4);
-        game.newPiecePositionByMove(new Position(6, 4));
-//        ArrayList<String> fieldsToMark = new ArrayList<>();
+        // Todo: tutaj jest dzialajaca metoda, ktora pokazuje czy dalismy szacha!
+//        public void newPiecePositionByMove (Position newPosition) {
+//            System.out.println("NEXT MOVE: ");
+//            if (this.possibleActions.getPossibleMoves().contains(newPosition)) {
+//                board.setEmpty(this.currentlySelected.getPosition());
+//                this.currentlySelected.setPosition(newPosition);
+//                board.setPiece(this.currentlySelected);
 //
-//        ArrayList<Position> allPossibleActions = new ArrayList<>();
+//                this.piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
 //
+//                System.out.println("------------------------------");
 //
-//        game.select(Field.getFieldByString("A2").getRow(), Field.getFieldByString("A2").getColumn());
+//                // We will not checking if opposite king will be under check if we will make our next move - PAWN PROMOTION
+//                // To not get out of the board
+////            if (currentlySelected.getClass() == Pawn.class) {
+////                if (currentlySelected.getPosition().getRow() != 0 || currentlySelected.getPosition().getRow() != 7) {
+////                    select(newPosition.getRow(), newPosition.getColumn());
+////                } else {
+////                    System.out.println("Problem1");
+////                }
+////            } else {
+////                select(newPosition.getRow(), newPosition.getColumn());
+////            }
 //
-//        ArrayList<Position> possibleMovesToMake  = game.possibleActions.possibleMoves;
-//        ArrayList<Position> possibleCapturesToMake = game.possibleActions.possibleCaptures;
+//            } else {
+//                System.out.println("cant move there");
+//            }
+//            board.printBoard();
+////        printActualPositionAndGetPositionOfBothKings();
+//            System.out.println("----------");
+//            areKingsUnderCheck(possibleActions);
+//            System.out.println("----------");
 //
-//        allPossibleActions.addAll(possibleCapturesToMake);
-//        allPossibleActions.addAll(possibleMovesToMake);
-//
-//        for (Position position: allPossibleActions) {
-//            fieldsToMark.add(Field.getFieldByPosition(position.getRow(), position.getColumn()));
+//            isWhiteKingChecked(board);
+//            isBlackKingChecked(board);
 //        }
 //
-//        System.out.println(fieldsToMark.contains("A3"));
-//        System.out.println(fieldsToMark.size());
-//        for (String string: fieldsToMark){
-//            System.out.println(string);
+//        public void newPiecePositionByCapture (Position newPosition) {
+//            System.out.println("NEXT MOVE: ");
+//            if (possibleActions.getPossibleCaptures().contains(newPosition)) {
+//                board.setEmpty(currentlySelected.getPosition());
+//                currentlySelected.setPosition(newPosition);
+//                board.setPiece(currentlySelected);
+//
+//                this.piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+//
+//                System.out.println();
+//                System.out.println("------------------------------");
+//                // We will not checking if opposite king will be under check if we will make our next move - PAWN PROMOTION
+//                // To not get out of the board
+////            if (currentlySelected.getClass() != Pawn.class && (currentlySelected.getPosition().getRow() != 7 || currentlySelected.getPosition().getRow() != 0)) {
+////                select(newPosition.getRow(), newPosition.getColumn());
+////            }
+//
+//            } else {
+//                System.out.println("cant move there");
+//            }
+//            board.printBoard();
+////        printActualPositionAndGetPositionOfBothKings();
+//            System.out.println("----------");
+//            areKingsUnderCheck(this.possibleActions);
+//            System.out.println("----------");
+//
+//            isWhiteKingChecked(board);
+//            isBlackKingChecked(board);
 //        }
-    }
+//    }
 }

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.communication.field.Field;
 import com.example.demo.model.ChessGame;
-import com.example.demo.model.board.Board;
 import com.example.demo.model.piece_properties.Color;
 import com.example.demo.model.piece_properties.Position;
 import com.google.gson.Gson;
@@ -22,7 +21,6 @@ public class MainController {
     private Boolean whitePlayer = true;
     private Color color;
     private Field selectedPiece;
-    private Board board;
 
     @RequestMapping(value = {"/selection"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -66,7 +64,7 @@ public class MainController {
 
     @RequestMapping(value = {"/move"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<String> move (@RequestParam int player, @RequestParam String fieldId) {
+    ResponseEntity<String> move (@RequestParam int player, @RequestParam String fieldId) throws Exception {
         ArrayList<String> fieldsToMark = new ArrayList<>();
 
         for (Position position : this.allPossibleActions) {
@@ -77,7 +75,6 @@ public class MainController {
         this.chessGame.newPiecePositionByMove(new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn()));
 
         fieldsToMark.add(Field.getFieldByPosition(this.chessGame.piecePositionNEW.getRow(), this.chessGame.piecePositionNEW.getColumn()));
-//  || chessGame.isWhiteKingChecked(board) || chessGame.isBlackKingChecked(board)
         if (!fieldsToMark.contains(fieldId)) {
             whitePlayer = !whitePlayer;
             return new ResponseEntity(new Error(), HttpStatus.BAD_REQUEST);
