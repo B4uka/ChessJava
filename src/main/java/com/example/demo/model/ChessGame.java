@@ -191,7 +191,8 @@ public class ChessGame {
 
         ChessGame game = new ChessGame();
         printActualPositionAndGetPositionOfBothKings();
-
+    }
+}
         // Todo: tutaj jest dzialajaca metoda, ktora pokazuje czy dalismy szacha!
 //        public void newPiecePositionByMove (Position newPosition) {
 //            System.out.println("NEXT MOVE: ");
@@ -259,4 +260,4 @@ public class ChessGame {
 //            isBlackKingChecked(board);
 //        }
 //    }
-}
+
