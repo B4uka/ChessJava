@@ -14,7 +14,6 @@ public class ChessGame {
     public PossibleActions possibleActions, whiteKingCheckedPositions, blackKingCheckedPositions;
     public Position position, piecePositionNEW, piecePositionOLD;
     public Color color;
-    public Piece piece;
 
     public ChessGame () {
         this.board = new Board();
@@ -25,20 +24,15 @@ public class ChessGame {
         this.board.getWhiteKingPosition();
         King whiteKing = new King(board.getWhiteKingPosition(), Color.WHITE);
 
-        System.out.println("Positions of pieces that are checking white king: ");
         try {
             whiteKingCheckedPositions = whiteKing.isWhiteKingChecked(board);
             whiteKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
         } catch (NullPointerException e) {
             System.out.println("Probably no check for the WhiteKing");
         }
-//        if (blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty()){
-//            System.out.println("0");
-//        }else blackKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
-//
-//        if (whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty()) {
-//            System.out.println("0");
-//        }else whiteKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
+        if (whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty()){
+            return false;
+        }
         return true;
     }
 
@@ -47,14 +41,47 @@ public class ChessGame {
         this.board.getBlackKingPosition();
         King blackKing = new King(board.getBlackKingPosition(), Color.BLACK);
 
-        System.out.println("Positions of pieces that are checking black king: ");
         try {
             blackKingCheckedPositions = blackKing.isBlackKingChecked(board);
             blackKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
         } catch (NullPointerException e) {
             System.out.println("Probably no check for the BlackKing");
         }
+        if (blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty()){
+            return false;
+        }
         return true;
+    }
+    // TODO all actions that white player can do
+    public PossibleActions allWhitePiecesPossibleActions(){
+        board.getAllWhitePiecesPosition();
+
+        for (Position test: board.whitePiecesPositions){
+            selectWhitePiece(test.getRow(), test.getColumn());
+            possibleActions.addPossibleMove(test);
+            possibleActions.addPossibleCapture(test);
+            possibleActions.addPossibleChecks(test);
+        }
+        System.out.println("Is white king checked? " + isWhiteKingChecked(board));
+        System.out.println("Is white king mated? " + possibleActions.isMated());
+        System.out.println("Is white king stalamated? " + possibleActions.isStalamated());
+        System.out.println("__________________________________________________________________________________________");
+        return possibleActions;
+    }
+    // TODO all actions that black player can do
+    public PossibleActions allBlackPiecesPossibleActions(){
+        board.getAllBlackPiecesPosition();
+        for (Position test: board.blackPiecesPositions){
+            selectBlackPiece(test.getRow(), test.getColumn());
+            possibleActions.addPossibleMove(test);
+            possibleActions.addPossibleCapture(test);
+            possibleActions.addPossibleChecks(test);
+        }
+        System.out.println("Is black king checked? " + isBlackKingChecked(board));
+        System.out.println("Is black king mated? " + possibleActions.isMated());
+        System.out.println("Is black king stalameted? " + possibleActions.isStalamated());
+        System.out.println("__________________________________________________________________________________________");
+        return possibleActions;
     }
 
     // -> mainController
@@ -63,10 +90,12 @@ public class ChessGame {
         currentlySelected = board.getWhitePiece(row, column);
         try {
             possibleActions = currentlySelected.generatePossibleActions(board);
-            System.out.println("Piece from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
+            System.out.println("__________________________________________________________________________________________");
+            System.out.println("White " + currentlySelected.getClass().getSimpleName() +" from: "  + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
             possibleActions.printPossibleMoves();
             possibleActions.printPossibleCaptures();
             possibleActions.printPossibleChecks();
+            System.out.println();
         } catch (NullPointerException e) {
             System.out.println(row + "\t" + column + "\t there is no WHITE piece on this position!");
         }
@@ -78,10 +107,12 @@ public class ChessGame {
         currentlySelected = board.getBlackPiece(row, column);
         try {
             possibleActions = currentlySelected.generatePossibleActions(board);
-            System.out.println("Piece from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
+            System.out.println("__________________________________________________________________________________________");
+            System.out.println("Black " + currentlySelected.getClass().getSimpleName() +" from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
             possibleActions.printPossibleMoves();
             possibleActions.printPossibleCaptures();
             possibleActions.printPossibleChecks();
+            System.out.println();
         } catch (NullPointerException e) {
             System.out.println(row + "\t" + column + "\t there is no BLACK piece on this position!");
         }
@@ -135,7 +166,6 @@ public class ChessGame {
 
                 System.out.println("wierszNowa:" + piecePositionNEW.getRow() + "kolumnaNowa: " + piecePositionNEW.getColumn());
                 System.out.println("wierszStara:" + piecePositionOLD.getRow() + "kolumnaStara: " + piecePositionOLD.getColumn());
-
             }
             board.printBoard();
         }
@@ -181,16 +211,19 @@ public class ChessGame {
 
         board.getWhiteKingPosition();
         board.getBlackKingPosition();
-        System.out.println("White King row: " + board.whiteKingPosition.getRow());
-        System.out.println("White King column: " + board.whiteKingPosition.getColumn());
-        System.out.println("Black King row: " + board.blackKingPosition.getRow());
-        System.out.println("Black King column: " + board.blackKingPosition.getColumn());
+//        System.out.println("White King row: " + board.whiteKingPosition.getRow());
+//        System.out.println("White King column: " + board.whiteKingPosition.getColumn());
+//        System.out.println("Black King row: " + board.blackKingPosition.getRow());
+//        System.out.println("Black King column: " + board.blackKingPosition.getColumn());
     }
 
     public static void main (String[] args) throws Exception {
 
         ChessGame game = new ChessGame();
         printActualPositionAndGetPositionOfBothKings();
+//        game.selectWhitePiece(7,0);
+        game.allWhitePiecesPossibleActions();
+        game.allBlackPiecesPossibleActions();
     }
 }
         // Todo: tutaj jest dzialajaca metoda, ktora pokazuje czy dalismy szacha!

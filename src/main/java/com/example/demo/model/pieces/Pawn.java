@@ -22,7 +22,7 @@ public class Pawn extends Piece {
         //possible moves by Black
         if (this.color == Color.BLACK) {
             pawnPossibleMove[0] = this.position.getNewPositionByVector(1, 0);
-            if (this.position.getRow() == 1) {
+            if (this.position.getRow() == 1 && !board.isOccupied(pawnPossibleMove[0])) {
                 pawnPossibleMove[1] = this.position.getNewPositionByVector(2, 0);
             } else {
                 pawnPossibleMove[1] = pawnPossibleMove[0];
@@ -45,14 +45,13 @@ public class Pawn extends Piece {
                     possibleActions.addPossibleCapture(test);
                 } else if (test.isOnBoard() && board.isOccupiedByKing(test, Color.WHITE)) {
                     possibleActions.addPossibleChecks(test);
-                    System.out.println("CHECK!!!!!!!!!!!");
                 }
             }
         } else if (this.color == Color.WHITE) {
 
             //possible moves by WHITE
             pawnPossibleMove[0] = this.position.getNewPositionByVector(-1, 0);
-            if (this.position.getRow() == 6) {
+            if (this.position.getRow() == 6  && !board.isOccupied(pawnPossibleMove[0])) {
                 pawnPossibleMove[1] = this.position.getNewPositionByVector(-2, 0);
             } else {
                 pawnPossibleMove[1] = pawnPossibleMove[0];
@@ -74,7 +73,6 @@ public class Pawn extends Piece {
                     possibleActions.addPossibleCapture(test);
                 } else if (test.isOnBoard() && board.isOccupiedByKing(test, Color.BLACK)) {
                     possibleActions.addPossibleChecks(test);
-                    System.out.println("CHECK!!!!!!!!!!!");
                 }
             }
         }

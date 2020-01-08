@@ -18,8 +18,15 @@ public class PossibleActions {
         this.possibleChecks = new ArrayList<>();
         this.listOfPiecesPositionsWhichAreCheckingTheKing = new ArrayList<>();
     }
+    public boolean isMated(){
+        return this.possibleMoves.isEmpty() && this.possibleCaptures.isEmpty() && listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
+    }
+    public boolean isStalamated(){
+        return this.possibleMoves.isEmpty() && this.possibleCaptures.isEmpty() && !listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
+    }
+
     public boolean isChecked(){
-        return !this.possibleChecks.isEmpty();
+        return !listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
     }
 
     public void addPossibleCapture (Position position) {
@@ -57,21 +64,22 @@ public class PossibleActions {
 
     public void printPossibleMoves () {
         for (Position position : possibleMoves) {
-            System.out.println("Possible moves: " + position.getRow() + "\t" + position.getColumn());
+            System.out.print("Possible moves: " + position.getRow() + "\t" + position.getColumn() + "\t");
         }
     }
     public void printPossibleCaptures () {
         for (Position position : possibleCaptures) {
-            System.out.println("Possible captures: " + position.getRow() + "\t" + position.getColumn());
+            System.out.print("Possible captures: " + position.getRow() + "\t" + position.getColumn() + "\t");
         }
     }
     public void printPossibleChecks () {
         for (Position position : possibleChecks) {
-            System.out.println("Possible checks: " + position.getRow() + "\t" + position.getColumn());
+            System.out.print("Possible checks: " + position.getRow() + "\t" + position.getColumn() + "\t");
         }
     }
     public void printPositionsofPiecesThatAreCheckingKing () {
         for (Position position : listOfPiecesPositionsWhichAreCheckingTheKing) {
+            System.out.println("Positions of pieces that are checking white king: ");
             System.out.println("Row: " + position.getRow() + "\t Column: " + position.getColumn());
         }
     }

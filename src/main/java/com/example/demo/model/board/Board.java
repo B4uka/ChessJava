@@ -4,10 +4,13 @@ import com.example.demo.model.piece_properties.Color;
 import com.example.demo.model.piece_properties.Position;
 import com.example.demo.model.pieces.*;
 
+import java.util.ArrayList;
+
 public class Board {
 
     protected Piece[][] boardOfPieces;
-    public Position blackKingPosition, whiteKingPosition;
+    public Position blackKingPosition, whiteKingPosition, blacksPositions, whitesPosition;
+    public ArrayList<Position> whitePiecesPositions, blackPiecesPositions;
 
     public Board () {
         this.boardOfPieces = new Piece[8][8];
@@ -111,7 +114,41 @@ public class Board {
         }
         return whiteKingPosition;
     }
+    //TODO all white Pieces
+    public ArrayList<Position> getAllWhitePiecesPosition () {
+        whitePiecesPositions = new ArrayList<>();
 
+        for (int i = 0; i < this.boardOfPieces.length; i++) {
+            for (int j = 0; j < this.boardOfPieces.length; j++) {
+                try {
+                    this.boardOfPieces[i][j].getClass();
+                    if (this.boardOfPieces[i][j].getClass() != null && this.boardOfPieces[i][j].getColor() == Color.WHITE) {
+                        whitesPosition = new Position(i, j);
+                        whitePiecesPositions.add(whitesPosition);
+                    }
+                } catch (NullPointerException e) {
+                }
+            }
+        }
+        return whitePiecesPositions;
+    }
+    //TODO all black Pieces
+    public ArrayList<Position>  getAllBlackPiecesPosition () {
+        blackPiecesPositions = new ArrayList<>();
+        for (int i = 0; i < this.boardOfPieces.length; i++) {
+            for (int j = 0; j < this.boardOfPieces.length; j++) {
+                try {
+                    this.boardOfPieces[i][j].getClass();
+                    if (this.boardOfPieces[i][j].getClass() != null && this.boardOfPieces[i][j].getColor() == Color.BLACK) {
+                        blacksPositions = new Position(i, j);
+                        blackPiecesPositions.add(blacksPositions);
+                    }
+                } catch (NullPointerException e) {
+                }
+            }
+        }
+        return blackPiecesPositions;
+    }
     // There is more specific method: isOccupiedByKing that also includes color of the King
     public boolean isOccupiedByKingOfAnyColor (Position position) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
@@ -149,7 +186,7 @@ public class Board {
 
     private void fillBoardWithPieces () {
 
-        this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK);
+        this.boardOfPieces[5][0] = new King(new Position(5, 0), Color.BLACK);
         this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE);
 
         this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK);
