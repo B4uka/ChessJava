@@ -32,7 +32,6 @@ public class Knight extends Piece {
                     possibleActions.addPossibleCapture(test);
                 } else if (test.isOnBoard() && board.isOccupiedByKing(test, Color.BLACK)) {
                     possibleActions.addPossibleChecks(test);
-                    System.out.println("CHECK!!!!!!!!!!!");
                 }
             }
         }
@@ -54,7 +53,6 @@ public class Knight extends Piece {
                     possibleActions.addPossibleCapture(test);
                 } else if (test.isOnBoard() && board.isOccupiedByKing(test, Color.WHITE)) {
                     possibleActions.addPossibleChecks(test);
-                    System.out.println("CHECK!!!!!!!!!!!");
                 }
             }
         }

@@ -1,12 +1,12 @@
 package com.example.demo.model.pieces;
 
+import com.example.demo.model.ChessGame;
 import com.example.demo.model.board.Board;
 import com.example.demo.model.board.PossibleActions;
 import com.example.demo.model.piece_properties.Color;
 import com.example.demo.model.piece_properties.Position;
 
 public class King extends Piece {
-
 
     public King (Position position, Color color) {
         super(position, color);
@@ -30,7 +30,7 @@ public class King extends Piece {
 
         for (Position test : kingMove) {
             if (test.isOnBoard()) {
-                if (this.color == Color.WHITE && !board.isOccupied(test)) {
+                if (this.color == Color.WHITE && !board.isOccupied(test) && ChessGame.isWhiteKingChecked()) {
                     possibleActions.addPossibleMove(test);
                 } else if (this.color == Color.WHITE && !board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedByColor((test), Color.BLACK)) {
                     possibleActions.addPossibleCapture(test);
@@ -45,9 +45,27 @@ public class King extends Piece {
         return possibleActions;
     }
 
-    public PossibleActions isWhiteKingChecked (Board board) {
-
+    public PossibleActions piecesPositionsCheckingWhiteKing (Board board) {
         PossibleActions possibleActions = new PossibleActions();
+
+        Position[] checkedByKing = new Position[8];
+
+        checkedByKing[0] = this.position.getNewPositionByVector(0, 1);
+        checkedByKing[1] = this.position.getNewPositionByVector(0, -1);
+        checkedByKing[2] = this.position.getNewPositionByVector(1, 0);
+        checkedByKing[3] = this.position.getNewPositionByVector(-1, 0);
+        checkedByKing[4] = this.position.getNewPositionByVector(1, 1);
+        checkedByKing[5] = this.position.getNewPositionByVector(1, -1);
+        checkedByKing[6] = this.position.getNewPositionByVector(-1, 1);
+        checkedByKing[7] = this.position.getNewPositionByVector(-1, -1);
+        for (Position test : checkedByKing) {
+            if (test.isOnBoard()) {
+                if (board.isOccupiedByColor(test, Color.BLACK) && board.isOccupiedByKing(test, Color.BLACK)) {
+                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
+                }
+            }
+        }
+
         Position[] checkedByKnight = new Position[8];
         checkedByKnight[0] = this.position.getNewPositionByVector(1, 2);
         checkedByKnight[1] = this.position.getNewPositionByVector(1, -2);
@@ -57,10 +75,10 @@ public class King extends Piece {
         checkedByKnight[5] = this.position.getNewPositionByVector(-1, -2);
         checkedByKnight[6] = this.position.getNewPositionByVector(-2, 1);
         checkedByKnight[7] = this.position.getNewPositionByVector(-2, -1);
-        for (Position testForKnightCheck : checkedByKnight) {
-            if (testForKnightCheck.isOnBoard()) {
-                if (board.isOccupiedByColor(testForKnightCheck, Color.BLACK) && board.isOccupiedByKnight(testForKnightCheck, Color.BLACK)) {
-                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(testForKnightCheck);
+        for (Position test : checkedByKnight) {
+            if (test.isOnBoard()) {
+                if (board.isOccupiedByColor(test, Color.BLACK) && board.isOccupiedByKnight(test, Color.BLACK)) {
+                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
                 }
             }
         }
@@ -168,10 +186,27 @@ public class King extends Piece {
         return possibleActions;
     }
 
-    public PossibleActions isBlackKingChecked (Board board) {
-
+    public PossibleActions piecesPositionsCheckingBlackKing (Board board) {
         PossibleActions possibleActions = new PossibleActions();
-//        if (this.color == Color.BLACK) {
+
+        Position[] checkedByKing = new Position[8];
+
+        checkedByKing[0] = this.position.getNewPositionByVector(0, 1);
+        checkedByKing[1] = this.position.getNewPositionByVector(0, -1);
+        checkedByKing[2] = this.position.getNewPositionByVector(1, 0);
+        checkedByKing[3] = this.position.getNewPositionByVector(-1, 0);
+        checkedByKing[4] = this.position.getNewPositionByVector(1, 1);
+        checkedByKing[5] = this.position.getNewPositionByVector(1, -1);
+        checkedByKing[6] = this.position.getNewPositionByVector(-1, 1);
+        checkedByKing[7] = this.position.getNewPositionByVector(-1, -1);
+        for (Position test : checkedByKing) {
+            if (test.isOnBoard()) {
+                if (board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedByKing(test, Color.WHITE)) {
+                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
+                }
+            }
+        }
+
         Position[] checkedByKnight = new Position[8];
         checkedByKnight[0] = this.position.getNewPositionByVector(1, 2);
         checkedByKnight[1] = this.position.getNewPositionByVector(1, -2);
