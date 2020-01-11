@@ -22,7 +22,6 @@ public abstract class Piece {
     public Color getColor () {
         return this.color;
     }
-
     public abstract PossibleActions generatePossibleActions (Board board);
 
     public void setPosition (Position position) {

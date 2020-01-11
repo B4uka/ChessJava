@@ -71,19 +71,19 @@ public class PossibleActions {
 
     public void printPossibleMoves () {
         for (Position position : possibleMoves) {
-            System.out.println("Possible moves: " + position.getRow() + "\t" + position.getColumn() + "\t");
+            System.out.print("Possible moves: " + position.getRow() + "\t" + position.getColumn() + "\t");
         }
     }
 
     public void printPossibleCaptures () {
         for (Position position : possibleCaptures) {
-            System.out.println("Possible captures: " + position.getRow() + "\t" + position.getColumn() + "\t");
+            System.out.print("Possible captures: " + position.getRow() + "\t" + position.getColumn() + "\t");
         }
     }
 
     public void printPossibleChecks () {
         for (Position position : possibleChecks) {
-            System.out.println("Possible checks: " + position.getRow() + "\t" + position.getColumn() + "\t");
+            System.out.print("Possible checks: " + position.getRow() + "\t" + position.getColumn() + "\t");
         }
     }
 

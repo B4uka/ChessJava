@@ -1,6 +1,5 @@
 package com.example.demo.model.pieces;
 
-import com.example.demo.model.ChessGame;
 import com.example.demo.model.board.Board;
 import com.example.demo.model.board.PossibleActions;
 import com.example.demo.model.piece_properties.Color;
@@ -27,10 +26,10 @@ public class King extends Piece {
         kingMove[5] = this.position.getNewPositionByVector(1, -1);
         kingMove[6] = this.position.getNewPositionByVector(-1, 1);
         kingMove[7] = this.position.getNewPositionByVector(-1, -1);
-
+//&& ChessGame.isWhiteKingChecked()
         for (Position test : kingMove) {
             if (test.isOnBoard()) {
-                if (this.color == Color.WHITE && !board.isOccupied(test) && ChessGame.isWhiteKingChecked()) {
+                if (this.color == Color.WHITE && !board.isOccupied(test)){//&& ChessGame.isWhiteKingChecked() ) {
                     possibleActions.addPossibleMove(test);
                 } else if (this.color == Color.WHITE && !board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedByColor((test), Color.BLACK)) {
                     possibleActions.addPossibleCapture(test);

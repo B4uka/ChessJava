@@ -6,12 +6,12 @@ import com.example.demo.model.piece_properties.Color;
 import com.example.demo.model.piece_properties.Position;
 import com.google.gson.Gson;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 
 @RestController
 public class MainController {
@@ -22,6 +22,7 @@ public class MainController {
     private Color color;
     private Field selectedPiece;
 
+
     @RequestMapping(value = {"/selection"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<String> selection (@RequestParam int player, @RequestParam String fieldId) {
@@ -31,18 +32,18 @@ public class MainController {
 
         selectedPiece = Field.getFieldByString(fieldId);
         Position piecePositionThatIsSelected = new Position(selectedPiece.getRow(), selectedPiece.getColumn());
-        color = chessGame.board.getColorFromTheBoardOnCurrentPosition(piecePositionThatIsSelected);
+        color = ChessGame.board.getColorFromTheBoardOnCurrentPosition(piecePositionThatIsSelected);
 
         if (whitePlayer) {
             chessGame.selectWhitePiece(selectedPiece.getRow(), selectedPiece.getColumn());
             if (color == Color.WHITE) {
                 whitePlayer = false;
-            }else return new ResponseEntity(new Error(), HttpStatus.BAD_REQUEST);
+            } else throw new EmptyStackException();
         } else {
             chessGame.selectBlackPiece(selectedPiece.getRow(), selectedPiece.getColumn());
             if (color == Color.BLACK) {
                 whitePlayer = true;
-            }else return new ResponseEntity(new Error(), HttpStatus.BAD_REQUEST);
+            } else throw new EmptyStackException();
         }
         ArrayList<Position> possibleMovesToMake = chessGame.possibleActions.getPossibleMoves();
         ArrayList<Position> possibleCapturesToMake = chessGame.possibleActions.getPossibleCaptures();
@@ -53,7 +54,6 @@ public class MainController {
         for (Position position : allPossibleActions) {
             fieldsToMark.add(Field.getFieldByPosition(position.getRow(), position.getColumn()));
         }
-
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
         String jsonResponse = new Gson().toJson(fieldsToMark);
@@ -61,31 +61,44 @@ public class MainController {
         return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
     }
 
-
     @RequestMapping(value = {"/move"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<String> move (@RequestParam int player, @RequestParam String fieldId) throws Exception {
-        ArrayList<String> fieldsToMark = new ArrayList<>();
-
-        for (Position position : this.allPossibleActions) {
-            this.chessGame.possibleActions.addPossibleMove(position);
-        }
-
-        this.chessGame.newPiecePositionByCapture(new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn()));
-        this.chessGame.newPiecePositionByMove(new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn()));
-
-        fieldsToMark.add(Field.getFieldByPosition(this.chessGame.piecePositionNEW.getRow(), this.chessGame.piecePositionNEW.getColumn()));
-        if (!fieldsToMark.contains(fieldId)) {
+        ArrayList<String> fieldsToMove = new ArrayList<>();
+        Position positionWhereWeWantToMove = new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn());
+        if (ChessGame.board.isOccupied(positionWhereWeWantToMove)) {
+            if (!chessGame.newPiecePositionByCapture(positionWhereWeWantToMove)) {
+                whitePlayer = !whitePlayer;
+                throw new EmptyStackException();
+            }
+        } else if (!chessGame.newPiecePositionByMove(positionWhereWeWantToMove)) {
             whitePlayer = !whitePlayer;
-            return new ResponseEntity(new Error(), HttpStatus.BAD_REQUEST);
-        } else {
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("Access-Control-Allow-Origin", "*");
-            String jsonResponse = new Gson().toJson(fieldsToMark);
-            return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
+            throw new EmptyStackException();
         }
+        fieldsToMove.add(Field.getFieldByPosition(chessGame.piecePositionNEW.getRow(), chessGame.piecePositionNEW.getColumn()));
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        String jsonResponse = new Gson().toJson(fieldsToMove);
+        return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
+    }
+
+    @RequestMapping(value = {"/mate"}, method = RequestMethod.GET, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    ResponseEntity<String> isMated () {
+        ArrayList<Boolean> isMated = new ArrayList<>();
+        if (whitePlayer) {
+            isMated.add(chessGame.isBlackKingMated());
+        } else
+            isMated.add(chessGame.isWhiteKingMated());
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        String jsonResponse = new Gson().toJson(isMated);
+        return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
     }
 }
+
 //        if (fieldsToMark.isEmpty()) {
 //                HttpHeaders responseHeaders = new HttpHeaders();
 //                responseHeaders.set("Access-Control-Allow-Origin", "*");
