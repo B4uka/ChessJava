@@ -7,8 +7,8 @@ import com.example.demo.model.piece_properties.Position;
 
 public class Bishop extends Piece {
 
-    public Bishop (Position position, Color color) {
-        super(position, color);
+    public Bishop (Position position, Color color, String code) {
+        super(position, color, code);
     }
 
 

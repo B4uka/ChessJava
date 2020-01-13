@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.HashMap;
 
 @RestController
 public class MainController {
@@ -64,7 +65,8 @@ public class MainController {
     @RequestMapping(value = {"/move"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<String> move (@RequestParam int player, @RequestParam String fieldId) throws Exception {
-        ArrayList<String> fieldsToMove = new ArrayList<>();
+        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
+
         Position positionWhereWeWantToMove = new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn());
         if (ChessGame.board.isOccupied(positionWhereWeWantToMove)) {
             if (!chessGame.newPiecePositionByCapture(positionWhereWeWantToMove)) {
@@ -75,11 +77,14 @@ public class MainController {
             whitePlayer = !whitePlayer;
             throw new EmptyStackException();
         }
-        fieldsToMove.add(Field.getFieldByPosition(chessGame.piecePositionNEW.getRow(), chessGame.piecePositionNEW.getColumn()));
+//        codeOfTheFieldsWithPiecesOnThem.add(Field.getFieldByPosition(chessGame.piecePositionNEW.getRow(), chessGame.piecePositionNEW.getColumn()));
+
+        ChessGame.board.getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(ChessGame.board.boardFieldAndCodes);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
-        String jsonResponse = new Gson().toJson(fieldsToMove);
+        String jsonResponse = new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
         return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
     }
 

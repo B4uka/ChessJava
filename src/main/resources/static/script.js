@@ -3,6 +3,7 @@ var possibleActions;
 var currentPiece;
 var currentCellToMove;
 var currentCell;
+var cells;
 
 //SELECTION
 
@@ -25,7 +26,7 @@ function select(field_id) {
   currentPiece = document.getElementById(currentCell).innerHTML;
 
 
-  $.post("http://195.181.247.79:8087/chessWebApp/selection", // url
+  $.post("http://localhost:8081/chessWebApp/selection", // url
       {
         player: 1,
         fieldId: field_id
@@ -43,23 +44,26 @@ function select(field_id) {
 }
 
 //MOVING PIECES
-
+// var cells = document.getElementsByTagName("td");
+// for (var i = 0; i < cells.length; i++) {
+//   cells[i].onclick = function() {
+//     getCell(this);
+//   };
+// }
 function move(field_id) {
   $("td").css("background", "");
 
-  $.post("http://195.181.247.79:8087/chessWebApp/move", // url
+  $.post("http://localhost:8081/chessWebApp/move", // url
       {
         player: 1,
         fieldId: field_id
       }, // data to be submit
       function(fieldsArray, status, xhr) { // success callback function
-        alert("status2: " + status);
-        if (fieldsArray.includes(field_id)){
-          $.each(fieldsArray, function(index, field_id) {
-              $("#" + field_id).html(currentPiece);
-              $("#" + currentCell).html("");
-            });
-          }
+            alert("status2: " + status);
+            var response =  {"test": "test1"};
+            $.each(fieldsArray, function(fieldId, codeOfPiece) {
+            alert(fieldId + ' -> ' + codeOfPiece);
+        });
       }, 'json')
     .fail(function(data, status) {
       alert("error2: " + status);

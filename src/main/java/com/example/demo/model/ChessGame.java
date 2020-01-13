@@ -22,7 +22,7 @@ public class ChessGame {
     public static boolean isWhiteKingChecked () {
         PossibleActions whiteKingCheckedPositions = new PossibleActions();
         board.getWhiteKingPosition();
-        King whiteKing = new King(board.getWhiteKingPosition(), Color.WHITE);
+        King whiteKing = new King(board.getWhiteKingPosition(), Color.WHITE, "&#9812;");
         try {
             whiteKingCheckedPositions = whiteKing.piecesPositionsCheckingWhiteKing(board);
             if (!whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty()) {
@@ -40,7 +40,7 @@ public class ChessGame {
     public static boolean isBlackKingChecked () {
         PossibleActions blackKingCheckedPositions = new PossibleActions();
         board.getBlackKingPosition();
-        King blackKing = new King(board.getBlackKingPosition(), Color.BLACK);
+        King blackKing = new King(board.getBlackKingPosition(), Color.BLACK, "&#9818;");
         try {
             blackKingCheckedPositions = blackKing.piecesPositionsCheckingBlackKing(board);
             if (!blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty()) {
@@ -291,13 +291,26 @@ public class ChessGame {
 //        }
 //        game.allBlackPiecesPossibleActions();
 //        board.printBoard();
-        game.selectBlackPiece(0, 4);
-        if(game.newPiecePositionByCapture(new Position(1, 5))) {
+        game.selectBlackPiece(0, 1);
+        if(game.newPiecePositionByMove(new Position(2, 2))) {
             System.out.println(game.isKingMated(Color.BLACK));
         }
 
-        board.printBoard();
+//        board.printBoard();
+//        board.printBoardWithCodes();
+//        System.out.println();
+//        board.getBoardWithPiecesActualCodes();
+//        board.printBoardWithCodes();
+//        System.out.println();
+//        board.getBoardFieldAndCodes();
 
+//        ArrayList<String> naa = new ArrayList<>();
+//        for (Position position : ChessGame.board.getAllBlackPiecesPosition()){
+//            naa.add(Field.getFieldByPosition(position.getRow(), position.getColumn()));
+//        }
+//        String jsonResponse2 = new Gson().toJson(naa);
+//        System.out.println();
+//        System.out.printf( "JSON: %s", jsonResponse2 );
     }
 }
 // Todo: tutaj jest dzialajaca metoda, ktora pokazuje czy dalismy szacha!

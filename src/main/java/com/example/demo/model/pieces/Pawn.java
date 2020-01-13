@@ -7,8 +7,8 @@ import com.example.demo.model.piece_properties.Position;
 
 public class Pawn extends Piece {
 
-    public Pawn (Position position, Color color) {
-        super(position, color);
+    public Pawn (Position position, Color color, String code) {
+        super(position, color, code);
     }
 
 

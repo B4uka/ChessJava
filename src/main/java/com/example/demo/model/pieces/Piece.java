@@ -12,9 +12,10 @@ public abstract class Piece {
     protected final String code;
 
 
-    public Piece (Position position, Color color) {
+    public Piece (Position position, Color color, String code) {
         this.position = position;
         this.color = color;
+        this.code = code;
     }
 
     public Position getPosition () {
@@ -24,6 +25,7 @@ public abstract class Piece {
     public Color getColor () {
         return this.color;
     }
+
     public abstract PossibleActions generatePossibleActions (Board board);
 
     public void setPosition (Position position) {
@@ -35,7 +37,7 @@ public abstract class Piece {
     }
 
     public void setPosition (int row, int column) {
-        this.position.setRowAndColumn(row,column);
+        this.position.setRowAndColumn(row, column);
     }
 }
 

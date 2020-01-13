@@ -1,16 +1,20 @@
 package com.example.demo.model.board;
 
+import com.example.demo.communication.field.Field;
 import com.example.demo.model.piece_properties.Color;
 import com.example.demo.model.piece_properties.Position;
 import com.example.demo.model.pieces.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Board {
 
     protected Piece[][] boardOfPieces;
     public Position blackKingPosition, whiteKingPosition, blacksPositions, whitesPosition;
     public ArrayList<Position> whitePiecesPositions, blackPiecesPositions;
+    public ArrayList<String> piecesPositionsWithCode;
+    public HashMap<String, String> boardFieldAndCodes;
 
     public Board () {
         this.boardOfPieces = new Piece[8][8];
@@ -54,6 +58,7 @@ public class Board {
         }
         return false;
     }
+
     public boolean isOccupiedByRook (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
         if (piece.getClass() == Rook.class && piece.getColor() == color) {
@@ -61,6 +66,7 @@ public class Board {
         }
         return false;
     }
+
     public boolean isOccupiedByBishop (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
         if (piece.getClass() == Bishop.class && piece.getColor() == color) {
@@ -68,6 +74,7 @@ public class Board {
         }
         return false;
     }
+
     public boolean isOccupiedByQueen (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
         if (piece.getClass() == Queen.class && piece.getColor() == color) {
@@ -75,6 +82,7 @@ public class Board {
         }
         return false;
     }
+
     public boolean isOccupiedByPawn (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
         if (piece.getClass() == Pawn.class && piece.getColor() == color) {
@@ -114,6 +122,7 @@ public class Board {
         }
         return whiteKingPosition;
     }
+
     //TODO all white Pieces
     public ArrayList<Position> getAllWhitePiecesPosition () {
         whitePiecesPositions = new ArrayList<>();
@@ -132,8 +141,9 @@ public class Board {
         }
         return whitePiecesPositions;
     }
+
     //TODO all black Pieces
-    public ArrayList<Position>  getAllBlackPiecesPosition () {
+    public ArrayList<Position> getAllBlackPiecesPosition () {
         blackPiecesPositions = new ArrayList<>();
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
@@ -149,6 +159,50 @@ public class Board {
         }
         return blackPiecesPositions;
     }
+
+    public ArrayList<String> getBoardWithPiecesActualCodes () {
+        piecesPositionsWithCode = new ArrayList<>();
+        String codeOfThePiece;
+        for (int i = 0; i < this.boardOfPieces.length; i++) {
+            for (int j = 0; j < this.boardOfPieces.length; j++) {
+                try {
+                    if (this.boardOfPieces[i][j].getCode() == null) {
+                        codeOfThePiece = "";
+                        piecesPositionsWithCode.add(codeOfThePiece);
+                    } else if (this.boardOfPieces[i][j].getCode() != null) {
+                        codeOfThePiece = boardOfPieces[i][j].getCode();
+                        piecesPositionsWithCode.add(codeOfThePiece);
+                    }
+                } catch (NullPointerException e) {
+                }
+            }
+        }
+        return piecesPositionsWithCode;
+    }
+
+    //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public HashMap<String, String> getBoardFieldAndCodes () {
+        boardFieldAndCodes = new HashMap<>();
+        String codeOfThePiece;
+        for (int i = 0; i < boardOfPieces.length; i++) {
+            for (int j = 0; j < boardOfPieces.length; j++) {
+                try {
+                    if (this.boardOfPieces[i][j].getCode() == null) {
+                        codeOfThePiece = "";
+                        boardFieldAndCodes.put(Field.getFieldByPosition(i, j), codeOfThePiece);
+                    } else if (this.boardOfPieces[i][j].getCode() != null) {
+                        boardFieldAndCodes.put(Field.getFieldByPosition(i, j), boardOfPieces[i][j].getCode());
+                    }
+                } catch (NullPointerException f) {
+                }
+            }
+        }
+//        String jsonResponse = new Gson().toJson(boardFieldAndCodes);
+//        System.out.printf( "JSON: %s", jsonResponse );
+
+        return boardFieldAndCodes;
+    }
+
     // There is more specific method: isOccupiedByKing that also includes color of the King
     public boolean isOccupiedByKingOfAnyColor (Position position) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
@@ -184,6 +238,10 @@ public class Board {
         boardOfPieces[position.getRow()][position.getColumn()] = null;
     }
 
+    public String getPieceCode (Piece piece) {
+        return boardOfPieces[piece.getPosition().getRow()][piece.getPosition().getColumn()].getCode();
+    }
+
     private void fillBoardWithPieces () {
 //        this.boardOfPieces[0][0] = new King(new Position(0, 0), Color.BLACK);
 //        this.boardOfPieces[7][7] = new King(new Position(7, 7), Color.WHITE);
@@ -194,44 +252,44 @@ public class Board {
 //        this.boardOfPieces[6][0] = new Rook(new Position(6, 0), Color.BLACK);
 //        this.boardOfPieces[4][1] = new Rook(new Position(4, 1), Color.WHITE);
 
-        this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK);
-        this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE);
+        this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK, "&#9818;");
+        this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE, "&#9818;");
 
-        this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK);
-        this.boardOfPieces[7][3] = new Queen(new Position(7, 3), Color.WHITE);
+        this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK, "&#9819;");
+        this.boardOfPieces[7][3] = new Queen(new Position(7, 3), Color.WHITE, "&#9812;");
 
-        this.boardOfPieces[0][0] = new Rook(new Position(0, 0), Color.BLACK);
-        this.boardOfPieces[0][7] = new Rook(new Position(0, 7), Color.BLACK);
-        this.boardOfPieces[7][0] = new Rook(new Position(7, 0), Color.WHITE);
-        this.boardOfPieces[7][7] = new Rook(new Position(7, 7), Color.WHITE);
+        this.boardOfPieces[0][0] = new Rook(new Position(0, 0), Color.BLACK, "&#9820;");
+        this.boardOfPieces[0][7] = new Rook(new Position(0, 7), Color.BLACK, "&#9820;");
+        this.boardOfPieces[7][0] = new Rook(new Position(7, 0), Color.WHITE, "&#9814;");
+        this.boardOfPieces[7][7] = new Rook(new Position(7, 7), Color.WHITE, "&#9814;");
 
-        this.boardOfPieces[0][1] = new Knight(new Position(0, 1), Color.BLACK);
-        this.boardOfPieces[0][6] = new Knight(new Position(0, 6), Color.BLACK);
-        this.boardOfPieces[7][1] = new Knight(new Position(7, 1), Color.WHITE);
-        this.boardOfPieces[7][6] = new Knight(new Position(7, 6), Color.WHITE);
+        this.boardOfPieces[0][1] = new Knight(new Position(0, 1), Color.BLACK, "&#9822;");
+        this.boardOfPieces[0][6] = new Knight(new Position(0, 6), Color.BLACK, "&#9822;");
+        this.boardOfPieces[7][1] = new Knight(new Position(7, 1), Color.WHITE, "&#9816;");
+        this.boardOfPieces[7][6] = new Knight(new Position(7, 6), Color.WHITE, "&#9816;");
 
-        this.boardOfPieces[0][2] = new Bishop(new Position(0, 2), Color.BLACK);
-        this.boardOfPieces[0][5] = new Bishop(new Position(0, 5), Color.BLACK);
-        this.boardOfPieces[7][2] = new Bishop(new Position(7, 2), Color.WHITE);
-        this.boardOfPieces[7][5] = new Bishop(new Position(7, 5), Color.WHITE);
+        this.boardOfPieces[0][2] = new Bishop(new Position(0, 2), Color.BLACK, "&#9821;");
+        this.boardOfPieces[0][5] = new Bishop(new Position(0, 5), Color.BLACK, "&#9821;");
+        this.boardOfPieces[7][2] = new Bishop(new Position(7, 2), Color.WHITE, "&#9815;");
+        this.boardOfPieces[7][5] = new Bishop(new Position(7, 5), Color.WHITE, "&#9815;");
 
-        this.boardOfPieces[1][0] = new Pawn(new Position(1, 0), Color.BLACK);
-        this.boardOfPieces[1][1] = new Pawn(new Position(1, 1), Color.BLACK);
-        this.boardOfPieces[1][2] = new Pawn(new Position(1, 2), Color.BLACK);
-        this.boardOfPieces[1][3] = new Pawn(new Position(1, 3), Color.BLACK);
-        this.boardOfPieces[1][4] = new Pawn(new Position(1, 4), Color.BLACK);
-        this.boardOfPieces[1][5] = new Pawn(new Position(1, 5), Color.BLACK);
-        this.boardOfPieces[1][6] = new Pawn(new Position(1, 6), Color.BLACK);
-        this.boardOfPieces[1][7] = new Pawn(new Position(1, 7), Color.BLACK);
+        this.boardOfPieces[1][0] = new Pawn(new Position(1, 0), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][1] = new Pawn(new Position(1, 1), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][2] = new Pawn(new Position(1, 2), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][3] = new Pawn(new Position(1, 3), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][4] = new Pawn(new Position(1, 4), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][5] = new Pawn(new Position(1, 5), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][6] = new Pawn(new Position(1, 6), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][7] = new Pawn(new Position(1, 7), Color.BLACK, "&#9823;");
 
-        this.boardOfPieces[6][0] = new Pawn(new Position(6, 0), Color.WHITE);
-        this.boardOfPieces[6][1] = new Pawn(new Position(6, 1), Color.WHITE);
-        this.boardOfPieces[6][2] = new Pawn(new Position(6, 2), Color.WHITE);
-        this.boardOfPieces[6][3] = new Pawn(new Position(6, 3), Color.WHITE);
-        this.boardOfPieces[6][4] = new Pawn(new Position(6, 4), Color.WHITE);
-        this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE);
-        this.boardOfPieces[6][6] = new Pawn(new Position(6, 6), Color.WHITE);
-        this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE);
+        this.boardOfPieces[6][0] = new Pawn(new Position(6, 0), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][1] = new Pawn(new Position(6, 1), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][2] = new Pawn(new Position(6, 2), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][3] = new Pawn(new Position(6, 3), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][4] = new Pawn(new Position(6, 4), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][6] = new Pawn(new Position(6, 6), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE, "&#9817;");
     }
 
     public void printBoard () {
@@ -268,6 +326,21 @@ public class Board {
                     }
                 } catch (NullPointerException e) {
                     System.out.print(".  ");
+                    continue;
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public void printBoardWithCodes () {
+        for (int i = 0; i < boardOfPieces.length; i++) {
+            for (int j = 0; j < boardOfPieces.length; j++) {
+                try {
+                    System.out.print(boardOfPieces[i][j].getCode() + "\t");
+
+                } catch (NullPointerException e) {
+                    System.out.print("\t . \t");
                     continue;
                 }
             }
