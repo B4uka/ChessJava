@@ -1,4 +1,4 @@
-package com.example.demo.DataBase;
+package com.example.demo.model.DataBase;
 
 public enum Result {
     WhiteWon,
