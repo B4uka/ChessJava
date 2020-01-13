@@ -10,8 +10,8 @@ import com.example.demo.model.pieces.Piece;
 public class ChessGame {
 
     public static Board board;
-    public Piece currentlySelected, pieceWhichMayBeCaptured;
-    public PossibleActions possibleActions;
+    public Piece currentlySelected, temproraryBeaten;
+    public PossibleActions possibleActions, blackKingCheckedPositions, whiteKingCheckedPositions;
     public Position position, piecePositionNEW, piecePositionOLD;
     public Color color;
 
@@ -26,13 +26,13 @@ public class ChessGame {
         try {
             whiteKingCheckedPositions = whiteKing.piecesPositionsCheckingWhiteKing(board);
             if (!whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty()) {
-//                System.out.println("Positions of pieces that are checking white king: ");
-//                whiteKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
+                System.out.println("Positions of pieces that are checking white king: ");
+                whiteKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
             } else {
-                //    System.out.println("King is not checked after this move!");
+                    System.out.println("King is not checked after this move!");
             }
         } catch (NullPointerException e) {
-//            System.out.println("Probably no check for the WhiteKing");
+            System.out.println("Probably no check for the WhiteKing");
         }
         return !whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
     }
@@ -44,13 +44,13 @@ public class ChessGame {
         try {
             blackKingCheckedPositions = blackKing.piecesPositionsCheckingBlackKing(board);
             if (!blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty()) {
-//                System.out.println("Positions of pieces that are checking black king: ");
-//                blackKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
+                System.out.println("Positions of pieces that are checking black king: ");
+                blackKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
             } else {
-                //   System.out.println("King is not checked after this move!");
+                   System.out.println("King is not checked after this move!");
             }
         } catch (NullPointerException e) {
-//            System.out.println("Probably no check for the BlackKing");
+            System.out.println("Probably no check for the BlackKing");
         }
         return !blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
     }
@@ -89,257 +89,174 @@ public class ChessGame {
     }
 
     // TODO probably not good method for searching for the mate
-    public Boolean isBlackKingMated () {
-        allBlackPiecesPossibleActions();
-        outloop:
-        {
-            for (Position test : possibleActions.possibleMoves) {
-                newPiecePositionByMoveForMate(test);
-                newPiecePositionByCaptureForMate(test);
-//            newPiecePositionByCapture(test);
-                if (!isBlackKingChecked()) {
-                    System.out.println("BLACK KING IS NOT MATED");
-                    break outloop;
-                }
+
+    public Boolean isKingMated (Color color) {
+        if(color == Color.WHITE) {
+            allWhitePiecesPossibleActions();
+        }else if (color == Color.BLACK){
+            allBlackPiecesPossibleActions();
+        }
+        for (Position test : possibleActions.getPossibleMoves()) {
+            if (isCheckAfterTheMove(test)) {
+            }else
+                return false;
+        }
+        for (Position test2: possibleActions.getPossibleCaptures()){
+            if(isCheckAfterTheCapture(test2)){
+                return true;
+            }else {
                 System.out.println("BLACK KING IS MATED_______________________________!!!!!!!!!!!!!!!!!!!!!!");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean isWhiteKingMated () {
-        allWhitePiecesPossibleActions();
-        outloop:
-        {
-            for (Position test : possibleActions.possibleMoves) {
-                newPiecePositionByMoveForMate(test);
-                newPiecePositionByCaptureForMate(test);
-//            newPiecePositionByCapture(test)
-                if (!isWhiteKingChecked()) {
-                    System.out.println("WHITE KING IS NOT MATED");
-                    break outloop;
-                }
-                System.out.println("WHITE KING IS MATED_______________________________!!!!!!!!!!!!!!!!!!!!!!");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // -> mainController
-    public PossibleActions selectWhitePiece (int row, int column) {
-
-        currentlySelected = board.getWhitePiece(row, column);
-        try {
-            possibleActions = currentlySelected.generatePossibleActions(board);
-            // ALL POSSIBLE ACTIONS WILL BE SHOWN IF YOU WILL USE LINES BELOW:
-            System.out.println("__________________________________________________________________________________________");
-            System.out.println("White " + currentlySelected.getClass().getSimpleName() + " from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
-            possibleActions.printPossibleMoves();
-            possibleActions.printPossibleCaptures();
-            possibleActions.printPossibleChecks();
-//            System.out.println();
-            //
-        } catch (NullPointerException e) {
-            System.out.println(row + "\t" + column + "\t there is no WHITE piece on this position!");
-        }
-        return possibleActions;
-    }
-
-    // -> mainController
-    public PossibleActions selectBlackPiece (int row, int column) {
-        currentlySelected = board.getBlackPiece(row, column);
-        try {
-            possibleActions = currentlySelected.generatePossibleActions(board);
-            // ALL POSSIBLE ACTIONS WILL BE SHOWN IF YOU WILL USE LINES BELOW:
-            System.out.println("__________________________________________________________________________________________");
-            System.out.println("Black " + currentlySelected.getClass().getSimpleName() + " from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
-            possibleActions.printPossibleMoves();
-            possibleActions.printPossibleCaptures();
-            possibleActions.printPossibleChecks();
-            System.out.println();
-            //
-        } catch (NullPointerException e) {
-            System.out.println(row + "\t" + column + "\t there is no BLACK piece on this position!");
-        }
-        return possibleActions;
-    }
-
-    // Method that is used for testing
-    public PossibleActions select (int row, int column) {
-
-        currentlySelected = this.board.getPiece(row, column);
-
-        try {
-            possibleActions = currentlySelected.generatePossibleActions(board);
-            System.out.println("Piece from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
-            possibleActions.printPossibleMoves();
-            possibleActions.printPossibleCaptures();
-            possibleActions.printPossibleChecks();
-        } catch (NullPointerException e) {
-            System.out.println(row + "\t" + column + "\t there is no piece on this position!");
-
-        }
-//        printActualPositionAndGetPositionOfBothKings();
-        System.out.println("----------");
-        areKingsUnderCheck(possibleActions);
-        System.out.println("----------");
-
-        isWhiteKingChecked();
-        isBlackKingChecked();
-        return possibleActions;
-    }
-
-
-
-
-    public boolean newPiecePositionByMoveForMate (Position newPosition) {
-//        System.out.println("NEXT MOVE: ");
-        if (this.possibleActions.getPossibleMoves().contains(newPosition)) {
-            piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
-
-            board.setEmpty(this.currentlySelected.getPosition());
-            this.currentlySelected.setPosition(newPosition);
-            board.setPiece(this.currentlySelected);
-            piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
-
-            if ((isWhiteKingChecked() && currentlySelected.getColor() == Color.WHITE)
-                    || (isBlackKingChecked() && currentlySelected.getColor() == Color.BLACK)) {
-                piecePositionNEW = piecePositionOLD;
-                board.setEmpty(this.currentlySelected.getPosition());
-                currentlySelected.setPosition(piecePositionNEW);
-                board.setPiece(currentlySelected);
-//                System.out.println("cant move there!");
                 return false;
             }
-            piecePositionNEW = piecePositionOLD;
-            board.setEmpty(this.currentlySelected.getPosition());
-            currentlySelected.setPosition(piecePositionNEW);
-            board.setPiece(currentlySelected);
-//            board.printBoard();
-            return true;
         }
         return false;
     }
 
-    public boolean newPiecePositionByMove (Position newPosition) {
-        System.out.println("NEXT MOVE: ");
-        if (this.possibleActions.getPossibleMoves().contains(newPosition)) {
+    public PossibleActions selectWhitePiece (int row, int column) {
+        currentlySelected = board.getWhitePiece(row, column);
+        generateActionsForCurrentlySelected();
+        System.out.println();
+        return possibleActions;
+    }
+
+    public PossibleActions selectBlackPiece (int row, int column) {
+        currentlySelected = board.getBlackPiece(row, column);
+        generateActionsForCurrentlySelected();
+        System.out.println();
+        return possibleActions;
+    }
+
+    private void generateActionsForCurrentlySelected () {
+        try {
+            possibleActions = currentlySelected.generatePossibleActions(board);
+            System.out.println();
+            System.out.println(currentlySelected.getColor() +" "+ currentlySelected.getClass().getSimpleName() + " from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
+            possibleActions.printPossibleMoves();
+            possibleActions.printPossibleCaptures();
+            possibleActions.printPossibleChecks();
+        } catch (NullPointerException e) {
+            System.out.println(currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn() + "\t there is no piece on this position!");
+        }
+//        printActualPositionAndGetPositionOfBothKings();
+//        System.out.println("----------");
+//        areKingsUnderCheck(possibleActions);
+//        System.out.println("----------");
+    }
+
+    private void revertNewMove (Position piecePositionOLD) {
+        this.piecePositionOLD = piecePositionOLD;
+
+        piecePositionNEW = piecePositionOLD;
+        board.setEmpty(this.currentlySelected.getPosition());
+        currentlySelected.setPosition(piecePositionNEW);
+        board.setPiece(currentlySelected);
+    }
+
+    private void revertNewMoveAndRestoreTempBeaten(Position piecePositionOLD) {
+        revertNewMove(piecePositionOLD);
+        board.setPiece(temproraryBeaten);
+    }
+
+
+    private Boolean newCaptureIfIsPossible (Position piecePositionNEW) {
+        this.piecePositionNEW = piecePositionNEW;
+        temproraryBeaten = board.getPiece(piecePositionNEW.getRow(),piecePositionNEW.getColumn());
+        if (this.possibleActions.getPossibleCaptures().contains(piecePositionNEW)) {
             piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
-
             board.setEmpty(this.currentlySelected.getPosition());
-            this.currentlySelected.setPosition(newPosition);
+            this.currentlySelected.setPosition(piecePositionNEW);
             board.setPiece(this.currentlySelected);
-            piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+            return true;
+        } else
+            return false;
+    }
+    private Boolean newMoveIfIsPossible (Position piecePositionNEW) {
+        this.piecePositionNEW = piecePositionNEW;
 
+        if (this.possibleActions.getPossibleMoves().contains(piecePositionNEW)) {
+            piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+            board.setEmpty(this.currentlySelected.getPosition());
+            this.currentlySelected.setPosition(piecePositionNEW);
+            board.setPiece(this.currentlySelected);
+            return true;
+        } else
+            return false;
+    }
+    public boolean isCheckAfterTheMove (Position piecePositionNEW) {
+        if (newMoveIfIsPossible(piecePositionNEW)) {
             if ((isWhiteKingChecked() && currentlySelected.getColor() == Color.WHITE)
                     || (isBlackKingChecked() && currentlySelected.getColor() == Color.BLACK)) {
-                piecePositionNEW = piecePositionOLD;
-                board.setEmpty(this.currentlySelected.getPosition());
-                currentlySelected.setPosition(piecePositionNEW);
-                board.setPiece(currentlySelected);
-                System.out.println("cant move there!");
+                revertNewMove(piecePositionOLD);
+                return true;
+            }
+            revertNewMove(piecePositionOLD);
+            return false;
+        }
+        return false;
+    }
+    public boolean newPiecePositionByMove (Position piecePositionNEW) {
+        System.out.println("NEXT MOVE: ");
+        if (newMoveIfIsPossible(piecePositionNEW)) {
+            if ((isWhiteKingChecked() && currentlySelected.getColor() == Color.WHITE)
+                    || (isBlackKingChecked() && currentlySelected.getColor() == Color.BLACK)) {
+                    revertNewMove(piecePositionOLD);
+                System.out.println("canT move there!");
                 return false;
             }
             board.printBoard();
             return true;
         }
+        System.out.println("canT move there!");
         return false;
     }
 
-    public boolean newPiecePositionByCaptureForMate (Position newPosition) {
+    public Boolean isCheckAfterTheCapture (Position piecePositionNEW) {
 //        System.out.println("NEXT MOVE: ");
 
-        if (this.possibleActions.getPossibleCaptures().contains(newPosition)) {
-            piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
-            pieceWhichMayBeCaptured = board.getPiece(newPosition.getRow(), newPosition.getColumn());
-
-            board.setEmpty(this.currentlySelected.getPosition());
-            this.currentlySelected.setPosition(newPosition);
-            board.setPiece(this.currentlySelected);
-            piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
-
+        if (newCaptureIfIsPossible(piecePositionNEW)) {
             if (isBlackKingChecked() && isWhiteKingChecked()) {
-                piecePositionNEW = piecePositionOLD;
-                board.setEmpty(this.currentlySelected.getPosition());
-                board.setPiece(pieceWhichMayBeCaptured);
-                currentlySelected.setPosition(piecePositionNEW);
-                board.setPiece(currentlySelected);
-//                System.out.println("cant move there!");
-                return false;
-            } else if (currentlySelected.getColor() != Color.WHITE) {
+                revertNewMove(piecePositionOLD);
+                return true;
+            }
+            if (currentlySelected.getColor() == Color.WHITE) {
                 if (isBlackKingChecked()) {
-                    piecePositionNEW = piecePositionOLD;
-                    board.setEmpty(this.currentlySelected.getPosition());
-                    board.setPiece(pieceWhichMayBeCaptured);
-                    currentlySelected.setPosition(piecePositionNEW);
-                    board.setPiece(currentlySelected);
-//                    System.out.println("cant move there!");
-                    return false;
+                    revertNewMove(piecePositionOLD);
+                    return true;
                 }
-            } else if (currentlySelected.getColor() != Color.BLACK) {
+            } else if (currentlySelected.getColor() == Color.BLACK) {
                 if (isWhiteKingChecked()) {
-                    piecePositionNEW = piecePositionOLD;
-                    board.setEmpty(this.currentlySelected.getPosition());
-                    board.setPiece(pieceWhichMayBeCaptured);
-                    currentlySelected.setPosition(piecePositionNEW);
-                    board.setPiece(currentlySelected);
-//                    System.out.println("cant move there!");
-                    return false;
+                    revertNewMove(piecePositionOLD);
+                    return true;
                 }
             } else
-//                System.out.println(pieceWhichMayBeCaptured.getPosition().getRow() + " pozycja figury" + pieceWhichMayBeCaptured.getPosition().getRow());
-                board.printBoard();
+                revertNewMove(piecePositionOLD);
             return true;
-        } else {
-//            System.out.println("cant move there");
+        } else
             return false;
-        }
     }
 
-    public boolean newPiecePositionByCapture (Position newPosition) {
+    public boolean newPiecePositionByCapture (Position piecePositionNEW) {
         System.out.println("NEXT MOVE: ");
-
-        if (this.possibleActions.getPossibleCaptures().contains(newPosition)) {
-            piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
-            pieceWhichMayBeCaptured = board.getPiece(newPosition.getRow(), newPosition.getColumn());
-
-            board.setEmpty(this.currentlySelected.getPosition());
-            this.currentlySelected.setPosition(newPosition);
-            board.setPiece(this.currentlySelected);
-            piecePositionNEW = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
-
+        System.out.println(currentlySelected.getColor());
+        if (newCaptureIfIsPossible(piecePositionNEW)){
             if (isBlackKingChecked() && isWhiteKingChecked()) {
-                piecePositionNEW = piecePositionOLD;
-                board.setEmpty(this.currentlySelected.getPosition());
-                board.setPiece(pieceWhichMayBeCaptured);
-                currentlySelected.setPosition(piecePositionNEW);
-                board.setPiece(currentlySelected);
+                revertNewMoveAndRestoreTempBeaten(piecePositionOLD);
                 System.out.println("cant move there!");
                 return false;
             } else if (currentlySelected.getColor() != Color.WHITE) {
                 if (isBlackKingChecked()) {
-                    piecePositionNEW = piecePositionOLD;
-                    board.setEmpty(this.currentlySelected.getPosition());
-                    board.setPiece(pieceWhichMayBeCaptured);
-                    currentlySelected.setPosition(piecePositionNEW);
-                    board.setPiece(currentlySelected);
+                    System.out.println(currentlySelected.getColor());
+                    revertNewMoveAndRestoreTempBeaten(piecePositionOLD);
                     System.out.println("cant move there!");
                     return false;
                 }
             } else if (currentlySelected.getColor() != Color.BLACK) {
                 if (isWhiteKingChecked()) {
-                    piecePositionNEW = piecePositionOLD;
-                    board.setEmpty(this.currentlySelected.getPosition());
-                    board.setPiece(pieceWhichMayBeCaptured);
-                    currentlySelected.setPosition(piecePositionNEW);
-                    board.setPiece(currentlySelected);
+                    revertNewMoveAndRestoreTempBeaten(piecePositionOLD);
                     System.out.println("cant move there!");
                     return false;
                 }
-            } else
-                System.out.println(pieceWhichMayBeCaptured.getPosition().getRow() + " pozycja figury" + pieceWhichMayBeCaptured.getPosition().getRow());
+            }
             board.printBoard();
             return true;
         } else {
@@ -367,17 +284,20 @@ public class ChessGame {
 
         ChessGame game = new ChessGame();
         printActualPositionAndGetPositionOfBothKings();
-
-        game.selectWhitePiece(6, 6);
-        game.newPiecePositionByCapture(new Position(1, 1));
-        game.isBlackKingMated();
+//
+//        game.selectWhitePiece(1, 1);
+//        if (game.newPiecePositionByMove(new Position(1, 0))) {
+//            System.out.println(game.isKingMated(Color.WHITE));
+//        }
 //        game.allBlackPiecesPossibleActions();
+//        board.printBoard();
+        game.selectBlackPiece(0, 4);
+        if(game.newPiecePositionByCapture(new Position(1, 5))) {
+            System.out.println(game.isKingMated(Color.BLACK));
+        }
+
         board.printBoard();
-        game.selectBlackPiece(0, 0);
-        game.newPiecePositionByCapture(new Position(1, 1));
-        game.isWhiteKingMated();
-        board.printBoard();
-//        System.out.println("------------------");
+
     }
 }
 // Todo: tutaj jest dzialajaca metoda, ktora pokazuje czy dalismy szacha!
@@ -428,7 +348,7 @@ public class ChessGame {
 //
 //                System.out.println();
 //                System.out.println("------------------------------");
-//                // We will not checking if opposite king will be under check if we will make our next move - PAWN PROMOTION
+//                // We will not check if opposite king will be under the check after we will make our next move - PAWN PROMOTION
 //                // To not get out of the board
 ////            if (currentlySelected.getClass() != Pawn.class && (currentlySelected.getPosition().getRow() != 7 || currentlySelected.getPosition().getRow() != 0)) {
 ////                select(newPosition.getRow(), newPosition.getColumn());

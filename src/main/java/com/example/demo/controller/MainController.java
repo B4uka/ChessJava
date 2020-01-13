@@ -85,17 +85,17 @@ public class MainController {
 
     @RequestMapping(value = {"/mate"}, method = RequestMethod.GET, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<String> isMated () {
-        ArrayList<Boolean> isMated = new ArrayList<>();
-        if (whitePlayer) {
-            isMated.add(chessGame.isBlackKingMated());
-        } else
-            isMated.add(chessGame.isWhiteKingMated());
-
+    ResponseEntity<Boolean> isMated () {
+        Boolean isMated = chessGame.isKingMated(Color.WHITE) || chessGame.isKingMated(Color.BLACK);
+//        if (whitePlayer) {
+//            isMated.add(chessGame.isKingMated(Color.WHITE));
+//        } else
+//            isMated.add(chessGame.isKingMated(Color.BLACK));
+//
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
-        String jsonResponse = new Gson().toJson(isMated);
-        return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
+//        Boolean jsonResponse = new Gson().toJson(isMated);
+        return ResponseEntity.ok().headers(responseHeaders).body(isMated);
     }
 }
 

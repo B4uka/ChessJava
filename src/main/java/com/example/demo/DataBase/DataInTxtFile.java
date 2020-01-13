@@ -1,4 +1,4 @@
-package com.example.demo.model.DataBase;
+package com.example.demo.DataBase;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

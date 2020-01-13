@@ -192,7 +192,7 @@ public class Board {
 //        this.boardOfPieces[1][1] = new Queen(new Position(1, 1), Color.BLACK);
 //
 //        this.boardOfPieces[6][0] = new Rook(new Position(6, 0), Color.BLACK);
-//        this.boardOfPieces[7][1] = new Rook(new Position(7, 1), Color.WHITE);
+//        this.boardOfPieces[4][1] = new Rook(new Position(4, 1), Color.WHITE);
 
         this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK);
         this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE);

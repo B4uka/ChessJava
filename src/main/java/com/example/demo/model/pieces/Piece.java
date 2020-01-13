@@ -9,6 +9,8 @@ public abstract class Piece {
 
     protected Position position;
     protected final Color color;
+    protected final String code;
+
 
     public Piece (Position position, Color color) {
         this.position = position;
@@ -26,6 +28,10 @@ public abstract class Piece {
 
     public void setPosition (Position position) {
         this.position = position;
+    }
+
+    public String getCode () {
+        return code;
     }
 
     public void setPosition (int row, int column) {
