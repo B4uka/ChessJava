@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class PossibleActions {
 
-    public ArrayList<Position> possibleMoves, possibleCaptures, possibleChecks, listOfPiecesPositionsWhichAreCheckingTheKing, possibleMovesandCaptures;
+    public ArrayList<Position> possibleMoves, possibleCaptures, possibleChecks, listOfPiecesPositionsWhichAreCheckingTheKing, possibleMovesAndCaptures, kingCastlingActions, rookCastlingActions;
     public Color color;
 
     public Position position;
@@ -16,6 +16,8 @@ public class PossibleActions {
         this.possibleCaptures = new ArrayList<>();
         this.possibleMoves = new ArrayList<>();
         this.possibleChecks = new ArrayList<>();
+        this.kingCastlingActions = new ArrayList<>();
+        this.rookCastlingActions = new ArrayList<>();
         this.listOfPiecesPositionsWhichAreCheckingTheKing = new ArrayList<>();
     }
 
@@ -38,7 +40,12 @@ public class PossibleActions {
     public void addPossibleMove (Position position) {
         this.possibleMoves.add(position);
     }
-
+    public void addPossibleCastlingKingMove (Position position){
+        this.kingCastlingActions.add(position);
+    }
+    public void addPossibleCastlingRookMove (Position position){
+        this.rookCastlingActions.add(position);
+    }
     public void addPossibleChecks (Position position) {
         this.possibleChecks.add(position);
     }
@@ -58,11 +65,16 @@ public class PossibleActions {
     public ArrayList<Position> getPossibleChecks () {
         return possibleChecks;
     }
-
+    public ArrayList<Position> getKingCastlingActions (){
+        return kingCastlingActions;
+    }
+    public ArrayList<Position> getRookCastlingActions (){
+        return rookCastlingActions;
+    }
     public ArrayList<Position> getAllPossibleMovesAndCaptures () {
         possibleMoves.addAll(possibleCaptures);
-        possibleMovesandCaptures = possibleMoves;
-        return possibleMovesandCaptures;
+        possibleMovesAndCaptures = possibleMoves;
+        return possibleMovesAndCaptures;
     }
 
     public Position getPosition () {
@@ -84,6 +96,16 @@ public class PossibleActions {
     public void printPossibleChecks () {
         for (Position position : possibleChecks) {
             System.out.print("Possible checks: " + position.getRow() + "\t" + position.getColumn() + "\t");
+        }
+    }
+    public void printPossibleCastlingKingMoves () {
+        for (Position position : kingCastlingActions) {
+            System.out.print("Possible castlings King moves: " + position.getRow() + "\t" + position.getColumn() + "\t");
+        }
+    }
+    public void printPossibleCastlingRookMoves () {
+        for (Position position : rookCastlingActions) {
+            System.out.print("Possible castlings Rook moves: " + position.getRow() + "\t" + position.getColumn() + "\t");
         }
     }
 

@@ -1,0 +1,36 @@
+body {
+  background-color: #f4f9f4;
+}
+hr {
+  border-style:none;
+  border-top-style: dotted;
+  border-color: grey;
+  border-width: 5px;
+  width: 10%;
+}
+img {
+  width: 10%;
+}
+table {
+  width: 40%;
+    }
+  h1 {
+    color: #1abb9c;
+    }
+  a {
+    background-color: powderblue;
+    transition: background-color .5s;
+    }
+  a:hover {
+    background-color: gold;
+    }
+  h3 {
+    color: #841818;
+    }
+  h3:hover {
+    color: gold;
+    }
+  .okrag {
+    border-radius: 80%;
+    border-top: 5px solid green;
+  }

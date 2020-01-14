@@ -10,9 +10,9 @@ import com.example.demo.model.pieces.Piece;
 public class ChessGame {
 
     public static Board board;
-    public Piece currentlySelected, temproraryBeaten;
+    public Piece currentlySelected, temporaryBeaten, currentlySelectedRookForCastle;
     public PossibleActions possibleActions, blackKingCheckedPositions, whiteKingCheckedPositions;
-    public Position position, piecePositionNEW, piecePositionOLD;
+    public Position position, piecePositionNEW, piecePositionOLD, rookCastlingMove, rookCastlingMoveOldPosition;
     public Color color;
 
     public ChessGame () {
@@ -64,6 +64,7 @@ public class ChessGame {
             possibleActions.addPossibleMove(test);
             possibleActions.addPossibleCapture(test);
             possibleActions.addPossibleChecks(test);
+            possibleActions.addPossibleCastlingKingMove(test);
         }
 //        System.out.println("Is white king checked? " + isWhiteKingChecked());
 //        System.out.println("Is white king mated? " + possibleActions.isMated());
@@ -80,6 +81,7 @@ public class ChessGame {
             possibleActions.addPossibleMove(test);
             possibleActions.addPossibleCapture(test);
             possibleActions.addPossibleChecks(test);
+            possibleActions.addPossibleCastlingKingMove(test);
         }
 //        System.out.println("Is black king checked? " + isBlackKingChecked());
 //        System.out.println("Is black king mated? " + possibleActions.isMated());
@@ -125,6 +127,12 @@ public class ChessGame {
         System.out.println();
         return possibleActions;
     }
+    public PossibleActions selectPiece (int row, int column) {
+        currentlySelected = board.getPiece(row, column);
+        generateActionsForCurrentlySelected();
+        System.out.println();
+        return possibleActions;
+    }
 
     private void generateActionsForCurrentlySelected () {
         try {
@@ -134,7 +142,10 @@ public class ChessGame {
             possibleActions.printPossibleMoves();
             possibleActions.printPossibleCaptures();
             possibleActions.printPossibleChecks();
+            possibleActions.printPossibleCastlingKingMoves();
+            possibleActions.printPossibleCastlingRookMoves();
         } catch (NullPointerException e) {
+            System.out.println();
             System.out.println(currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn() + "\t there is no piece on this position!");
         }
 //        printActualPositionAndGetPositionOfBothKings();
@@ -147,41 +158,51 @@ public class ChessGame {
         this.piecePositionOLD = piecePositionOLD;
 
         piecePositionNEW = piecePositionOLD;
-        board.setEmpty(this.currentlySelected.getPosition());
+        board.setEmptyByPosition(this.currentlySelected.getPosition());
         currentlySelected.setPosition(piecePositionNEW);
         board.setPiece(currentlySelected);
     }
 
     private void revertNewMoveAndRestoreTempBeaten(Position piecePositionOLD) {
         revertNewMove(piecePositionOLD);
-        board.setPiece(temproraryBeaten);
+        board.setPiece(temporaryBeaten);
     }
-
 
     private Boolean newCaptureIfIsPossible (Position piecePositionNEW) {
         this.piecePositionNEW = piecePositionNEW;
-        temproraryBeaten = board.getPiece(piecePositionNEW.getRow(),piecePositionNEW.getColumn());
+        temporaryBeaten = board.getPiece(piecePositionNEW.getRow(),piecePositionNEW.getColumn());
         if (this.possibleActions.getPossibleCaptures().contains(piecePositionNEW)) {
             piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
-            board.setEmpty(this.currentlySelected.getPosition());
+            board.setEmptyByPosition(this.currentlySelected.getPosition());
             this.currentlySelected.setPosition(piecePositionNEW);
             board.setPiece(this.currentlySelected);
             return true;
         } else
             return false;
     }
+
     private Boolean newMoveIfIsPossible (Position piecePositionNEW) {
         this.piecePositionNEW = piecePositionNEW;
-
         if (this.possibleActions.getPossibleMoves().contains(piecePositionNEW)) {
+            //Piece move
             piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
-            board.setEmpty(this.currentlySelected.getPosition());
+            board.setEmptyByPosition(this.currentlySelected.getPosition());
             this.currentlySelected.setPosition(piecePositionNEW);
             board.setPiece(this.currentlySelected);
             return true;
-        } else
+        }else if (this.possibleActions.getKingCastlingActions().contains(piecePositionNEW)
+                && ((currentlySelected.getPosition().getRow()== 0 && currentlySelected.getPosition().getColumn() == 4 && currentlySelected.getClass() == King.class && currentlySelected.getColor() == Color.BLACK))
+                || ((currentlySelected.getPosition().getRow()== 7 && currentlySelected.getPosition().getColumn() == 4 && currentlySelected.getClass() == King.class && currentlySelected.getColor() == Color.WHITE))){
+            //castling -> King Move
+            piecePositionOLD = new Position(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn());
+            board.setEmptyByPosition(this.currentlySelected.getPosition());
+            this.currentlySelected.setPosition(piecePositionNEW);
+            board.setPiece(this.currentlySelected);
+            return true;
+        }else
             return false;
     }
+
     public boolean isCheckAfterTheMove (Position piecePositionNEW) {
         if (newMoveIfIsPossible(piecePositionNEW)) {
             if ((isWhiteKingChecked() && currentlySelected.getColor() == Color.WHITE)
@@ -194,6 +215,39 @@ public class ChessGame {
         }
         return false;
     }
+
+    public void rookMoveWhenCastling(){
+        //castle Rook Move
+        if (this.possibleActions.getKingCastlingActions().contains(piecePositionNEW)){
+            if(piecePositionNEW.getRow() == 0 && piecePositionNEW.getColumn() == 2){
+                currentlySelectedRookForCastle = board.getPiece(0,0);
+                rookCastlingMove = currentlySelectedRookForCastle.getPosition();
+                board.setEmptyByPosition(rookCastlingMove);
+                this.currentlySelectedRookForCastle.setPosition(0,3);
+                board.setPiece(currentlySelectedRookForCastle);
+            }if(piecePositionNEW.getRow() == 0 && piecePositionNEW.getColumn() == 6){
+                currentlySelectedRookForCastle = board.getPiece(0,7);
+                rookCastlingMove = currentlySelectedRookForCastle.getPosition();
+                board.setEmptyByPosition(rookCastlingMove);
+                this.currentlySelectedRookForCastle.setPosition(0,5);
+                board.setPiece(currentlySelectedRookForCastle);
+            }if(piecePositionNEW.getRow() == 7 && piecePositionNEW.getColumn() == 2){
+                currentlySelectedRookForCastle = board.getPiece(7,0);
+                rookCastlingMove = currentlySelectedRookForCastle.getPosition();
+                board.setEmptyByPosition(rookCastlingMove);
+                this.currentlySelectedRookForCastle.setPosition(7,3);
+                board.setPiece(currentlySelectedRookForCastle);
+            }if(piecePositionNEW.getRow() == 7 && piecePositionNEW.getColumn() == 6){
+                currentlySelectedRookForCastle = board.getPiece(7,7);
+                rookCastlingMove = currentlySelectedRookForCastle.getPosition();
+                board.setEmptyByPosition(rookCastlingMove);
+                this.currentlySelectedRookForCastle.setPosition(7,5);
+                board.setPiece(currentlySelectedRookForCastle);
+            }else {
+                revertNewMove(piecePositionNEW);
+            }
+        }
+    }
     public boolean newPiecePositionByMove (Position piecePositionNEW) {
         System.out.println("NEXT MOVE: ");
         if (newMoveIfIsPossible(piecePositionNEW)) {
@@ -202,7 +256,7 @@ public class ChessGame {
                 revertNewMove(piecePositionOLD);
                 System.out.println("canT move there!");
                 return false;
-            }
+            }rookMoveWhenCastling();  //rook move when castling
             board.printBoard();
             return true;
         }
@@ -212,7 +266,6 @@ public class ChessGame {
 
     public Boolean isCheckAfterTheCapture (Position piecePositionNEW) {
 //        System.out.println("NEXT MOVE: ");
-
         if (newCaptureIfIsPossible(piecePositionNEW)) {
             if (isBlackKingChecked() && isWhiteKingChecked()) {
                 revertNewMove(piecePositionOLD);
@@ -285,24 +338,33 @@ public class ChessGame {
         ChessGame game = new ChessGame();
         printActualPositionAndGetPositionOfBothKings();
 //
-        game.selectWhitePiece(7, 1);
-        if (game.newPiecePositionByMove(new Position(5, 2))) {
-            System.out.println(game.isKingMated(Color.WHITE));
-        }
         game.allBlackPiecesPossibleActions();
         board.printBoard();
-        game.selectBlackPiece(0, 1);
-        if(game.newPiecePositionByMove(new Position(2, 2))) {
+        game.selectBlackPiece(0, 4);
+        if(game.newPiecePositionByMove(new Position(0, 2))) {
             System.out.println(game.isKingMated(Color.BLACK));
         }
+//        game.selectWhitePiece(7, 0);
+//        if (game.newPiecePositionByMove(new Position(7, 1))) {
+//             System.out.println(game.isKingMated(Color.WHITE));
+//        }
 
+        game.allWhitePiecesPossibleActions();
+        game.selectWhitePiece(7, 4);
+        if (game.newPiecePositionByMove(new Position(7, 6))) {
+            System.out.println(game.isKingMated(Color.WHITE));
+        }
+        game.selectBlackPiece(0, 2);
+        if(game.newPiecePositionByMove(new Position(0, 1))) {
+            System.out.println(game.isKingMated(Color.BLACK));
+        }
         board.printBoard();
-        board.printBoardWithCodes();
-        System.out.println();
+//        board.printBoardWithCodes();
+//        System.out.println();
         board.getBoardWithPiecesActualCodes();
-        board.printBoardWithCodes();
+//        board.printBoardWithCodes();
         System.out.println();
-        board.getBoardFieldAndCodes();
+//        board.getBoardFieldAndCodes();
 
 //        ArrayList<String> naa = new ArrayList<>();
 //        for (Position position : ChessGame.board.getAllBlackPiecesPosition()){
@@ -317,7 +379,7 @@ public class ChessGame {
 //        public void newPiecePositionByMove (Position newPosition) {
 //            System.out.println("NEXT MOVE: ");
 //            if (this.possibleActions.getPossibleMoves().contains(newPosition)) {
-//                board.setEmpty(this.currentlySelected.getPosition());
+//                board.setEmptyByPosition(this.currentlySelected.getPosition());
 //                this.currentlySelected.setPosition(newPosition);
 //                board.setPiece(this.currentlySelected);
 //
@@ -353,7 +415,7 @@ public class ChessGame {
 //        public void newPiecePositionByCapture (Position newPosition) {
 //            System.out.println("NEXT MOVE: ");
 //            if (possibleActions.getPossibleCaptures().contains(newPosition)) {
-//                board.setEmpty(currentlySelected.getPosition());
+//                board.setEmptyByPosition(currentlySelected.getPosition());
 //                currentlySelected.setPosition(newPosition);
 //                board.setPiece(currentlySelected);
 //

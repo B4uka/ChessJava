@@ -47,9 +47,11 @@ public class MainController {
         }
         ArrayList<Position> possibleMovesToMake = chessGame.possibleActions.getPossibleMoves();
         ArrayList<Position> possibleCapturesToMake = chessGame.possibleActions.getPossibleCaptures();
+        ArrayList<Position> possibleCastling = chessGame.possibleActions.getKingCastlingActions();
 
         allPossibleActions.addAll(possibleCapturesToMake);
         allPossibleActions.addAll(possibleMovesToMake);
+        allPossibleActions.addAll(possibleCastling);
 
         for (Position position : allPossibleActions) {
             fieldsToMark.add(Field.getFieldByPosition(position.getRow(), position.getColumn()));

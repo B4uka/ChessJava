@@ -1,5 +1,6 @@
 package com.example.demo.model.pieces;
 
+import com.example.demo.model.ChessGame;
 import com.example.demo.model.board.Board;
 import com.example.demo.model.board.PossibleActions;
 import com.example.demo.model.piece_properties.Color;
@@ -16,7 +17,9 @@ public class King extends Piece {
     public PossibleActions generatePossibleActions (Board board) {
 
         PossibleActions possibleActions = new PossibleActions();
+
         Position[] kingMove = new Position[8];
+        Position[] castlingKingMove = new Position[4];
 
         kingMove[0] = this.position.getNewPositionByVector(0, 1);
         kingMove[1] = this.position.getNewPositionByVector(0, -1);
@@ -26,7 +29,29 @@ public class King extends Piece {
         kingMove[5] = this.position.getNewPositionByVector(1, -1);
         kingMove[6] = this.position.getNewPositionByVector(-1, 1);
         kingMove[7] = this.position.getNewPositionByVector(-1, -1);
-//&& ChessGame.isWhiteKingChecked()
+
+        castlingKingMove[0] = this.position.getNewPosition(7, 6);
+        castlingKingMove[1] = this.position.getNewPosition(0, 6);
+        castlingKingMove[2] = this.position.getNewPosition(7, 2);
+        castlingKingMove[3] = this.position.getNewPosition(0, 2);
+
+            if (this.color == Color.WHITE && !ChessGame.isWhiteKingChecked() && !board.isBoardOccupiedByPiece(7, 5)
+                    && !board.isBoardOccupiedByPiece(7, 6) && board.getWhitePiece(7,7).getClass() == Rook.class) {
+                possibleActions.addPossibleCastlingKingMove(castlingKingMove[0]);//King move
+            }
+            if (this.color == Color.BLACK && !ChessGame.isBlackKingChecked()  && !board.isBoardOccupiedByPiece(0, 5)
+                    && !board.isBoardOccupiedByPiece(0, 6) && board.getBlackPiece(0,7).getClass() == Rook.class) {
+                possibleActions.addPossibleCastlingKingMove(castlingKingMove[1]);//King move
+            }
+            if (this.color == Color.WHITE && !ChessGame.isWhiteKingChecked() && !board.isBoardOccupiedByPiece(7, 3)
+                    && !board.isBoardOccupiedByPiece(7, 2)  && !board.isBoardOccupiedByPiece(7, 1) && board.getWhitePiece(7,0).getClass() == Rook.class) {
+                possibleActions.addPossibleCastlingKingMove(castlingKingMove[2]);//King move
+            }
+            if (this.color == Color.BLACK && !ChessGame.isBlackKingChecked() && !board.isBoardOccupiedByPiece(0, 3)
+                    &&!board.isBoardOccupiedByPiece(0, 2) && !board.isBoardOccupiedByPiece(0, 1) && board.getBlackPiece(0,0).getClass() == Rook.class) {
+                possibleActions.addPossibleCastlingKingMove(castlingKingMove[3]);//King move
+            }
+
         for (Position test : kingMove) {
             if (test.isOnBoard()) {
                 if (this.color == Color.WHITE && !board.isOccupied(test)){//&& ChessGame.isWhiteKingChecked() ) {

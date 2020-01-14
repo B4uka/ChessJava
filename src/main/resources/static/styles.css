@@ -109,9 +109,8 @@ box-shadow: 0 0 0 0 !important;
 color: white;
 }
 .textAndBackground{
-background-color: #faf5e4;
-color: #ff7f12;
-opacity: 0.7;
+color: #fffcc1;
+font-weight: bold;
 }
 
 .remember input
@@ -198,7 +197,7 @@ table, td {
   width: 15px;
   width: 15px;
 }
-.numer {
+.number {
   height: 15px;
   width: 15px;
 }

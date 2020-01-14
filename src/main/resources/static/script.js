@@ -27,7 +27,7 @@ function select(field_id) {
   currentCell = field_id;
   currentPiece = document.getElementById(currentCell).innerHTML;
 
-  $.post("http://localhost:8081/chessWebApp/selection", // url
+  $.post("http://195.181.247.79:8087/chessWebApp/selection", // url
       {
         player: 1,
         fieldId: field_id
@@ -47,7 +47,7 @@ function select(field_id) {
 function move(field_id) {
   $("td").css("background", "");
 
-  $.post("http://localhost:8081/chessWebApp/move", // url
+  $.post("http://195.181.247.79:8087/chessWebApp/move", // url
       {
         player: 1,
         fieldId: field_id
@@ -67,7 +67,7 @@ function move(field_id) {
 }
 // TODO!
 function updateDisplay() {
-  $.get("http://localhost:8081/chessWebApp/actualBoard",
+  $.get("http://195.181.247.79:8087/chessWebApp/actualBoard",
        function(fieldsArray, status, xhr){
           var response =  {"test": "test1"};
           $.each(fieldsArray, function(fieldId, codeOfPiece) {

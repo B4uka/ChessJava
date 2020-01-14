@@ -14,6 +14,9 @@ public class Position {
         this.row = row;
         this.column = column;
     }
+    public Position getRowAndColumn (int row, int column) {
+       return new Position(row, column);
+    }
 
     public int getRow () {
         return this.row;
@@ -25,6 +28,9 @@ public class Position {
 
     public Position getNewPositionByVector (int plusRow, int plusColumn) {
         return new Position(this.row + plusRow, this.column + plusColumn);
+    }
+    public Position getNewPosition (int plusRow, int plusColumn) {
+        return new Position(plusRow, plusColumn);
     }
 
     public Position getNewPositionByPossibleMove (int plusRow, int plusColumn) {
