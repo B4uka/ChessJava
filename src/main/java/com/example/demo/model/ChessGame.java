@@ -29,7 +29,7 @@ public class ChessGame {
                 System.out.println("Positions of pieces that are checking white king: ");
                 whiteKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
             } else {
-                    System.out.println("King is not checked after this move!");
+                System.out.println("King is not checked after this move!");
             }
         } catch (NullPointerException e) {
             System.out.println("Probably no check for the WhiteKing");
@@ -47,7 +47,7 @@ public class ChessGame {
                 System.out.println("Positions of pieces that are checking black king: ");
                 blackKingCheckedPositions.printPositionsofPiecesThatAreCheckingKing();
             } else {
-                   System.out.println("King is not checked after this move!");
+                System.out.println("King is not checked after this move!");
             }
         } catch (NullPointerException e) {
             System.out.println("Probably no check for the BlackKing");
@@ -199,7 +199,7 @@ public class ChessGame {
         if (newMoveIfIsPossible(piecePositionNEW)) {
             if ((isWhiteKingChecked() && currentlySelected.getColor() == Color.WHITE)
                     || (isBlackKingChecked() && currentlySelected.getColor() == Color.BLACK)) {
-                    revertNewMove(piecePositionOLD);
+                revertNewMove(piecePositionOLD);
                 System.out.println("canT move there!");
                 return false;
             }
@@ -285,24 +285,24 @@ public class ChessGame {
         ChessGame game = new ChessGame();
         printActualPositionAndGetPositionOfBothKings();
 //
-//        game.selectWhitePiece(1, 1);
-//        if (game.newPiecePositionByMove(new Position(1, 0))) {
-//            System.out.println(game.isKingMated(Color.WHITE));
-//        }
-//        game.allBlackPiecesPossibleActions();
-//        board.printBoard();
+        game.selectWhitePiece(7, 1);
+        if (game.newPiecePositionByMove(new Position(5, 2))) {
+            System.out.println(game.isKingMated(Color.WHITE));
+        }
+        game.allBlackPiecesPossibleActions();
+        board.printBoard();
         game.selectBlackPiece(0, 1);
         if(game.newPiecePositionByMove(new Position(2, 2))) {
             System.out.println(game.isKingMated(Color.BLACK));
         }
 
-//        board.printBoard();
-//        board.printBoardWithCodes();
-//        System.out.println();
-//        board.getBoardWithPiecesActualCodes();
-//        board.printBoardWithCodes();
-//        System.out.println();
-//        board.getBoardFieldAndCodes();
+        board.printBoard();
+        board.printBoardWithCodes();
+        System.out.println();
+        board.getBoardWithPiecesActualCodes();
+        board.printBoardWithCodes();
+        System.out.println();
+        board.getBoardFieldAndCodes();
 
 //        ArrayList<String> naa = new ArrayList<>();
 //        for (Position position : ChessGame.board.getAllBlackPiecesPosition()){
@@ -380,4 +380,3 @@ public class ChessGame {
 //            piecesPositionsCheckingBlackKing(board);
 //        }
 //    }
-

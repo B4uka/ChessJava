@@ -180,29 +180,6 @@ public class Board {
         return piecesPositionsWithCode;
     }
 
-    //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    public HashMap<String, String> getBoardFieldAndCodes () {
-        boardFieldAndCodes = new HashMap<>();
-        String codeOfThePiece;
-        for (int i = 0; i < boardOfPieces.length; i++) {
-            for (int j = 0; j < boardOfPieces.length; j++) {
-                try {
-                    if (this.boardOfPieces[i][j].getCode() == null) {
-                        codeOfThePiece = "";
-                        boardFieldAndCodes.put(Field.getFieldByPosition(i, j), codeOfThePiece);
-                    } else if (this.boardOfPieces[i][j].getCode() != null) {
-                        boardFieldAndCodes.put(Field.getFieldByPosition(i, j), boardOfPieces[i][j].getCode());
-                    }
-                } catch (NullPointerException f) {
-                }
-            }
-        }
-//        String jsonResponse = new Gson().toJson(boardFieldAndCodes);
-//        System.out.printf( "JSON: %s", jsonResponse );
-
-        return boardFieldAndCodes;
-    }
-
     // There is more specific method: isOccupiedByKing that also includes color of the King
     public boolean isOccupiedByKingOfAnyColor (Position position) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
@@ -253,10 +230,10 @@ public class Board {
 //        this.boardOfPieces[4][1] = new Rook(new Position(4, 1), Color.WHITE);
 
         this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK, "&#9818;");
-        this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE, "&#9818;");
+        this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE, "&#9812;");
 
         this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK, "&#9819;");
-        this.boardOfPieces[7][3] = new Queen(new Position(7, 3), Color.WHITE, "&#9812;");
+        this.boardOfPieces[7][3] = new Queen(new Position(7, 3), Color.WHITE, "&#9813;");
 
         this.boardOfPieces[0][0] = new Rook(new Position(0, 0), Color.BLACK, "&#9820;");
         this.boardOfPieces[0][7] = new Rook(new Position(0, 7), Color.BLACK, "&#9820;");
@@ -290,6 +267,12 @@ public class Board {
         this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE, "&#9817;");
         this.boardOfPieces[6][6] = new Pawn(new Position(6, 6), Color.WHITE, "&#9817;");
         this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE, "&#9817;");
+
+//        for (int i = 2; i < 6; i++) {
+//            for (int j = 0; j < 8; j++){
+//                boardOfPieces[i][j].setCode("");
+//            }
+//        }
     }
 
     public void printBoard () {
@@ -346,5 +329,28 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public HashMap<String, String> getBoardFieldAndCodes () {
+        boardFieldAndCodes = new HashMap<>();
+
+        for (int i = 0; i < boardOfPieces.length; i++) {
+            for (int j = 0; j < boardOfPieces.length; j++) {
+                try {
+                    if (this.boardOfPieces[i][j].getCode() != null) {
+                        boardFieldAndCodes.put(Field.getFieldByPosition(i, j), boardOfPieces[i][j].getCode());
+                    } else {
+                        boardFieldAndCodes.put(Field.getFieldByPosition(i, j), "");
+                    }
+                } catch (NullPointerException f) {
+                    boardFieldAndCodes.put(Field.getFieldByPosition(i, j), "");
+                }
+            }
+        }
+//        String jsonResponse = new Gson().toJson(boardFieldAndCodes);
+//        System.out.printf( "JSON: %s", jsonResponse );
+        System.out.println(boardFieldAndCodes);
+        return boardFieldAndCodes;
     }
 }

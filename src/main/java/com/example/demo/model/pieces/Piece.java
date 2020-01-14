@@ -24,6 +24,13 @@ public abstract class Piece {
         return this.color;
     }
 
+    public String getCode () {
+        return code;
+    }
+    public void setCode(String code){
+        this.code = code;
+    }
+
     public abstract PossibleActions generatePossibleActions (Board board);
 
     public void setPosition (Position position) {

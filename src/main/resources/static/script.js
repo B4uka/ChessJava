@@ -3,8 +3,11 @@ var possibleActions;
 var currentPiece;
 var currentCellToMove;
 var currentCell;
-
-//SELECTION
+var cells;
+//TODO:
+window.onload(function() {
+  updateDisplay();
+});
 
 $("td").click(function() {
   if (state == true && this.innerHTML != "") {
@@ -24,8 +27,7 @@ function select(field_id) {
   currentCell = field_id;
   currentPiece = document.getElementById(currentCell).innerHTML;
 
-
-  $.post("http://195.181.247.79:8087/chessWebApp/selection", // url
+  $.post("http://localhost:8081/chessWebApp/selection", // url
       {
         player: 1,
         fieldId: field_id
@@ -42,29 +44,37 @@ function select(field_id) {
     });
 }
 
-//MOVING PIECES
-
 function move(field_id) {
   $("td").css("background", "");
 
-  $.post("http://195.181.247.79:8087/chessWebApp/move", // url
+  $.post("http://localhost:8081/chessWebApp/move", // url
       {
         player: 1,
         fieldId: field_id
       }, // data to be submit
       function(fieldsArray, status, xhr) { // success callback function
-        alert("status2: " + status);
-        if (fieldsArray.includes(field_id)){
-          $.each(fieldsArray, function(index, field_id) {
-              $("#" + field_id).html(currentPiece);
-              $("#" + currentCell).html("");
-            });
-          }
+            alert("status2: " + status);
+            var response =  {"test": "test1"};
+            $.each(fieldsArray, function(fieldId, codeOfPiece) {
+            $("#" + fieldId).html(codeOfPiece);
+//            alert(fieldId + ' -> ' + codeOfPiece);
+        });
       }, 'json')
     .fail(function(data, status) {
       alert("error2: " + status);
       state = true;
     });
+}
+// TODO!
+function updateDisplay() {
+  $.get("http://localhost:8081/chessWebApp/actualBoard",
+       function(fieldsArray, status, xhr){
+          var response =  {"test": "test1"};
+          $.each(fieldsArray, function(fieldId, codeOfPiece) {
+          alert(fieldId + ' -> ' + codeOfPiece);
+//        $("#" + fieldId).html(codeOfPiece);
+         });
+    }, 'json')
 }
 
 // var state = false; //false if no piece has been selected
@@ -78,7 +88,21 @@ function move(field_id) {
 //   };
 // }
 //
-//
+// TODO: REFRESHING PAGE WITH AJAX
+////$(document).ready(function(){
+  //    window.setTimeout(function () {
+  //          $.ajax({
+  //            url:"http://localhost:8081/chessWebApp/actualBoard",
+  //            type:'get',
+  //            success: function(fieldsArray, status, xhr){
+  //                var response =  {"test": "test1"};
+  //                $.each(fieldsArray, function(fieldId, codeOfPiece) {
+  //                $("#" + fieldId).html(codeOfPiece);
+  //             }
+  //            });
+  //        },100);
+  //});
+
 // function getCell(that) {
 //   if (!state2) { //this means if the state is false (i.e. no piece selected
 //     state2 = true; //piece has been selected
@@ -95,3 +119,4 @@ function move(field_id) {
 // $("td").click(function() {
 //   select($(this).attr('id'));
 // });
+
