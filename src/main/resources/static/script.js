@@ -5,9 +5,9 @@ var currentCellToMove;
 var currentCell;
 var cells;
 //TODO:
-window.onload(function() {
-  updateDisplay();
-});
+//window.onload(function() {
+//  updateDisplay();
+//});
 
 $("td").click(function() {
   if (state == true && this.innerHTML != "") {

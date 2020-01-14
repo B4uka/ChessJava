@@ -5,7 +5,7 @@
   height: 100%;
   background-image: url("images/chess1.jpg");
   background-repeat: no-repeat;
-  position: absolute;
+  position: fixed;
   background-size:  cover;
   width: 100%;
   /* opacity: 0.4; */
@@ -73,6 +73,9 @@ font-size: 60px;
 margin-left: 10px;
 color: #ff7f12;
 }
+.ratings{
+margin-top: 90px;
+}
 
 .social_icon span:hover{
 color: white;
@@ -105,6 +108,11 @@ box-shadow: 0 0 0 0 !important;
 .remember{
 color: white;
 }
+.textAndBackground{
+background-color: #faf5e4;
+color: #ff7f12;
+opacity: 0.7;
+}
 
 .remember input
 {
@@ -119,7 +127,9 @@ color: blue;
 background-color: #ff7f12;
 width: 100px;
 }
-
+.char{
+background-color: #c9753d;
+}
 .login_btn:hover{
 color: black;
 background-color: white;
@@ -163,16 +173,16 @@ margin-left: 4px;
 
 .cellLight {
   text-align: center;
-  background-color: white;
-  width: 40px;
-  height: 66px;
+  background-color: #faf5e4;
+  width: 45px;
+  height: 70px;
   font-size: 40px;
 }
 .cellDark{
   text-align: center;
-  background-color: #ADD8E6;
-  width: 40px;
-  height: 66px;
+  background-color: #cfb495;
+  width: 45px;
+  height: 70px;
   font-size: 40px;
 }
 table, td {

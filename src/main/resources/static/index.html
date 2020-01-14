@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
-
+  <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="">Contact</a>
+              <a class="nav-link" href="contact_me.html">Contact</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="">Pricing</a>
@@ -95,29 +95,29 @@
     </section> -->
   <section>
     <!-- CHESSBOARD -->
-    <div class="row">
-      <div class="col-3">
+    <div class="row text-center">
+      <div class="col-3 d-none d-lg-block ratings">
         <a href="https://2700chess.com/women" target="_blank"><img border="0" src="https://2700chess.com/files/topten_women.png" alt="2700chess.com for more details and full list" title="2700chess.com for more details and full list" /></a>
-        <a href="https://2700chess.com" target="_blank"><img border="0" src="https://2700chess.com/files/topten.png" alt="2700chess.com for more details and full list" title="2700chess.com for more details and full list" /></a>
+        <a href="https://2700chess.com" target="_blank"><img border="0" src="https://2700chess.com/files/topten.png" alt="2700chess.com for more details and full list" title="2700chess.com for more details and full list"style=" margin-top: 10px;" /></a>
       </div>
 
-      <div class="col-6">
+      <div class="col-lg-6 col-md-9">
         <!-- <div id="chessBoard"></div> -->
         <table class="table" id="table">
           <tbody>
-            <tr>
+            <tr class="table char">
               <td></td>
-              <td class="chara">a</td>
-              <td class="chara">b</td>
-              <td class="chara">c</td>
-              <td class="chara">d</td>
-              <td class="chara">e</td>
-              <td class="chara">f</td>
-              <td class="chara">g</td>
-              <td class="chara">h</td>
+              <td class="char">a</td>
+              <td class="char">b</td>
+              <td class="char">c</td>
+              <td class="char">d</td>
+              <td class="char">e</td>
+              <td class="char">f</td>
+              <td class="char">g</td>
+              <td class="char">h</td>
             </tr>
             <tr>
-              <td>8</td>
+              <td class="char">8</td>
               <td class="cellLight" id="A8">&#9820;</td>
               <td class="cellDark" id="B8">&#9822;</td>
               <td class="cellLight" id="C8">&#9821;</td>
@@ -126,10 +126,10 @@
               <td class="cellDark" id="F8">&#9821;</td>
               <td class="cellLight" id="G8">&#9822;</td>
               <td class="cellDark" id="H8">&#9820;</td>
-              <td class="numer">8</td>
+              <td class="char numer">8</td>
             </tr>
             <tr>
-              <td class="numer">7</td>
+              <td class="char">7</td>
               <td class="f cellDark" id="A7">&#9823;</td>
               <td class="f cellLight" id="B7">&#9823;</td>
               <td class="f cellDark" id="C7">&#9823;</td>
@@ -138,10 +138,10 @@
               <td class="f cellLight" id="F7">&#9823;</td>
               <td class="f cellDark" id="G7">&#9823;</td>
               <td class="f cellLight" id="H7">&#9823;</td>
-              <td class="numer">7</td>
+              <td class="char numer">7</td>
             </tr>
             <tr>
-              <td class="numer">6</td>
+              <td class="char numer">6</td>
               <td class="cellLight" id="A6"></td>
               <td class="cellDark" id="B6"></td>
               <td class="cellLight" id="C6"></td>
@@ -150,10 +150,10 @@
               <td class="cellDark" id="F6"></td>
               <td class="cellLight" id="G6"></td>
               <td class="cellDark" id="H6"></td>
-              <td class="numer">6</td>
+              <td class="char numer">6</td>
             </tr>
             <tr>
-              <td class="numer">5</td>
+              <td class="char numer">5</td>
               <td class="cellDark" id="A5"></td>
               <td class="cellLight" id="B5"></td>
               <td class="cellDark" id="C5"></td>
@@ -162,10 +162,10 @@
               <td class="cellLight" id="F5"></td>
               <td class="cellDark" id="G5"></td>
               <td class="cellLight" id="H5"></td>
-              <td class="numer">5</td>
+              <td class="char numer">5</td>
             </tr>
             <tr>
-              <td class="numer">4</td>
+              <td class="char numer">4</td>
               <td class="cellLight" id="A4"></td>
               <td class="cellDark" id="B4"></td>
               <td class="cellLight" id="C4"></td>
@@ -174,10 +174,10 @@
               <td class="cellDark" id="F4"></td>
               <td class="cellLight" id="G4"></td>
               <td class="cellDark" id="H4"></td>
-              <td class="numer">4</td>
+              <td class="char numer">4</td>
             </tr>
             <tr>
-              <td class="numer">3</td>
+              <td class="char numer">3</td>
               <td class="cellDark" id="A3"></td>
               <td class="cellLight" id="B3"></td>
               <td class="cellDark" id="C3"></td>C
@@ -186,10 +186,10 @@
               <td class="cellLight" id="F3"></td>
               <td class="cellDark" id="G3"></td>
               <td class="cellLight" id="H3"></td>
-              <td class="numer">3</td>
+              <td class="char numer">3</td>
             </tr>
             <tr>
-              <td class="numer">2</td>
+              <td class="char numer">2</td>
               <td class="cellLight" id="A2">&#9817;</td>
               <td class="cellDark" id="B2">&#9817;</td>
               <td class="cellLight" id="C2">&#9817;</td>
@@ -198,10 +198,10 @@
               <td class="cellDark" id="F2">&#9817;</td>
               <td class="cellLight" id="G2">&#9817;</td>
               <td class="cellDark" id="H2">&#9817;</td>
-              <td class="numer">2</td>
+              <td class="char numer">2</td>
             </tr>
-            <tr> id="A6"
-              <td class="numer">1</td>
+            <tr>
+              <td class="char numer">1</td>
               <td class="cellDark" id="A1">&#9814;</td>
               <td class="cellLight" id="B1">&#9816;</td>
               <td class="cellDark" id="C1">&#9815;</td>
@@ -210,9 +210,9 @@
               <td class="cellLight" id="F1">&#9815;</td>
               <td class="cellDark" id="G1">&#9816;</td>
               <td class="cellLight" id="H1">&#9814;</td>
-              <td class="numer">1</td>
+              <td class="char numer">1</td>
             </tr>
-            <tr>
+            <tr class="char numer">
               <td></td>
               <td class="char">a</td>
               <td class="char">b</td>
@@ -225,30 +225,32 @@
             </tr>
           </tbody>
         </table>
-</body>
-</div>
-</div>
-</div>
+      </div>
+    </div>
+    </div>
 
 </section>
 
 <!-- Features -->
-<section id="features" class="fixed-bottom">
+<section id="features" class="bottom">
+  <div  class="text-center">
+    <button onclick="myFunction()">Refresh pieces position</button>
+  </div>
   <div class="row">
     <div class="feature-box col-lg-4">
       <i class="fas fa-user fa-2x icon"></i>
-      <h3>Easy to use.</h3>
-      <p>Just log in and play with your friends in best strategy game was ever created!</p>
+      <h3 class="textAndBackground">Easy to use.</h3>
+      <p class="textAndBackground">Just log in and play with your friends in best strategy game was ever created!</p>
     </div>
     <div class="feature-box col-lg-4">
       <i class="fas fa-chess-board fa-2x icon"></i>
-      <h3>Choose your pace.</h3>
-      <p>Are you fast enough to play bullet game?</p>
+      <h3 class="textAndBackground">Choose your pace.</h3>
+      <p class="textAndBackground">Are you fast enough to play bullet game?</p>
     </div>
     <div class="feature-box col-lg-4">
       <i class="fas fa-chess fa-2x icon"></i>
-      <h3>Want to be better player?</h3>
-      <p>Download history of your games if you want to analize them.</p>
+      <h3 class="textAndBackground">Want to be better player?</h3>
+      <p class="textAndBackground">Download history of your games if you want to analize them.</p>
     </div>
   </div>
 </section>
