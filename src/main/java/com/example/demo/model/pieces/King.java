@@ -44,11 +44,11 @@ public class King extends Piece {
             Position[] castlingKingMove = new Position[2];
             castlingKingMove[0] = this.position.getNewPosition(0, 6);
             castlingKingMove[1] = this.position.getNewPosition(0, 2);
-            if (!ChessGame.isBlackKingChecked() && !board.isBoardOccupiedByPiece(0, 5)
+            if (!ChessGame.isBlackKingChecked() && !board.isBoardOccupiedByPiece(0, 5) && board.getPiece(0, 7).getCountMoves() == 0
                     && !board.isBoardOccupiedByPiece(0, 6) && board.getBlackPiece(0, 7).getClass() == Rook.class) {
                 possibleActions.addPossibleCastlingKingMove(castlingKingMove[0]);//King move
             }
-            if (!ChessGame.isBlackKingChecked() && !board.isBoardOccupiedByPiece(0, 3)
+            if (!ChessGame.isBlackKingChecked() && !board.isBoardOccupiedByPiece(0, 3) && board.getPiece(0, 0).getCountMoves() == 0
                     && !board.isBoardOccupiedByPiece(0, 2) && !board.isBoardOccupiedByPiece(0, 1) && board.getBlackPiece(0, 0).getClass() == Rook.class) {
                 possibleActions.addPossibleCastlingKingMove(castlingKingMove[1]);//King move
             }
@@ -56,11 +56,11 @@ public class King extends Piece {
             Position[] castlingKingMove = new Position[2];
             castlingKingMove[0] = this.position.getNewPosition(7, 6);
             castlingKingMove[1] = this.position.getNewPosition(7, 2);
-            if (!ChessGame.isWhiteKingChecked() && !board.isBoardOccupiedByPiece(7, 5)
+            if (!ChessGame.isWhiteKingChecked() && !board.isBoardOccupiedByPiece(7, 5) && board.getPiece(7, 7).getCountMoves() == 0
                     && !board.isBoardOccupiedByPiece(7, 6) && board.getWhitePiece(7, 7).getClass() == Rook.class) {
                 possibleActions.addPossibleCastlingKingMove(castlingKingMove[0]);//King move
             }
-            if (!ChessGame.isWhiteKingChecked() && !board.isBoardOccupiedByPiece(7, 3)
+            if (!ChessGame.isWhiteKingChecked() && !board.isBoardOccupiedByPiece(7, 3) && board.getPiece(7, 0).getCountMoves() == 0
                     && !board.isBoardOccupiedByPiece(7, 2) && !board.isBoardOccupiedByPiece(7, 1) && board.getWhitePiece(7, 0).getClass() == Rook.class) {
                 possibleActions.addPossibleCastlingKingMove(castlingKingMove[1]);//King move
             }

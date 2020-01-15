@@ -5,10 +5,12 @@ var currentCellToMove;
 var currentCell;
 var cells;
 
-$("td").click(function() {
+$(".ChessCell").click(function() {
   if (state == true && this.innerHTML != "") {
-    state = false;
-    select($(this).attr('id'));
+    while (state == true && this.innerHTML != "") {
+        state = false;
+        select($(this).attr('id'));
+    }
   }
   else if (state == true && this.innerHTML == ""){
   }
@@ -19,7 +21,10 @@ $("td").click(function() {
 });
 
 function select(field_id) {
-  $("td").css("background", "");
+  $("td").css({'background' : '',
+                'border' : 'solid 1px black'
+  });
+
   currentCell = field_id;
   currentPiece = document.getElementById(currentCell).innerHTML;
 
@@ -29,19 +34,26 @@ function select(field_id) {
         fieldId: field_id
       }, // data to be submit
       function(fieldsArray, status, xhr) { // success callback function
-        alert("status: " + status);
         $.each(fieldsArray, function(index, fieldId) {
-            $("#" + fieldId).css("background", "lightGray");
+            $("#" + fieldId).css({
+                                'background' : '#9dab86',
+                                'border' : 'double 7px #fddb3a'
+             });
         });
       }, 'json')
     .fail(function(data, status) {
-      alert("error1 " + status);
-      state = true;
+        state = true;
+        $("td").css({'background' : '',
+                      'border' : 'solid 1px black'
+        });
+        alert("It's not your move!");
     });
 }
 
 function move(field_id) {
-  $("td").css("background", "");
+    $("td").css({'background' : '',
+                  'border' : 'solid 1px black'
+    });
 
   $.post("http://195.181.247.79:8087/chessWebApp/move", // url
       {
@@ -49,7 +61,6 @@ function move(field_id) {
         fieldId: field_id
       }, // data to be submit
       function(fieldsArray, status, xhr) { // success callback function
-            alert("status2: " + status);
             var response =  {"test": "test1"};
             $.each(fieldsArray, function(fieldId, codeOfPiece) {
             $("#" + fieldId).html(codeOfPiece);
@@ -57,13 +68,39 @@ function move(field_id) {
         });
       }, 'json')
     .fail(function(data, status) {
-      alert("error2: " + status);
+//      alert("error2: " + status);
+        alert("You can't move there!");
+        $("td").css({'background' : '',
+                      'border' : 'solid 1px black'
+        });
       state = true;
     });
 }
 // TODO!
 function updateDisplay() {
+  $("td").css({'background' : '',
+                'border' : 'solid 1px black'
+  });
   $.post("http://195.181.247.79:8087/chessWebApp/actualBoard",
+      {
+      player: 1,
+      },
+      function(fieldsArray, status, xhr){
+          var response =  {"test": "test1"};
+          $.each(fieldsArray, function(fieldId, codeOfPiece) {
+//          alert(fieldId + ' -> ' + codeOfPiece);
+          $("#" + fieldId).html(codeOfPiece);
+         });
+    }, 'json')
+  .fail(function(data, status) {
+    alert("error2: " + status);
+  });
+}
+function newGame() {
+  $("td").css({'background' : '',
+                'border' : 'solid 1px black'
+  });
+  $.post("http://195.181.247.79:8087/chessWebApp/newGame",
       {
       player: 1,
       },

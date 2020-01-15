@@ -115,6 +115,21 @@ public class MainController {
         String jsonResponse = new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
         return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
     }
+    @RequestMapping(value = {"/newGame"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    ResponseEntity<String> newGame  (@RequestParam int player) throws Exception {
+        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
+        new ChessGame();
+        whitePlayer = true;
+        ChessGame.board.getBoard();
+        ChessGame.board.getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(ChessGame.board.boardFieldAndCodes);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        String jsonResponse = new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
+        return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
+    }
 }
 
 //        if (fieldsToMark.isEmpty()) {
