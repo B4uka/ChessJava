@@ -16,6 +16,7 @@ public class ChessGame {
     public Color color;
     public static Boolean blackCastled, whiteCastled;
     private int rookCountMove;
+    private Piece [] rookOnBoard;
 
     public ChessGame () {
         board = new Board();
@@ -70,10 +71,6 @@ public class ChessGame {
             possibleActions.addPossibleChecks(test);
             possibleActions.addPossibleCastlingKingMove(test);
         }
-//        System.out.println("Is white king checked? " + isWhiteKingChecked());
-//        System.out.println("Is white king mated? " + possibleActions.isMated());
-//        System.out.println("Is white king stalamated? " + possibleActions.isStalamated());
-//        System.out.println("__________________________________________________________________________________________");
         return possibleActions;
     }
 
@@ -87,10 +84,6 @@ public class ChessGame {
             possibleActions.addPossibleChecks(test);
             possibleActions.addPossibleCastlingKingMove(test);
         }
-//        System.out.println("Is black king checked? " + isBlackKingChecked());
-//        System.out.println("Is black king mated? " + possibleActions.isMated());
-//        System.out.println("Is black king stalameted? " + possibleActions.isStalamated());
-//        System.out.println("__________________________________________________________________________________________");
         return possibleActions;
     }
 
@@ -142,14 +135,14 @@ public class ChessGame {
     private void generateActionsForCurrentlySelected () {
         try {
             possibleActions = currentlySelected.generatePossibleActions(board);
-            System.out.println();
+//            System.out.println();
             System.out.println(currentlySelected.getColor() + " " + currentlySelected.getClass().getSimpleName() + " from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
             possibleActions.printPossibleMoves();
             possibleActions.printPossibleCaptures();
             possibleActions.printPossibleChecks();
             possibleActions.printPossibleCastlingKingMoves();
         } catch (NullPointerException e) {
-            System.out.println();
+//            System.out.println();
             System.out.println(currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn() + "\t there is no piece on this position!");
         }
 //        printActualPositionAndGetPositionOfBothKings();
@@ -229,35 +222,41 @@ public class ChessGame {
 
     public void rookMoveWhenCastling () {
         //castle Rook Move
-        if (this.possibleActions.getKingCastlingActions().contains(piecePositionNEW)) {
-            if (piecePositionNEW.getRow() == 0 && piecePositionNEW.getColumn() == 2) {
+        Piece [] rookOnBoard = new Piece[4];
+        rookOnBoard[0] =(board.getPiece(0, 0));
+        rookOnBoard[1] =(board.getPiece(0, 7));
+        rookOnBoard[2] =(board.getPiece(7, 0));
+        rookOnBoard[3] =(board.getPiece(7, 7));
+//        {&& board.getPiece(currentlySelectedRookForCastle.getPosition().getRow(), currentlySelectedRookForCastle.getPosition().getColumn()).getCountMoves() == 0)
+        if (this.possibleActions.getKingCastlingActions().contains(piecePositionNEW)){
+            if (piecePositionNEW.getRow() == 0 && piecePositionNEW.getColumn() == 2 && rookOnBoard[0].getCountMoves() == 0) {
                 currentlySelectedRookForCastle = board.getPiece(0, 0);
                 rookCastlingMove = currentlySelectedRookForCastle.getPosition();
                 board.setEmptyByPosition(rookCastlingMove);
                 this.currentlySelectedRookForCastle.setPosition(0, 3);
                 board.setPiece(currentlySelectedRookForCastle);
-            }
-            if (piecePositionNEW.getRow() == 0 && piecePositionNEW.getColumn() == 6) {
+            }else revertNewMove(piecePositionNEW);
+            if (piecePositionNEW.getRow() == 0 && piecePositionNEW.getColumn() == 6 && rookOnBoard[1].getCountMoves() == 0) {
                 currentlySelectedRookForCastle = board.getPiece(0, 7);
                 rookCastlingMove = currentlySelectedRookForCastle.getPosition();
                 board.setEmptyByPosition(rookCastlingMove);
                 this.currentlySelectedRookForCastle.setPosition(0, 5);
                 board.setPiece(currentlySelectedRookForCastle);
-            }
-            if (piecePositionNEW.getRow() == 7 && piecePositionNEW.getColumn() == 2) {
+            }else revertNewMove(piecePositionNEW);
+            if (piecePositionNEW.getRow() == 7 && piecePositionNEW.getColumn() == 2 && rookOnBoard[2].getCountMoves() == 0) {
                 currentlySelectedRookForCastle = board.getPiece(7, 0);
                 rookCastlingMove = currentlySelectedRookForCastle.getPosition();
                 board.setEmptyByPosition(rookCastlingMove);
                 this.currentlySelectedRookForCastle.setPosition(7, 3);
                 board.setPiece(currentlySelectedRookForCastle);
-            }
-            if (piecePositionNEW.getRow() == 7 && piecePositionNEW.getColumn() == 6) {
+            }else revertNewMove(piecePositionNEW);
+            if (piecePositionNEW.getRow() == 7 && piecePositionNEW.getColumn() == 6 && rookOnBoard[3].getCountMoves() == 0) {
                 currentlySelectedRookForCastle = board.getPiece(7, 7);
                 rookCastlingMove = currentlySelectedRookForCastle.getPosition();
                 board.setEmptyByPosition(rookCastlingMove);
                 this.currentlySelectedRookForCastle.setPosition(7, 5);
                 board.setPiece(currentlySelectedRookForCastle);
-            }rookCountMove = currentlySelectedRookForCastle.getCountMoves();
+            }else revertNewMove(piecePositionNEW);
             System.out.println("ile razy ruszyla sie wieza?: " + rookCountMove);
         } else if (!this.possibleActions.getKingCastlingActions().contains(piecePositionNEW)) {
             revertNewMove(piecePositionNEW);
@@ -297,10 +296,12 @@ public class ChessGame {
                 }
                 board.printBoard();
                 board.getPiece(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn()).countMoveAdd();
-                System.out.println("ile razy ruszyla sie: " + currentlySelected.getClass().getSimpleName() + " " + currentlySelected.getPosition().getRow() + " " + currentlySelected.getPosition().getColumn()
+                System.out.println("ile razy ruszył sie: " + currentlySelected.getClass().getSimpleName() + " " + currentlySelected.getPosition().getRow() + " " + currentlySelected.getPosition().getColumn()
                         + " -> " + board.getPiece(currentlySelected.getPosition().getRow(), currentlySelected.getPosition().getColumn()).getCountMoves());
                 return true;
             }
+            System.out.println("canT move there!");
+            return false;
         }
         System.out.println("canT move there!");
         return false;
@@ -383,31 +384,35 @@ public class ChessGame {
 //        game.allBlackPiecesPossibleActions();
         game.selectBlackPiece(0, 4);
         if (game.newPiecePositionByMove(new Position(0, 2))) {
-            System.out.println(game.isKingMated(Color.BLACK));
+//            System.out.println(game.isKingMated(Color.BLACK));
         }
         game.selectBlackPiece(0, 2);
         if (game.newPiecePositionByMove(new Position(0, 1))) {
-            System.out.println(game.isKingMated(Color.BLACK));
+//            System.out.println(game.isKingMated(Color.BLACK));
         }
-        game.selectBlackPiece(0, 3);
-        if (game.newPiecePositionByMove(new Position(0, 5))) {
-            System.out.println(game.isKingMated(Color.BLACK));
-        }
-
-        game.selectWhitePiece(7, 0);
-        if (game.newPiecePositionByMove(new Position(7, 1))) {
-            System.out.println(game.isKingMated(Color.WHITE));
-        }
-        board.printBoard();
-//        game.allWhitePiecesPossibleActions();
-        game.selectWhitePiece(6, 4);
-        if (game.newPiecePositionByMove(new Position(5, 4))) {
-            System.out.println(game.isKingMated(Color.WHITE));
-        }
-//        game.selectBlackPiece(0, 2);
-//        if (game.newPiecePositionByMove(new Position(0, 1))) {
+//        game.selectBlackPiece(0, 3);
+//        if (game.newPiecePositionByMove(new Position(0, 5))) {
 //            System.out.println(game.isKingMated(Color.BLACK));
 //        }
+//        game.selectWhitePiece(7, 0);
+//        if (game.newPiecePositionByMove(new Position(7, 1))) {
+//            System.out.println(game.isKingMated(Color.WHITE));
+//        }
+        game.allWhitePiecesPossibleActions();
+        game.selectWhitePiece(7, 4);
+        if (game.newPiecePositionByMove(new Position(7, 6))) {
+//            System.out.println(game.isKingMated(Color.WHITE));
+        }
+        board.printBoard();
+//       game.allWhitePiecesPossibleActions();
+        game.selectWhitePiece(7, 5);
+        if (game.newPiecePositionByMove(new Position(7, 2))) {
+//            System.out.println(game.isKingMated(Color.WHITE));
+        }
+        game.selectBlackPiece(0, 3);
+        if (game.newPiecePositionByMove(new Position(0, 4))) {
+//            System.out.println(game.isKingMated(Color.BLACK));
+        }
         board.printBoard();
 //        board.printBoardWithCodes();
 //        System.out.println();

@@ -102,9 +102,9 @@ public class MainController {
         return ResponseEntity.ok().headers(responseHeaders).body(isMated);
     }
 
-    @RequestMapping(value = {"/actualBoard"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = {"/actualBoard"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<String> actualBoard () throws Exception {
+    ResponseEntity<String> actualBoard  (@RequestParam int player) throws Exception {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
         ChessGame.board.getBoard();
         ChessGame.board.getBoardFieldAndCodes();

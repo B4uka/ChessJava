@@ -4,10 +4,6 @@ var currentPiece;
 var currentCellToMove;
 var currentCell;
 var cells;
-//TODO:
-//window.onload(function() {
-//  updateDisplay();
-//});
 
 $("td").click(function() {
   if (state == true && this.innerHTML != "") {
@@ -67,14 +63,20 @@ function move(field_id) {
 }
 // TODO!
 function updateDisplay() {
-  $.get("http://195.181.247.79:8087/chessWebApp/actualBoard",
-       function(fieldsArray, status, xhr){
+  $.post("http://195.181.247.79:8087/chessWebApp/actualBoard",
+      {
+      player: 1,
+      },
+      function(fieldsArray, status, xhr){
           var response =  {"test": "test1"};
           $.each(fieldsArray, function(fieldId, codeOfPiece) {
-          alert(fieldId + ' -> ' + codeOfPiece);
-//        $("#" + fieldId).html(codeOfPiece);
+//          alert(fieldId + ' -> ' + codeOfPiece);
+          $("#" + fieldId).html(codeOfPiece);
          });
     }, 'json')
+  .fail(function(data, status) {
+    alert("error2: " + status);
+  });
 }
 
 // var state = false; //false if no piece has been selected
