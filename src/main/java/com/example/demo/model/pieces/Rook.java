@@ -7,8 +7,8 @@ import com.example.demo.model.piece_properties.Position;
 
 public class Rook extends Piece {
 
-    public Rook(Position position, Color color, String code){
-        super(position, color, code);
+    public Rook(Position position, Color color, String code, int countMoves){
+        super(position, color, code, countMoves);
     }
 
     @Override

@@ -9,7 +9,6 @@ public class PossibleActions {
 
     public ArrayList<Position> possibleMoves, possibleCaptures, possibleChecks, listOfPiecesPositionsWhichAreCheckingTheKing, possibleMovesAndCaptures, kingCastlingActions, rookCastlingActions;
     public Color color;
-
     public Position position;
 
     public PossibleActions () {
@@ -28,7 +27,6 @@ public class PossibleActions {
     public boolean isStalamated () {
         return this.possibleMoves.isEmpty() && this.possibleCaptures.isEmpty() && !listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
     }
-
     public boolean isChecked () {
         return !listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
     }
@@ -101,11 +99,6 @@ public class PossibleActions {
     public void printPossibleCastlingKingMoves () {
         for (Position position : kingCastlingActions) {
             System.out.print("Possible castlings King moves: " + position.getRow() + "\t" + position.getColumn() + "\t");
-        }
-    }
-    public void printPossibleCastlingRookMoves () {
-        for (Position position : rookCastlingActions) {
-            System.out.print("Possible castlings Rook moves: " + position.getRow() + "\t" + position.getColumn() + "\t");
         }
     }
 
