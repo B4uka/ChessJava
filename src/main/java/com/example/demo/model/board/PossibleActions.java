@@ -74,6 +74,9 @@ public class PossibleActions {
         possibleMovesAndCaptures = possibleMoves;
         return possibleMovesAndCaptures;
     }
+    public Boolean noPossibleMoveOrCaptures (PossibleActions possibleActions) {
+        return possibleActions == null;
+    }
 
     public Position getPosition () {
         return position;
@@ -102,7 +105,7 @@ public class PossibleActions {
         }
     }
 
-    public void printPositionsofPiecesThatAreCheckingKing () {
+    public void printPositionsOfPiecesThatAreCheckingKing () {
         for (Position position : listOfPiecesPositionsWhichAreCheckingTheKing) {
             System.out.println("Row: " + position.getRow() + "\t Column: " + position.getColumn());
         }

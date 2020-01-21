@@ -109,8 +109,14 @@ box-shadow: 0 0 0 0 !important;
 color: white;
 }
 .textAndBackground{
-color: #fffcc1;
+color: white;
 font-weight: bold;
+}
+
+.white-on-black{
+color: white;
+background:#222831;
+margin-bottom: 10px;
 }
 
 .remember input

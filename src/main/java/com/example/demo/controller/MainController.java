@@ -87,19 +87,26 @@ public class MainController {
         return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
     }
 
-    @RequestMapping(value = {"/mate"}, method = RequestMethod.GET, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = {"/mate"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<Boolean> isMated () {
-        Boolean isMated = chessGame.isKingMated(Color.WHITE) || chessGame.isKingMated(Color.BLACK);
-//        if (whitePlayer) {
-//            isMated.add(chessGame.isKingMated(Color.WHITE));
-//        } else
-//            isMated.add(chessGame.isKingMated(Color.BLACK));
-//
+    ResponseEntity<String> isMated (@RequestParam int player) {
+        ArrayList<String> isMated = new ArrayList<>();
+        if (whitePlayer){
+            Boolean isWhiteMated = chessGame.isKingMated(Color.WHITE);
+             if (isWhiteMated) {
+                 isMated.add("true");
+             }else isMated.add("false");
+        }else {
+            Boolean isBlackMated = chessGame.isKingMated(Color.BLACK);
+            if (isBlackMated) {
+                isMated.add("true");
+            }else isMated.add("false");
+        }
+
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
-//        Boolean jsonResponse = new Gson().toJson(isMated);
-        return ResponseEntity.ok().headers(responseHeaders).body(isMated);
+        String jsonResponse = new Gson().toJson(isMated);
+        return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
     }
 
     @RequestMapping(value = {"/actualBoard"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

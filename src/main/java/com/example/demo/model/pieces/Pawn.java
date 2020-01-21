@@ -35,6 +35,7 @@ public class Pawn extends Piece {
                     continue;
                 }
             }
+            // TODO:  En passant
             //possible captures by BLACK
             pawnPossibleCapture[0] = this.position.getNewPositionByVector(1, 1);
             pawnPossibleCapture[1] = this.position.getNewPositionByVector(1, -1);
@@ -63,6 +64,7 @@ public class Pawn extends Piece {
                     continue;
                 }
             }
+            // TODO:  En passant
             // possible captures by WHITE
             pawnPossibleCapture[0] = this.position.getNewPositionByVector(-1, 1);
             pawnPossibleCapture[1] = this.position.getNewPositionByVector(-1, -1);

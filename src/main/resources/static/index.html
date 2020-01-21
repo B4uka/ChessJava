@@ -33,10 +33,7 @@
               <a class="nav-link" href="contact_me.html">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Curriculum Vitae</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="images/jasiogif.gif">Pricing</a>
+              <a class="nav-link" href="https://chess24.com/en/watch/live-tournaments"  target="_blank">Live Tournaments</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="https://chess-db.com/public/pinfo.jsp?id=1134060">My Fide Profile</a>
@@ -188,28 +185,37 @@
 
 <!-- Features -->
 <section id="features" class="bottom">
-  <div  class="text-center">
-    <button onclick="updateDisplay()">Refresh pieces positions</button>
+
+  <div id="info" class="information text-center"></div>
+
+  <div style="margin-bottom:10px;" class="text-center">
+    <button class="btn btn-success" onclick="updateDisplay()">Refresh pieces positions</button>
   </div>
-  <div  class="text-center">
-    <button onclick="newGame()">New Game</button>
+  <div style="margin-bottom:10px;" class="text-center">
+    <button class="btn btn-warning" onclick="newGame()">New Game</button>
   </div>
   <div class="row">
     <div class="feature-box col-lg-4">
       <i class="fas fa-user fa-2x icon"></i>
-      <h3 class="textAndBackground">Have fun!</h3>
-      <p class="textAndBackground">Just log in and play with your friends in best strategy game was ever created!</p>
+      <div  style="background:#222831;">
+        <h3 class="textAndBackground">Have fun!</h3>
+        <p class="textAndBackground" style="height: 55px;">Just log in and play with your friends in best strategy game was ever created!</p>
+      </div>
     </div>
     <div class="feature-box col-lg-4">
       <i class="fas fa-chess-board fa-2x icon"></i>
-      <h3 class="textAndBackground">Choose your pace</h3>
-      <p class="textAndBackground">Are you fast enough to play bullet game?</p>
-      <h6 class="textAndBackground">Not available yet :)</h6>
+      <div  style="background:#222831;">
+        <h3 class="textAndBackground">Choose your pace</h3>
+        <p class="textAndBackground">Are you fast enough to play bullet game?</p>
+        <h6 class="textAndBackground" style="height: 40px;">Not available yet :)</h6>
+      </div>
     </div>
     <div class="feature-box col-lg-4">
       <i class="fas fa-chess fa-2x icon"></i>
-      <h3 class="textAndBackground" >Want to be better player?</h3>
-      <a class="textAndBackground" href="https://www.chess.com/learn-how-to-play-chess">Learn the rules of the game! </a>
+      <div  style="background:#222831;height:88px;">
+         <h3 class="textAndBackground" >Want to be better player?</h3>
+         <a class="textAndBackground" style="height: 49px;" href="https://www.chess.com/learn-how-to-play-chess">Learn the rules of the game! </a>
+      </div>
     </div>
   </div>
 </section>
