@@ -91,6 +91,7 @@ public class MainController {
     @ResponseBody
     ResponseEntity<String> isMated (@RequestParam int player) {
         ArrayList<String> isMated = new ArrayList<>();
+
         if (whitePlayer){
             Boolean isWhiteMated = chessGame.isKingMated(Color.WHITE);
              if (isWhiteMated) {
@@ -101,6 +102,9 @@ public class MainController {
             if (isBlackMated) {
                 isMated.add("true");
             }else isMated.add("false");
+        }
+        if (ChessGame.isStalameted){
+            isMated.add("stalamate");
         }
 
         HttpHeaders responseHeaders = new HttpHeaders();

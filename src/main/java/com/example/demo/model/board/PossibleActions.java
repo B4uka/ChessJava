@@ -20,13 +20,6 @@ public class PossibleActions {
         this.listOfPiecesPositionsWhichAreCheckingTheKing = new ArrayList<>();
     }
 
-    public boolean isMated () {
-        return this.possibleMoves.isEmpty() && this.possibleCaptures.isEmpty() && !listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
-    }
-
-    public boolean isStalamated () {
-        return this.possibleMoves.isEmpty() && this.possibleCaptures.isEmpty() && !listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
-    }
     public boolean isChecked () {
         return !listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
     }

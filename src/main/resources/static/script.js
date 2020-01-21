@@ -147,6 +147,8 @@ function mate() {
           $.each(booleanMate, function(index, mate) {
           if (mate == "true"){
            window.open('images/mate.jpg');
+          } else if (mate == "stalamate"){
+            window.open('images/stalamate.jpg');
           }
          });
     }, 'json')

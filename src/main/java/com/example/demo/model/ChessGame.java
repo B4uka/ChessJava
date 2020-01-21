@@ -14,7 +14,7 @@ public class ChessGame {
     public PossibleActions possibleActions, blackKingCheckedPositions, whiteKingCheckedPositions, possibleMOVESorCAPTURES;
     public Position position, piecePositionNEW, piecePositionOLD, rookCastlingMove, rookCastlingMoveOldPosition;
     public Color color;
-    public static Boolean blackCastled, whiteCastled;
+    public static Boolean blackCastled, whiteCastled, isStalameted;
     private int rookCountMove;
     private Piece[] rookOnBoard;
 
@@ -22,6 +22,7 @@ public class ChessGame {
         board = new Board();
         blackCastled = false;
         whiteCastled = false;
+        isStalameted = false;
     }
 
     public static boolean isWhiteKingChecked () {
@@ -118,24 +119,25 @@ public class ChessGame {
 
     public Boolean isKingMated (Color color) {
         if (color == Color.WHITE) {
-            try {
-                allWhitePiecesPossibleActions();
-            } catch (NullPointerException e) {
-                return true;
+            allWhitePiecesPossibleActions();
+            if (isWhiteKingChecked()) {
+                return possibleMOVESorCAPTURES.getAllPossibleMovesAndCaptures().isEmpty();
+            }else if (!isWhiteKingChecked() && possibleMOVESorCAPTURES.getAllPossibleMovesAndCaptures().size() == 0) {
+                isStalameted = true;
+                return false;
             }
-            System.out.println(possibleMOVESorCAPTURES.getAllPossibleMovesAndCaptures().isEmpty());
-            return possibleMOVESorCAPTURES.getAllPossibleMovesAndCaptures().isEmpty();
         } else if (color == Color.BLACK) {
-            try {
-                allBlackPiecesPossibleActions();
-            } catch (NullPointerException e) {
-                return true;
+            allBlackPiecesPossibleActions();
+            if (isBlackKingChecked()) {
+                return possibleMOVESorCAPTURES.getAllPossibleMovesAndCaptures().isEmpty();
+            } else if (!isBlackKingChecked() && possibleMOVESorCAPTURES.getAllPossibleMovesAndCaptures().size() == 0) {
+                isStalameted = true;
+                return false;
             }
-            System.out.println(possibleMOVESorCAPTURES.getAllPossibleMovesAndCaptures().isEmpty());
-            return possibleMOVESorCAPTURES.getAllPossibleMovesAndCaptures().isEmpty();
         }
         return false;
     }
+
 
     public PossibleActions selectWhitePiece (int row, int column) {
         currentlySelected = board.getWhitePiece(row, column);
