@@ -20,10 +20,6 @@ public class PossibleActions {
         this.listOfPiecesPositionsWhichAreCheckingTheKing = new ArrayList<>();
     }
 
-    public boolean isChecked () {
-        return !listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
-    }
-
     public void addPossibleCapture (Position position) {
         this.possibleCaptures.add(position);
     }
@@ -34,9 +30,7 @@ public class PossibleActions {
     public void addPossibleCastlingKingMove (Position position){
         this.kingCastlingActions.add(position);
     }
-    public void addPossibleCastlingRookMove (Position position){
-        this.rookCastlingActions.add(position);
-    }
+
     public void addPossibleChecks (Position position) {
         this.possibleChecks.add(position);
     }
@@ -53,22 +47,14 @@ public class PossibleActions {
         return possibleMoves;
     }
 
-    public ArrayList<Position> getPossibleChecks () {
-        return possibleChecks;
-    }
     public ArrayList<Position> getKingCastlingActions (){
         return kingCastlingActions;
     }
-    public ArrayList<Position> getRookCastlingActions (){
-        return rookCastlingActions;
-    }
+
     public ArrayList<Position> getAllPossibleMovesAndCaptures () {
         possibleMoves.addAll(possibleCaptures);
         possibleMovesAndCaptures = possibleMoves;
         return possibleMovesAndCaptures;
-    }
-    public Boolean noPossibleMoveOrCaptures (PossibleActions possibleActions) {
-        return possibleActions == null;
     }
 
     public Position getPosition () {

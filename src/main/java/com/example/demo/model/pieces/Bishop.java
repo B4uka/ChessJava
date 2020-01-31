@@ -11,7 +11,6 @@ public class Bishop extends Piece {
         super(position, color, code, countMoves);
     }
 
-
     @Override
     public PossibleActions generatePossibleActions (Board board) {
         PossibleActions possibleActions = new PossibleActions();
@@ -23,7 +22,7 @@ public class Bishop extends Piece {
         bishopMove[2] = this.position.getNewPositionByVector(-1, 1);
         bishopMove[3] = this.position.getNewPositionByVector(-1, -1);
 
-        /** ALL POSSIBLE MOVES */
+        /* ALL POSSIBLE MOVES */
         outloop:{
             for (int i = 1; i < 8; i++) {
                 if (!bishopMove[0].isOnBoard() || (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[0], Color.BLACK)) || (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[0], Color.WHITE))) {
@@ -32,14 +31,12 @@ public class Bishop extends Piece {
                     possibleActions.addPossibleMove(bishopMove[0]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(bishopMove[0], Color.BLACK)) {
                     possibleActions.addPossibleChecks(bishopMove[0]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[0], Color.BLACK)) {
                     possibleActions.addPossibleCapture(bishopMove[0]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(bishopMove[0], Color.WHITE)) {
                     possibleActions.addPossibleChecks(bishopMove[0]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[0], Color.WHITE)) {
                     possibleActions.addPossibleCapture(bishopMove[0]);
@@ -53,14 +50,12 @@ public class Bishop extends Piece {
                     possibleActions.addPossibleMove(bishopMove[1]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(bishopMove[1], Color.BLACK)) {
                     possibleActions.addPossibleChecks(bishopMove[1]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[1], Color.BLACK)) {
                     possibleActions.addPossibleCapture(bishopMove[1]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(bishopMove[1], Color.WHITE)) {
                     possibleActions.addPossibleChecks(bishopMove[1]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[1], Color.WHITE)) {
                     possibleActions.addPossibleCapture(bishopMove[1]);
@@ -74,14 +69,12 @@ public class Bishop extends Piece {
                     possibleActions.addPossibleMove(bishopMove[2]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(bishopMove[2], Color.BLACK)) {
                     possibleActions.addPossibleChecks(bishopMove[2]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[2], Color.BLACK)) {
                     possibleActions.addPossibleCapture(bishopMove[2]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(bishopMove[2], Color.WHITE)) {
                     possibleActions.addPossibleChecks(bishopMove[2]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[2], Color.WHITE)) {
                     possibleActions.addPossibleCapture(bishopMove[2]);
@@ -97,14 +90,12 @@ public class Bishop extends Piece {
                     possibleActions.addPossibleMove(bishopMove[3]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(bishopMove[3], Color.BLACK)) {
                     possibleActions.addPossibleChecks(bishopMove[3]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(bishopMove[3], Color.BLACK)) {
                     possibleActions.addPossibleCapture(bishopMove[3]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(bishopMove[3], Color.WHITE)) {
                     possibleActions.addPossibleChecks(bishopMove[3]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(bishopMove[3], Color.WHITE)) {
                     possibleActions.addPossibleCapture(bishopMove[3]);

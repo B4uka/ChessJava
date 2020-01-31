@@ -21,7 +21,7 @@ public class Rook extends Piece {
         rookMove[2] = this.position.getNewPositionByVector(1, 0);
         rookMove[3] = this.position.getNewPositionByVector(-1, 0);
 
-        /** POSSIBLE MOVES */
+        /* POSSIBLE MOVES */
         outloop:
         {
             for (int i = 1; i < 8; i++) {
@@ -30,15 +30,13 @@ public class Rook extends Piece {
                 } else if (!board.isOccupied(rookMove[0])) {
                     possibleActions.addPossibleMove(rookMove[0]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(rookMove[0], Color.BLACK)) {
-                    possibleActions.addPossibleChecks(rookMove[0]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
+                    possibleActions.addPossibleChecks(rookMove[0]);;
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(rookMove[0], Color.BLACK)) {
                     possibleActions.addPossibleCapture(rookMove[0]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(rookMove[0], Color.WHITE)) {
                     possibleActions.addPossibleChecks(rookMove[0]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(rookMove[0], Color.WHITE)) {
                     possibleActions.addPossibleCapture(rookMove[0]);
@@ -52,14 +50,12 @@ public class Rook extends Piece {
                     possibleActions.addPossibleMove(rookMove[1]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(rookMove[1], Color.BLACK)) {
                     possibleActions.addPossibleChecks(rookMove[1]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(rookMove[1], Color.BLACK)) {
                     possibleActions.addPossibleCapture(rookMove[1]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(rookMove[1], Color.WHITE)) {
                     possibleActions.addPossibleChecks(rookMove[1]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(rookMove[1], Color.WHITE)) {
                     possibleActions.addPossibleCapture(rookMove[1]);
@@ -73,14 +69,12 @@ public class Rook extends Piece {
                     possibleActions.addPossibleMove(rookMove[2]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(rookMove[2], Color.BLACK)) {
                     possibleActions.addPossibleChecks(rookMove[2]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(rookMove[2], Color.BLACK)) {
                     possibleActions.addPossibleCapture(rookMove[2]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(rookMove[2], Color.WHITE)) {
                     possibleActions.addPossibleChecks(rookMove[2]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(rookMove[2], Color.WHITE)) {
                     possibleActions.addPossibleCapture(rookMove[2]);
@@ -96,7 +90,6 @@ public class Rook extends Piece {
                     possibleActions.addPossibleMove(rookMove[3]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(rookMove[3], Color.BLACK)) {
                     possibleActions.addPossibleChecks(rookMove[3]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(rookMove[3], Color.BLACK )&& !board.isOccupiedByKing(rookMove[3], color)) {
                     possibleActions.addPossibleCapture(rookMove[3]);
@@ -104,7 +97,6 @@ public class Rook extends Piece {
 
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(rookMove[3], Color.WHITE)) {
                     possibleActions.addPossibleChecks(rookMove[3]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(rookMove[3], Color.WHITE)&& !board.isOccupiedByKing(rookMove[3], color)) {
                     possibleActions.addPossibleCapture(rookMove[3]);

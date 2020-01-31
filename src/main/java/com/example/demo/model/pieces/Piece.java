@@ -27,28 +27,17 @@ public abstract class Piece {
     public int countMoveAdd(){
         return countMoves++;
     }
-
     public String getCode () {
         return code;
     }
-    public void setCode(String code){
-        this.code = code;
-    }
-
     public void setPosition (Position position) {
         this.position = position;
     }
-
     public void setPosition (int row, int column) {
         this.position.setRowAndColumn(row, column);
     }
-
     public int getCountMoves () {
         return countMoves;
-    }
-
-    public void setCountMoves (int countMoves) {
-        this.countMoves = countMoves;
     }
 }
 

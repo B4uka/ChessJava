@@ -11,7 +11,6 @@ public class Pawn extends Piece {
         super(position, color, code, countMoves);
     }
 
-
     @Override
     public PossibleActions generatePossibleActions (Board board) {
 
@@ -27,16 +26,12 @@ public class Pawn extends Piece {
             } else {
                 pawnPossibleMove[1] = pawnPossibleMove[0];
             }
-
             for (Position test : pawnPossibleMove) {
                 if (test.isOnBoard() && !board.isOccupied(test)) {
                     possibleActions.addPossibleMove(test);
-                } else {
-                    continue;
                 }
             }
             // TODO:  En passant
-            //possible captures by BLACK
             pawnPossibleCapture[0] = this.position.getNewPositionByVector(1, 1);
             pawnPossibleCapture[1] = this.position.getNewPositionByVector(1, -1);
             for (Position test : pawnPossibleCapture) {
@@ -49,7 +44,6 @@ public class Pawn extends Piece {
                 }
             }
         } else if (this.color == Color.WHITE) {
-
             //possible moves by WHITE
             pawnPossibleMove[0] = this.position.getNewPositionByVector(-1, 0);
             if (this.position.getRow() == 6  && !board.isOccupied(pawnPossibleMove[0])) {
@@ -60,12 +54,9 @@ public class Pawn extends Piece {
             for (Position test : pawnPossibleMove) {
                 if (test.isOnBoard() && !board.isOccupied(test)) {
                     possibleActions.addPossibleMove(test);
-                } else {
-                    continue;
                 }
             }
             // TODO:  En passant
-            // possible captures by WHITE
             pawnPossibleCapture[0] = this.position.getNewPositionByVector(-1, 1);
             pawnPossibleCapture[1] = this.position.getNewPositionByVector(-1, -1);
             for (Position test : pawnPossibleCapture) {

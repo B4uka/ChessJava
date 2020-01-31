@@ -33,71 +33,44 @@ public class Board {
 
         return this.boardOfPieces[position.getRow()][position.getColumn()] != null;
     }
-    public boolean isWhiteKingOnStartingPosition () {
-        return this.boardOfPieces[7][4].getClass() == King.class && this.boardOfPieces[7][4].getColor() == Color.WHITE;
-    }
-    public boolean isBlackKingOnStartingPosition () {
-        return this.boardOfPieces[0][4].getClass() == King.class && this.boardOfPieces[0][4].getColor() == Color.WHITE;
-    }
-    public boolean isBoardOccupiedByPiece(int row, int column){
+
+    public boolean isBoardOccupiedByPiece (int row, int column) {
         return this.boardOfPieces[row][column] != null;
     }
 
     public boolean isOccupiedByColor (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
-        if (piece != null && piece.getColor() == color) {
-            return true;
-        }
-        return false;
+        return piece != null && piece.getColor() == color;
     }
 
-    // There is also less specific method: isOccupiedByKing which is not including color of the King
     public boolean isOccupiedByKing (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
-        if (piece.getClass() == King.class && piece.getColor() == color) {
-            return true;
-        }
-        return false;
+        return piece.getClass() == King.class && piece.getColor() == color;
     }
 
     public boolean isOccupiedByKnight (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
-        if (piece.getClass() == Knight.class && piece.getColor() == color) {
-            return true;
-        }
-        return false;
+        return piece.getClass() == Knight.class && piece.getColor() == color;
     }
 
     public boolean isOccupiedByRook (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
-        if (piece.getClass() == Rook.class && piece.getColor() == color) {
-            return true;
-        }
-        return false;
+        return piece.getClass() == Rook.class && piece.getColor() == color;
     }
 
     public boolean isOccupiedByBishop (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
-        if (piece.getClass() == Bishop.class && piece.getColor() == color) {
-            return true;
-        }
-        return false;
+        return piece.getClass() == Bishop.class && piece.getColor() == color;
     }
 
     public boolean isOccupiedByQueen (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
-        if (piece.getClass() == Queen.class && piece.getColor() == color) {
-            return true;
-        }
-        return false;
+        return piece.getClass() == Queen.class && piece.getColor() == color;
     }
 
     public boolean isOccupiedByPawn (Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
-        if (piece.getClass() == Pawn.class && piece.getColor() == color) {
-            return true;
-        }
-        return false;
+        return piece.getClass() == Pawn.class && piece.getColor() == color;
     }
 
     public Position getBlackKingPosition () {
@@ -105,7 +78,6 @@ public class Board {
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
                 try {
-                    this.boardOfPieces[i][j].getClass();
                     if (boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.BLACK) {
                         blackKingPosition = new Position(i, j);
                     }
@@ -115,6 +87,7 @@ public class Board {
         }
         return blackKingPosition;
     }
+
     public Piece getBlackKingPiece () {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
@@ -129,6 +102,7 @@ public class Board {
         }
         return boardOfPieces[blackKingPosition.getRow()][blackKingPosition.getColumn()];
     }
+
     public Piece getWhiteKingPiece () {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
@@ -149,7 +123,6 @@ public class Board {
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
                 try {
-                    this.boardOfPieces[i][j].getClass();
                     if (this.boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.WHITE) {
                         whiteKingPosition = new Position(i, j);
                     }
@@ -167,7 +140,6 @@ public class Board {
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
                 try {
-                    this.boardOfPieces[i][j].getClass();
                     if (this.boardOfPieces[i][j].getClass() != null && this.boardOfPieces[i][j].getColor() == Color.WHITE) {
                         whitesPosition = new Position(i, j);
                         whitePiecesPositions.add(whitesPosition);
@@ -217,15 +189,6 @@ public class Board {
         return piecesPositionsWithCode;
     }
 
-    // There is more specific method: isOccupiedByKing that also includes color of the King
-    public boolean isOccupiedByKingOfAnyColor (Position position) {
-        Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
-        if (piece.getClass() == King.class) {
-            return true;
-        }
-        return false;
-    }
-
     public Piece getWhitePiece (int row, int column) {
         if (this.boardOfPieces[row][column].getColor() == Color.WHITE) {
             return boardOfPieces[row][column];
@@ -251,6 +214,7 @@ public class Board {
     public void setEmptyByPosition (Position position) {
         boardOfPieces[position.getRow()][position.getColumn()] = null;
     }
+
     public void setEmptyByRowAndColumn (int row, int column) {
         boardOfPieces[row][column] = null;
     }
@@ -299,20 +263,12 @@ public class Board {
         this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE, "&#9817;", 0);
         this.boardOfPieces[6][6] = new Pawn(new Position(6, 6), Color.WHITE, "&#9817;", 0);
         this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE, "&#9817;", 0);
-
-//        for (int i = 2; i < 6; i++) {
-//            for (int j = 0; j < 8; j++){
-//                boardOfPieces[i][j].setCode("");
-//            }
-//        }
     }
 
     public void printBoard () {
         for (int i = 0; i < boardOfPieces.length; i++) {
             for (int j = 0; j < boardOfPieces.length; j++) {
                 try {
-                    boardOfPieces[i][j].getClass();
-
                     if (boardOfPieces[i][j].getClass() == Rook.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
                         System.out.print("r  ");
                     } else if (boardOfPieces[i][j].getClass() == Pawn.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
@@ -380,9 +336,6 @@ public class Board {
                 }
             }
         }
-//        String jsonResponse = new Gson().toJson(boardFieldAndCodes);
-//        System.out.printf( "JSON: %s", jsonResponse );
-//        System.out.println(boardFieldAndCodes);
         return boardFieldAndCodes;
     }
 }

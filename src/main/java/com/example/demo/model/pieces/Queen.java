@@ -36,14 +36,12 @@ public class Queen extends Piece {
                     possibleActions.addPossibleMove(queenMove[0]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(queenMove[0], Color.BLACK)) {
                     possibleActions.addPossibleChecks(queenMove[0]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[0], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[0]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[0], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[0]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[0], Color.WHITE)) {
                     possibleActions.addPossibleCapture(queenMove[0]);
@@ -57,14 +55,12 @@ public class Queen extends Piece {
                     possibleActions.addPossibleMove(queenMove[1]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(queenMove[1], Color.BLACK)) {
                     possibleActions.addPossibleChecks(queenMove[1]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[1], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[1]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[1], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[1]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[1], Color.WHITE)) {
                     possibleActions.addPossibleCapture(queenMove[1]);
@@ -78,14 +74,12 @@ public class Queen extends Piece {
                     possibleActions.addPossibleMove(queenMove[2]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(queenMove[2], Color.BLACK)) {
                     possibleActions.addPossibleChecks(queenMove[2]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[2], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[2]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[2], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[2]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[2], Color.WHITE)) {
                     possibleActions.addPossibleCapture(queenMove[2]);
@@ -101,7 +95,6 @@ public class Queen extends Piece {
                     possibleActions.addPossibleMove(queenMove[3]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(queenMove[3], Color.BLACK)) {
                     possibleActions.addPossibleChecks(queenMove[3]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[3], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[3]);
@@ -109,7 +102,6 @@ public class Queen extends Piece {
 
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[3], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[3]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[3], Color.WHITE)) {
                     possibleActions.addPossibleCapture(queenMove[3]);
@@ -125,14 +117,12 @@ public class Queen extends Piece {
                     possibleActions.addPossibleMove(queenMove[4]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(queenMove[4], Color.BLACK)) {
                     possibleActions.addPossibleChecks(queenMove[4]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[4], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[4]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[4], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[4]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[4], Color.WHITE)) {
                     possibleActions.addPossibleCapture(queenMove[4]);
@@ -148,14 +138,12 @@ public class Queen extends Piece {
                     possibleActions.addPossibleMove(queenMove[5]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(queenMove[5], Color.BLACK)) {
                     possibleActions.addPossibleChecks(queenMove[5]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[5], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[5]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[5], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[5]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[5], Color.WHITE)) {
                     possibleActions.addPossibleCapture(queenMove[5]);
@@ -170,14 +158,12 @@ public class Queen extends Piece {
                     possibleActions.addPossibleMove(queenMove[6]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(queenMove[6], Color.BLACK)) {
                     possibleActions.addPossibleChecks(queenMove[6]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[6], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[6]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[6], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[6]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (queenMove[6].isOnBoard() && this.color == Color.BLACK && board.isOccupiedByColor(queenMove[6], Color.WHITE)) {
                     possibleActions.addPossibleCapture(queenMove[6]);
@@ -193,14 +179,12 @@ public class Queen extends Piece {
                     possibleActions.addPossibleMove(queenMove[7]);
                 } else if (this.color == Color.WHITE && board.isOccupiedByKing(queenMove[7], Color.BLACK)) {
                     possibleActions.addPossibleChecks(queenMove[7]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove[7], Color.BLACK)) {
                     possibleActions.addPossibleCapture(queenMove[7]);
                     break;
                 } else if (this.color == Color.BLACK && board.isOccupiedByKing(queenMove[7], Color.WHITE)) {
                     possibleActions.addPossibleChecks(queenMove[7]);
-                    System.out.println("CHECK!!!!!!!!!!!!!!");
                     break outloop;
                 } else if (this.color == Color.BLACK && board.isOccupiedByColor(queenMove[7], Color.WHITE)) {
                     possibleActions.addPossibleCapture(queenMove[7]);

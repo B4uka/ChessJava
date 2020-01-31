@@ -58,7 +58,6 @@ function select(field_id) {
                 text: "It's not your move!",
                 class: 'alert alert-danger'
         }).appendTo('.information.text-center');
-//        alert("It's not your move!");
     });
 }
 
@@ -78,11 +77,9 @@ function move(field_id) {
             $.each(fieldsArray, function(fieldId, codeOfPiece) {
             $("#" + fieldId).html(codeOfPiece);
             $('#info').empty();
-//            alert(fieldId + ' -> ' + codeOfPiece);
         });
       }, 'json')
     .fail(function(data, status) {
-//      alert("error2: " + status);
         $('#info').empty();
         jQuery('<div/>', {
             text:  "You can't move there!",
@@ -107,7 +104,6 @@ function updateDisplay() {
           $('#info').empty();
           var response =  {"test": "test1"};
           $.each(fieldsArray, function(fieldId, codeOfPiece) {
-//          alert(fieldId + ' -> ' + codeOfPiece);
           $("#" + fieldId).html(codeOfPiece);
          });
     }, 'json')
@@ -127,7 +123,6 @@ function newGame() {
           $('#info').empty();
           var response =  {"test": "test1"};
           $.each(fieldsArray, function(fieldId, codeOfPiece) {
-//          alert(fieldId + ' -> ' + codeOfPiece);
           $("#" + fieldId).html(codeOfPiece);
          });
     }, 'json')
@@ -156,48 +151,3 @@ function mate() {
     alert("error2: " + status);
   });
 }
-
-
-// var state = false; //false if no piece has been selected
-// var currentPiece;
-// var currentCell;
-
-// var cells = document.getElementsByTagName("td");
-// for (var i = 0; i < cells.length; i++) {
-//   cells[i].onclick = function() {
-//     getCell(this);
-//   };
-// }
-//
-// TODO: REFRESHING PAGE WITH AJAX
-////$(document).ready(function(){
-  //    window.setTimeout(function () {
-  //          $.ajax({
-  //            url:"http://localhost:8081/chessWebApp/actualBoard",
-  //            type:'get',
-  //            success: function(fieldsArray, status, xhr){
-  //                var response =  {"test": "test1"};
-  //                $.each(fieldsArray, function(fieldId, codeOfPiece) {
-  //                $("#" + fieldId).html(codeOfPiece);
-  //             }
-  //            });
-  //        },100);
-  //});
-
-// function getCell(that) {
-//   if (!state2) { //this means if the state is false (i.e. no piece selected
-//     state2 = true; //piece has been selected
-//     currentPiece = that.innerHTML; //get the current piece selected
-//     currentCell = that; //get the current cell selection
-//     // alert($(that).attr('id'));
-//   } else { //else, you are moving a piece
-//     that.innerHTML = currentPiece; //Set the selected space to the piece that was grabbed
-//     currentCell.innerHTML = ""; //remove the piece from its old location
-//     // alert($(that).attr('id'));
-//     state2 = false; //piece has been placed, so set state back to false
-//   }
-// }
-// $("td").click(function() {
-//   select($(this).attr('id'));
-// });
-

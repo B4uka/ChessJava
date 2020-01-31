@@ -33,10 +33,6 @@ public class Position {
         return new Position(plusRow, plusColumn);
     }
 
-    public Position getNewPositionByPossibleMove (int plusRow, int plusColumn) {
-        return new Position(plusRow, plusColumn);
-    }
-
     public boolean isOnBoard () {
         return 0 <= row && row <= 7 && 0 <= column && column <= 7;
     }
