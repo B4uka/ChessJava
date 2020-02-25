@@ -6,5 +6,5 @@ import pl.wb.demo.chess.model.piece_properties.Position;
 
 public interface MoveValidation {
 
-    PossibleActions moveValidation(Position bishopPosition, Board board, PossibleActions possibleActions, int directionForRow, int directionForColumn);
+    PossibleActions moveValidation(Position bishopPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift);
 }

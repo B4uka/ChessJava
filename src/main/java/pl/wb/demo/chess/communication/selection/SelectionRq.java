@@ -1,4 +1,4 @@
-package com.wb.demo.chess.communication.selection;
+package pl.wb.demo.chess.communication.selection;
 
 public class SelectionRq {
     private String fieldSelectionAttempt;

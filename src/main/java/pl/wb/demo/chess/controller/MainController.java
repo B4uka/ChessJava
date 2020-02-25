@@ -1,14 +1,14 @@
 package pl.wb.demo.chess.controller;
 
-import pl.wb.demo.chess.communication.field.Field;
-import pl.wb.demo.chess.model.ChessGame;
-import pl.wb.demo.chess.model.piece_properties.Color;
-import pl.wb.demo.chess.model.piece_properties.Position;
 import com.google.gson.Gson;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.wb.demo.chess.communication.field.Field;
+import pl.wb.demo.chess.model.ChessGame;
+import pl.wb.demo.chess.model.piece_properties.Color;
+import pl.wb.demo.chess.model.piece_properties.Position;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;

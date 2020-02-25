@@ -24,9 +24,9 @@ public class Rook extends Piece implements MoveValidation{
     }
 
     @Override
-    public PossibleActions moveValidation (Position rookMove, Board board, PossibleActions possibleActions, int directionForRow, int directionForColumn) {
+    public PossibleActions moveValidation (Position rookMove, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
 
-        rookMove = rookMove.getNewPositionByVector(directionForRow, directionForColumn);
+        rookMove = rookMove.getNewPositionByVector(rowShift, columnShift);
 
         while (rookMove.isOnBoard()) {
             if(this.color == Color.BLACK && board.isOccupiedByColor(rookMove, Color.BLACK)
@@ -38,7 +38,7 @@ public class Rook extends Piece implements MoveValidation{
                 return possibleActions;
             } else if (!board.isOccupied(rookMove)) {
                 possibleActions.addPossibleMove(rookMove);
-                rookMove = rookMove.getNewPositionByVector(directionForRow, directionForColumn);
+                rookMove = rookMove.getNewPositionByVector(rowShift, columnShift);
             }
         }
         return possibleActions;

@@ -388,38 +388,42 @@ public class ChessGame {
         ChessGame game = new ChessGame();
         printActualPositionAndGetPositionOfBothKings();
 
-        game.selectWhitePiece(7, 0);
-        if (game.newPiecePositionByMove(new Position(7, 3))) {
-            System.out.println(game.isKingMated(Color.BLACK));
-        }
-        game.selectWhitePiece(7, 6);
-        if (game.newPiecePositionByMove(new Position(5, 7))) {
-            System.out.println(game.isKingMated(Color.BLACK));
-        }
-//        game.selectBlackPiece(1, 4);
-//        if (game.newPiecePositionByMove(new Position(3, 4))) {
-//            System.out.println(game.isKingMated(Color.WHITE));
-//        }
-//        game.selectWhitePiece(6, 6);
-//        if (game.newPiecePositionByMove(new Position(4, 6))) {
+//        game.selectWhitePiece(7, 0);
+//        if (game.newPiecePositionByMove(new Position(7, 3))) {
 //            System.out.println(game.isKingMated(Color.BLACK));
 //        }
-//        game.selectBlackPiece(1, 1);
-//        if (game.newPiecePositionByMove(new Position(3, 1))) {
-//            System.out.println(game.isKingMated(Color.WHITE));
-//        }
-//        game.selectWhitePiece(6, 4);
-//        if (game.newPiecePositionByMove(new Position(5, 4))) {
-//            System.out.println(game.isKingMated(Color.BLACK));
-//        }
-//        game.selectWhitePiece(7, 5);
+//        game.selectWhitePiece(7, 6);
 //        if (game.newPiecePositionByMove(new Position(5, 7))) {
 //            System.out.println(game.isKingMated(Color.BLACK));
 //        }
-//        game.selectBlackPiece(0, 3);
-//        if (game.newPiecePositionByMove(new Position(4, 7))) {
-//            System.out.println(game.isKingMated(Color.WHITE));
-//        }
+        game.selectBlackPiece(1, 4);
+        if (game.newPiecePositionByMove(new Position(3, 4))) {
+            System.out.println(game.isKingMated(Color.WHITE));
+        }
+        game.selectWhitePiece(6, 6);
+        if (game.newPiecePositionByMove(new Position(4, 6))) {
+            System.out.println(game.isKingMated(Color.BLACK));
+        }
+        game.selectWhitePiece(6, 5);
+        if (game.newPiecePositionByMove(new Position(4, 5))) {
+            System.out.println(game.isKingMated(Color.BLACK));
+        }
+        game.selectBlackPiece(1, 1);
+        if (game.newPiecePositionByMove(new Position(3, 1))) {
+            System.out.println(game.isKingMated(Color.WHITE));
+        }
+        game.selectWhitePiece(6, 4);
+        if (game.newPiecePositionByMove(new Position(5, 4))) {
+            System.out.println(game.isKingMated(Color.BLACK));
+        }
+        game.selectWhitePiece(7, 5);
+        if (game.newPiecePositionByMove(new Position(5, 7))) {
+            System.out.println(game.isKingMated(Color.BLACK));
+        }
+        game.selectBlackPiece(0, 3);
+        if (game.newPiecePositionByMove(new Position(4, 7))) {
+            System.out.println(game.isKingMated(Color.WHITE));
+        }
         board.printBoard();
     }
 }

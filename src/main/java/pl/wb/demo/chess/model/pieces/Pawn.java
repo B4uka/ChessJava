@@ -5,7 +5,7 @@ import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 
-public class Pawn extends Piece {
+public class Pawn extends Piece implements MoveValidation {
 
     public Pawn (Position position, Color color, String code, int countMoves) {
         super(position, color, code, countMoves);
@@ -15,59 +15,41 @@ public class Pawn extends Piece {
     public PossibleActions generatePossibleActions (Board board) {
 
         PossibleActions possibleActions = new PossibleActions();
-        Position[] pawnPossibleMove = new Position[2];
-        Position[] pawnPossibleCapture = new Position[2];
 
-        //possible moves by Black
         if (this.color == Color.BLACK) {
-            pawnPossibleMove[0] = this.position.getNewPositionByVector(1, 0);
-            if (this.position.getRow() == 1 && !board.isOccupied(pawnPossibleMove[0])) {
-                pawnPossibleMove[1] = this.position.getNewPositionByVector(2, 0);
-            } else {
-                pawnPossibleMove[1] = pawnPossibleMove[0];
-            }
-            for (Position test : pawnPossibleMove) {
-                if (test.isOnBoard() && !board.isOccupied(test)) {
-                    possibleActions.addPossibleMove(test);
-                }
-            }
-            // TODO:  En passant
-            pawnPossibleCapture[0] = this.position.getNewPositionByVector(1, 1);
-            pawnPossibleCapture[1] = this.position.getNewPositionByVector(1, -1);
-            for (Position test : pawnPossibleCapture) {
-                if (test.isOnBoard() && !board.isOccupiedByColor(test, Color.BLACK) && !board.isOccupiedByColor(test, Color.WHITE)) {
-                    continue;
-                } else if (test.isOnBoard() && board.isOccupiedByColor(test, Color.WHITE) && !board.isOccupiedBySpecificPiece(test, Color.WHITE, King.class)) {
-                    possibleActions.addPossibleCapture(test);
-                } else if (test.isOnBoard() && board.isOccupiedBySpecificPiece(test, Color.WHITE, King.class)) {
-                    possibleActions.addPossibleChecks(test);
-                }
-            }
+            moveValidation(this.position, board, possibleActions, 1, 0);
+            captureValidation(this.position, board, possibleActions, 1, 1, Color.WHITE);
+            captureValidation(this.position, board, possibleActions, 1, -1, Color.WHITE);
         } else if (this.color == Color.WHITE) {
-            //possible moves by WHITE
-            pawnPossibleMove[0] = this.position.getNewPositionByVector(-1, 0);
-            if (this.position.getRow() == 6 && !board.isOccupied(pawnPossibleMove[0])) {
-                pawnPossibleMove[1] = this.position.getNewPositionByVector(-2, 0);
-            } else {
-                pawnPossibleMove[1] = pawnPossibleMove[0];
+            moveValidation(this.position, board, possibleActions, -1, 0);
+            captureValidation(this.position, board, possibleActions, -1, 1, Color.BLACK);
+            captureValidation(this.position, board, possibleActions, -1, -1, Color.BLACK);
+        }
+        return possibleActions;
+    }
+
+    @Override
+    public PossibleActions moveValidation (Position pawnMove, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+
+        pawnMove = pawnMove.getNewPositionByVector(rowShift, columnShift);
+
+        if (!board.isOccupied(pawnMove)) {
+            possibleActions.addPossibleMove(pawnMove);
+            if ((this.position.getRow() == 1 && pawnMove.getRow() == 2) || (this.position.getRow() == 6 && pawnMove.getRow() == 5)) {
+                moveValidation(pawnMove, board, possibleActions, rowShift, columnShift);
             }
-            for (Position test : pawnPossibleMove) {
-                if (test.isOnBoard() && !board.isOccupied(test)) {
-                    possibleActions.addPossibleMove(test);
-                }
-            }
-            // TODO:  En passant
-            pawnPossibleCapture[0] = this.position.getNewPositionByVector(-1, 1);
-            pawnPossibleCapture[1] = this.position.getNewPositionByVector(-1, -1);
-            for (Position test : pawnPossibleCapture) {
-                if (test.isOnBoard() && !board.isOccupiedByColor(test, Color.WHITE) && !board.isOccupiedByColor(test, Color.BLACK)) {
-                    continue;
-                } else if (test.isOnBoard() && board.isOccupiedByColor(test, Color.BLACK) && !board.isOccupiedBySpecificPiece(test, Color.BLACK, King.class)) {
-                    possibleActions.addPossibleCapture(test);
-                } else if (test.isOnBoard() && board.isOccupiedBySpecificPiece(test, Color.BLACK, King.class)) {
-                    possibleActions.addPossibleChecks(test);
-                }
-            }
+        }
+        return possibleActions;
+    }
+
+
+    public PossibleActions captureValidation (Position pawnCapture, Board board, PossibleActions possibleActions, int rowShift, int columnShift, Color opponentsColor) {
+
+        pawnCapture = pawnCapture.getNewPositionByVector(rowShift, columnShift);
+
+        // TODO: En passant
+        if (pawnCapture.isOnBoard() && board.isOccupiedByColor(pawnCapture, opponentsColor) && !board.isOccupiedBySpecificPiece(pawnCapture, opponentsColor, King.class)) {
+            possibleActions.addPossibleCapture(pawnCapture);
         }
         return possibleActions;
     }

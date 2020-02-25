@@ -23,9 +23,9 @@ public class Bishop extends Piece implements MoveValidation{
         return possibleActions;
     }
     @Override
-    public PossibleActions moveValidation (Position bishopPosition, Board board, PossibleActions possibleActions, int directionForRow, int directionForColumn) {
+    public PossibleActions moveValidation (Position bishopPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
 
-        bishopPosition = bishopPosition.getNewPositionByVector(directionForRow, directionForColumn);
+        bishopPosition = bishopPosition.getNewPositionByVector(rowShift, columnShift);
 
         while (bishopPosition.isOnBoard()) {
             if(this.color == Color.BLACK && board.isOccupiedByColor(bishopPosition, Color.BLACK)
@@ -37,7 +37,7 @@ public class Bishop extends Piece implements MoveValidation{
                 return possibleActions;
             } else if (!board.isOccupied(bishopPosition)) {
                 possibleActions.addPossibleMove(bishopPosition);
-                bishopPosition = bishopPosition.getNewPositionByVector(directionForRow, directionForColumn);
+                bishopPosition = bishopPosition.getNewPositionByVector(rowShift, columnShift);
             }
         }
         return possibleActions;

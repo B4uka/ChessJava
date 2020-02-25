@@ -29,9 +29,9 @@ public class Queen extends Piece implements MoveValidation {
     }
 
     @Override
-    public PossibleActions moveValidation (Position queenMove, Board board, PossibleActions possibleActions, int directionForRow, int directionForColumn) {
+    public PossibleActions moveValidation (Position queenMove, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
 
-            queenMove = queenMove.getNewPositionByVector(directionForRow, directionForColumn);
+            queenMove = queenMove.getNewPositionByVector(rowShift, columnShift);
 
             while (queenMove.isOnBoard()) {
                 if(this.color == Color.BLACK && board.isOccupiedByColor(queenMove, Color.BLACK)
@@ -43,7 +43,7 @@ public class Queen extends Piece implements MoveValidation {
                     return possibleActions;
                 } else if (!board.isOccupied(queenMove)) {
                     possibleActions.addPossibleMove(queenMove);
-                    queenMove = queenMove.getNewPositionByVector(directionForRow, directionForColumn);
+                    queenMove = queenMove.getNewPositionByVector(rowShift, columnShift);
                 }
             }
             return possibleActions;

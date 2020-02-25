@@ -19,6 +19,7 @@ public class Knight extends Piece implements MoveValidation {
         moveValidation(this.position, board, possibleActions, 1, -2);
         moveValidation(this.position, board, possibleActions, 2, 1);
         moveValidation(this.position, board, possibleActions, 2, -1);
+
         moveValidation(this.position, board, possibleActions, -1, 2);
         moveValidation(this.position, board, possibleActions, -1, -2);
         moveValidation(this.position, board, possibleActions, -2, 1);
@@ -28,25 +29,21 @@ public class Knight extends Piece implements MoveValidation {
     }
 
     @Override
-    public PossibleActions moveValidation (Position knightMove, Board board, PossibleActions possibleActions, int directionForRow, int directionForColumn) {
+    public PossibleActions moveValidation (Position knightMove, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
 
-        knightMove = knightMove.getNewPositionByVector(directionForRow, directionForColumn);
+        knightMove = knightMove.getNewPositionByVector(rowShift, columnShift);
 
         if (this.color == Color.WHITE && knightMove.isOnBoard()) {
-            if (!board.isOccupiedByColor(knightMove, Color.WHITE) && !board.isOccupiedByColor(knightMove, Color.BLACK)) {
+            if (!board.isOccupied(knightMove)) {
                 possibleActions.addPossibleMove(knightMove);
             } else if (board.isOccupiedByColor(knightMove, Color.BLACK) && !board.isOccupiedBySpecificPiece(knightMove, Color.BLACK, King.class)) {
                 possibleActions.addPossibleCapture(knightMove);
-            } else if ( board.isOccupiedBySpecificPiece(knightMove, Color.BLACK, King.class)) {
-                possibleActions.addPossibleChecks(knightMove);
             }
         } else if (this.color == Color.BLACK && knightMove.isOnBoard()) {
-            if (!board.isOccupiedByColor(knightMove, Color.BLACK) && !board.isOccupiedByColor(knightMove, Color.WHITE)) {
+            if (!board.isOccupied(knightMove)) {
                 possibleActions.addPossibleMove(knightMove);
             } else if (board.isOccupiedByColor(knightMove, Color.WHITE) && !board.isOccupiedBySpecificPiece(knightMove, Color.WHITE, King.class)) {
                 possibleActions.addPossibleCapture(knightMove);
-            } else if (board.isOccupiedBySpecificPiece(knightMove, Color.WHITE, King.class)) {
-                possibleActions.addPossibleChecks(knightMove);
             }
         }
         return possibleActions;
