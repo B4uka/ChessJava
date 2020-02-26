@@ -4,6 +4,7 @@ import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
+import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.MoveValidation;
 
 public class Knight extends Piece implements MoveValidation {
 
@@ -29,21 +30,21 @@ public class Knight extends Piece implements MoveValidation {
     }
 
     @Override
-    public PossibleActions moveValidation (Position knightMove, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+    public PossibleActions moveValidation (Position knightPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+        //potential position knowing row and columns shifts
+        Position knightPossibleMovePosition = knightPosition.getNewPositionByVector(rowShift, columnShift);
 
-        knightMove = knightMove.getNewPositionByVector(rowShift, columnShift);
-
-        if (this.color == Color.WHITE && knightMove.isOnBoard()) {
-            if (!board.isOccupied(knightMove)) {
-                possibleActions.addPossibleMove(knightMove);
-            } else if (board.isOccupiedByColor(knightMove, Color.BLACK) && !board.isOccupiedBySpecificPiece(knightMove, Color.BLACK, King.class)) {
-                possibleActions.addPossibleCapture(knightMove);
+        if (this.color == Color.WHITE && knightPossibleMovePosition.isOnBoard()) {
+            if (!board.isOccupied(knightPossibleMovePosition)) {
+                possibleActions.addPossibleMove(knightPossibleMovePosition);
+            } else if (board.isOccupiedByColor(knightPossibleMovePosition, Color.BLACK) && !board.isOccupiedBySpecificPiece(knightPossibleMovePosition, Color.BLACK, King.class)) {
+                possibleActions.addPossibleCapture(knightPossibleMovePosition);
             }
-        } else if (this.color == Color.BLACK && knightMove.isOnBoard()) {
-            if (!board.isOccupied(knightMove)) {
-                possibleActions.addPossibleMove(knightMove);
-            } else if (board.isOccupiedByColor(knightMove, Color.WHITE) && !board.isOccupiedBySpecificPiece(knightMove, Color.WHITE, King.class)) {
-                possibleActions.addPossibleCapture(knightMove);
+        } else if (this.color == Color.BLACK && knightPossibleMovePosition.isOnBoard()) {
+            if (!board.isOccupied(knightPossibleMovePosition)) {
+                possibleActions.addPossibleMove(knightPossibleMovePosition);
+            } else if (board.isOccupiedByColor(knightPossibleMovePosition, Color.WHITE) && !board.isOccupiedBySpecificPiece(knightPossibleMovePosition, Color.WHITE, King.class)) {
+                possibleActions.addPossibleCapture(knightPossibleMovePosition);
             }
         }
         return possibleActions;

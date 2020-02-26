@@ -4,6 +4,7 @@ import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
+import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.MoveValidation;
 
 public class Pawn extends Piece implements MoveValidation {
 
@@ -29,14 +30,14 @@ public class Pawn extends Piece implements MoveValidation {
     }
 
     @Override
-    public PossibleActions moveValidation (Position pawnMove, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+    public PossibleActions moveValidation (Position pawnPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+        //potential position knowing row and columns shifts
+        Position pawnPossibleMovePosition = pawnPosition.getNewPositionByVector(rowShift, columnShift);
 
-        pawnMove = pawnMove.getNewPositionByVector(rowShift, columnShift);
-
-        if (!board.isOccupied(pawnMove)) {
-            possibleActions.addPossibleMove(pawnMove);
-            if ((this.position.getRow() == 1 && pawnMove.getRow() == 2) || (this.position.getRow() == 6 && pawnMove.getRow() == 5)) {
-                moveValidation(pawnMove, board, possibleActions, rowShift, columnShift);
+        if (!board.isOccupied(pawnPossibleMovePosition)) {
+            possibleActions.addPossibleMove(pawnPossibleMovePosition);
+            if ((this.position.getRow() == 1 && pawnPossibleMovePosition.getRow() == 2) || (this.position.getRow() == 6 && pawnPossibleMovePosition.getRow() == 5)) {
+                moveValidation(pawnPossibleMovePosition, board, possibleActions, rowShift, columnShift);
             }
         }
         return possibleActions;

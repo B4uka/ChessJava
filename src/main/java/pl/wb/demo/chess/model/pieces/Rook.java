@@ -4,8 +4,9 @@ import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
+import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.MoveValidation;
 
-public class Rook extends Piece implements MoveValidation{
+public class Rook extends Piece implements MoveValidation {
 
     public Rook (Position position, Color color, String code, int countMoves) {
         super(position, color, code, countMoves);
@@ -24,21 +25,21 @@ public class Rook extends Piece implements MoveValidation{
     }
 
     @Override
-    public PossibleActions moveValidation (Position rookMove, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+    public PossibleActions moveValidation (Position rookPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+        //first iteration - potential position knowing row and columns shifts
+        Position rookPossibleMovePosition = rookPosition.getNewPositionByVector(rowShift, columnShift);
 
-        rookMove = rookMove.getNewPositionByVector(rowShift, columnShift);
-
-        while (rookMove.isOnBoard()) {
-            if(this.color == Color.BLACK && board.isOccupiedByColor(rookMove, Color.BLACK)
-                    || this.color == Color.WHITE && board.isOccupiedByColor(rookMove, Color.WHITE)){
+        while (rookPossibleMovePosition.isOnBoard()) {
+            if(this.color == Color.BLACK && board.isOccupiedByColor(rookPossibleMovePosition, Color.BLACK)
+                    || this.color == Color.WHITE && board.isOccupiedByColor(rookPossibleMovePosition, Color.WHITE)){
                 break;
-            } else if (this.color == Color.WHITE && board.isOccupiedByColor(rookMove, Color.BLACK)
-                    || (this.color == Color.BLACK && board.isOccupiedByColor(rookMove, Color.WHITE))) {
-                possibleActions.addPossibleCapture(rookMove);
+            } else if (this.color == Color.WHITE && board.isOccupiedByColor(rookPossibleMovePosition, Color.BLACK)
+                    || (this.color == Color.BLACK && board.isOccupiedByColor(rookPossibleMovePosition, Color.WHITE))) {
+                possibleActions.addPossibleCapture(rookPossibleMovePosition);
                 return possibleActions;
-            } else if (!board.isOccupied(rookMove)) {
-                possibleActions.addPossibleMove(rookMove);
-                rookMove = rookMove.getNewPositionByVector(rowShift, columnShift);
+            } else if (!board.isOccupied(rookPossibleMovePosition)) {
+                possibleActions.addPossibleMove(rookPossibleMovePosition);
+                rookPossibleMovePosition = rookPossibleMovePosition.getNewPositionByVector(rowShift, columnShift);
             }
         }
         return possibleActions;

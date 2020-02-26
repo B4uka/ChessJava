@@ -45,7 +45,7 @@ public class Board {
 
     public boolean isOccupiedBySpecificPiece (Position position, Color color, Class pieceClass) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
-        return piece.getClass() == pieceClass && piece.getColor() == color;
+        return piece != null && piece.getClass() == pieceClass && piece.getColor() == color;
     }
 
     public Position getBlackKingPosition () {

@@ -1,12 +1,14 @@
 package pl.wb.demo.chess.model.pieces;
 
-import pl.wb.demo.chess.model.ChessGame;
 import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
+import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.CastlingKingMovesValidation;
+import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.CheckValidation;
+import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.MoveValidation;
 
-public class King extends Piece {
+public class King extends Piece implements MoveValidation, CheckValidation {
 
     public King (Position position, Color color, String code, int countMoves) {
         super(position, color, code, countMoves);
@@ -16,207 +18,103 @@ public class King extends Piece {
     public PossibleActions generatePossibleActions (Board board) {
         PossibleActions possibleActions = new PossibleActions();
 
-        Position[] kingMove = new Position[8];
+        moveValidation(this.position, board, possibleActions,0, 1);
+        moveValidation(this.position, board, possibleActions,0, -1);
+        moveValidation(this.position, board, possibleActions,1, 0);
+        moveValidation(this.position, board, possibleActions,-1, 0);
+        moveValidation(this.position, board, possibleActions,1, 1);
+        moveValidation(this.position, board, possibleActions,1, -1);
+        moveValidation(this.position, board, possibleActions,-1, 1);
+        moveValidation(this.position, board, possibleActions,-1, -1);
 
-        kingMove[0] = this.position.getNewPositionByVector(0, 1);
-        kingMove[1] = this.position.getNewPositionByVector(0, -1);
-        kingMove[2] = this.position.getNewPositionByVector(1, 0);
-        kingMove[3] = this.position.getNewPositionByVector(-1, 0);
-        kingMove[4] = this.position.getNewPositionByVector(1, 1);
-        kingMove[5] = this.position.getNewPositionByVector(1, -1);
-        kingMove[6] = this.position.getNewPositionByVector(-1, 1);
-        kingMove[7] = this.position.getNewPositionByVector(-1, -1);
+        CastlingKingMovesValidation possibleKingCastleMoves = new CastlingKingMovesValidation(possibleActions, this.color, board, this.position);
+        possibleKingCastleMoves.kingMovesForCastling();
 
-        for (Position test : kingMove) {
-            if (test.isOnBoard()) {
-                if (this.color == Color.WHITE && !board.isOccupied(test)) {//&& ChessGame.isWhiteKingChecked() ) {
-                    possibleActions.addPossibleMove(test);
-                } else if (this.color == Color.WHITE && !board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedByColor((test), Color.BLACK)) {
-                    possibleActions.addPossibleCapture(test);
-                } else if (this.color == Color.BLACK && !board.isOccupied(test)) {
-                    possibleActions.addPossibleMove(test);
-                } else if (this.color == Color.BLACK && !board.isOccupiedByColor(test, Color.BLACK) && board.isOccupiedByColor((test), Color.WHITE)) {
-                    possibleActions.addPossibleCapture(test);
-                }
-            }
-        }
-        if (this.color == Color.BLACK && !ChessGame.blackCastled && board.getBlackKingPiece().getCountMoves() == 0) {
-            if(!board.isBoardOccupiedByAnyPiece(0, 6) && board.getBlackPiece(0, 7).getClass() == Rook.class) {
-                Position castlingKingMove1 = this.position.setNewPosition(0, 6);
-                if (!ChessGame.isBlackKingChecked() && !board.isBoardOccupiedByAnyPiece(0, 5) && board.getPiece(0, 7).getCountMoves() == 0) {
-                    possibleActions.addPossibleCastlingKingMove(castlingKingMove1);//King move
-                }
-            }
-            if(!board.isBoardOccupiedByAnyPiece(0, 3) & !board.isBoardOccupiedByAnyPiece(0, 2) && !board.isBoardOccupiedByAnyPiece(0, 1) && board.getBlackPiece(0, 0).getClass() == Rook.class) {
-                Position castlingKingMove2 = this.position.setNewPosition(0, 2);
-                if (!ChessGame.isBlackKingChecked() && !board.isBoardOccupiedByAnyPiece(0, 3) && board.getPiece(0, 0).getCountMoves() == 0) {
-                    possibleActions.addPossibleCastlingKingMove(castlingKingMove2);//King move
-                }
-            }
-        } else if (this.color == Color.WHITE && !ChessGame.whiteCastled && board.getWhiteKingPiece().getCountMoves() == 0) {
-            if (!board.isBoardOccupiedByAnyPiece(7, 6) && !board.isBoardOccupiedByAnyPiece(7, 5)) {
-                Position castlingKingMove1 = this.position.setNewPosition(7, 6);
-                if (!ChessGame.isWhiteKingChecked() && board.getPiece(7, 7).getCountMoves() == 0
-                        && board.getWhitePiece(7, 7).getClass() == Rook.class) {
-                    possibleActions.addPossibleCastlingKingMove(castlingKingMove1);//King move
-                }
-            }
-            if (!board.isBoardOccupiedByAnyPiece(7, 3) && !board.isBoardOccupiedByAnyPiece(7, 2) && !board.isBoardOccupiedByAnyPiece(7, 1) && board.getWhitePiece(7, 0).getClass() == Rook.class) {
-                Position castlingKingMove2 = this.position.setNewPosition(7, 2);
-                if (!ChessGame.isWhiteKingChecked() && !board.isBoardOccupiedByAnyPiece(7, 3) && board.getPiece(7, 0).getCountMoves() == 0) {
-                    possibleActions.addPossibleCastlingKingMove(castlingKingMove2);//King move
-                }
+        return possibleActions;
+    }
+
+    @Override
+    public PossibleActions moveValidation (Position kingPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+        //potential position knowing row and columns shifts
+        Position kingPossibleMovePosition = kingPosition.getNewPositionByVector(rowShift, columnShift);
+
+        if (kingPossibleMovePosition.isOnBoard()) {
+            if (this.color == Color.WHITE && !board.isOccupied(kingPossibleMovePosition)) {//&& ChessGame.isWhiteKingChecked() ) {
+                possibleActions.addPossibleMove(kingPossibleMovePosition);
+            } else if (this.color == Color.WHITE && !board.isOccupiedByColor(kingPossibleMovePosition, Color.WHITE) && board.isOccupiedByColor((kingPossibleMovePosition), Color.BLACK)) {
+                possibleActions.addPossibleCapture(kingPossibleMovePosition);
+            } else if (this.color == Color.BLACK && !board.isOccupied(kingPossibleMovePosition)) {
+                possibleActions.addPossibleMove(kingPossibleMovePosition);
+            } else if (this.color == Color.BLACK && !board.isOccupiedByColor(kingPossibleMovePosition, Color.BLACK) && board.isOccupiedByColor((kingPossibleMovePosition), Color.WHITE)) {
+                possibleActions.addPossibleCapture(kingPossibleMovePosition);
             }
         }
         return possibleActions;
     }
 
+    @Override
     public PossibleActions piecesPositionsCheckingWhiteKing (Board board) {
         PossibleActions possibleActions = new PossibleActions();
 
-        Position[] checkedByKing = new Position[8];
+        //enemy king checking players king
+        kingCheckingKing(board, possibleActions);
 
-        checkedByKing[0] = this.position.getNewPositionByVector(0, 1);
-        checkedByKing[1] = this.position.getNewPositionByVector(0, -1);
-        checkedByKing[2] = this.position.getNewPositionByVector(1, 0);
-        checkedByKing[3] = this.position.getNewPositionByVector(-1, 0);
-        checkedByKing[4] = this.position.getNewPositionByVector(1, 1);
-        checkedByKing[5] = this.position.getNewPositionByVector(1, -1);
-        checkedByKing[6] = this.position.getNewPositionByVector(-1, 1);
-        checkedByKing[7] = this.position.getNewPositionByVector(-1, -1);
-        for (Position test : checkedByKing) {
-            if (test.isOnBoard()) {
-                if (board.isOccupiedByColor(test, Color.BLACK) && board.isOccupiedBySpecificPiece(test, Color.BLACK, King.class)) {
-                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
-                }
-            }
-        }
+        //enemy king checking players king
+        knightCheckingKing(board, possibleActions);
 
-        Position[] checkedByKnight = new Position[8];
-        checkedByKnight[0] = this.position.getNewPositionByVector(1, 2);
-        checkedByKnight[1] = this.position.getNewPositionByVector(1, -2);
-        checkedByKnight[2] = this.position.getNewPositionByVector(2, 1);
-        checkedByKnight[3] = this.position.getNewPositionByVector(2, -1);
-        checkedByKnight[4] = this.position.getNewPositionByVector(-1, 2);
-        checkedByKnight[5] = this.position.getNewPositionByVector(-1, -2);
-        checkedByKnight[6] = this.position.getNewPositionByVector(-2, 1);
-        checkedByKnight[7] = this.position.getNewPositionByVector(-2, -1);
-        for (Position test : checkedByKnight) {
-            if (test.isOnBoard()) {
-                if (board.isOccupiedByColor(test, Color.BLACK) && board.isOccupiedBySpecificPiece(test, Color.BLACK, Knight.class)) {
-                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
-                }
-            }
-        }
+        //enemy queen or bishop checking players king
+        queenBishopCheckingKing(this.position, board, possibleActions, 1, 1, Color.BLACK);
+        queenBishopCheckingKing(this.position, board, possibleActions, 1, -1, Color.BLACK);
+        queenBishopCheckingKing(this.position, board, possibleActions, -1, 1, Color.BLACK);
+        queenBishopCheckingKing(this.position, board, possibleActions, -1, -1, Color.BLACK);
 
-        Position[] checkedByQueenBishopRook = new Position[8];
-        checkedByQueenBishopRook[0] = this.position.getNewPositionByVector(1, 1);
-        checkedByQueenBishopRook[1] = this.position.getNewPositionByVector(1, -1);
-        checkedByQueenBishopRook[2] = this.position.getNewPositionByVector(-1, 1);
-        checkedByQueenBishopRook[3] = this.position.getNewPositionByVector(-1, -1);
+        //enemy queen or rook checking players king
+        queenRookCheckingKing(this.position, board, possibleActions, 0, 1, Color.BLACK);
+        queenRookCheckingKing(this.position, board, possibleActions, 0, -1, Color.BLACK);
+        queenRookCheckingKing(this.position, board, possibleActions, 1, 0, Color.BLACK);
+        queenRookCheckingKing(this.position, board, possibleActions, -1, 0, Color.BLACK);
 
-        checkedByQueenBishopRook[4] = this.position.getNewPositionByVector(0, 1);
-        checkedByQueenBishopRook[5] = this.position.getNewPositionByVector(0, -1);
-        checkedByQueenBishopRook[6] = this.position.getNewPositionByVector(1, 0);
-        checkedByQueenBishopRook[7] = this.position.getNewPositionByVector(-1, 0);
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[0].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[0]))
-                checkedByQueenBishopRook[0] = this.position.getNewPositionByVector(1 + i, 1 + i);
-            else if (checkedByQueenBishopRook[0].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[0]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[0], Color.BLACK, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[0], Color.BLACK, Bishop.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[0]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[1].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[1]))
-                checkedByQueenBishopRook[1] = this.position.getNewPositionByVector(1 + i, -1 - i);
-            else if (checkedByQueenBishopRook[1].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[1]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[1], Color.BLACK, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[1], Color.BLACK, Bishop.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[1]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[2].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[2]))
-                checkedByQueenBishopRook[2] = this.position.getNewPositionByVector(-1 - i, 1 + i);
-            else if (checkedByQueenBishopRook[2].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[2]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[2], Color.BLACK, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[2], Color.BLACK, Bishop.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[2]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[3].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[3]))
-                checkedByQueenBishopRook[3] = this.position.getNewPositionByVector(-1 - i, -1 - i);
-            else if (checkedByQueenBishopRook[3].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[3]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[3], Color.BLACK, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[3], Color.BLACK, Bishop.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[3]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[4].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[4]))
-                checkedByQueenBishopRook[4] = this.position.getNewPositionByVector(0, 1 + i);
-            else if (checkedByQueenBishopRook[4].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[4]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[4], Color.BLACK, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[4], Color.BLACK, Rook.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[4]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[5].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[5]))
-                checkedByQueenBishopRook[5] = this.position.getNewPositionByVector(0, -1 - i);
-            else if (checkedByQueenBishopRook[5].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[5]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[5], Color.BLACK, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[5], Color.BLACK, Rook.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[5]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[6].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[6]))
-                checkedByQueenBishopRook[6] = this.position.getNewPositionByVector(+1 + i, 0);
-            else if (checkedByQueenBishopRook[6].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[6]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[6], Color.BLACK, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[6], Color.BLACK, Rook.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[6]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[7].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[7]))
-                checkedByQueenBishopRook[7] = this.position.getNewPositionByVector(-1 - i, 0);
-            else if (checkedByQueenBishopRook[7].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[7]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[7], Color.BLACK, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[7], Color.BLACK, Rook.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[7]);
-                break;
-            } else
-                break;
-        }
-        Position[] checkedByPawn = new Position[2];
-        checkedByPawn[0] = this.position.getNewPositionByVector(-1, 1);
-        checkedByPawn[1] = this.position.getNewPositionByVector(-1, -1);
-        for (Position test : checkedByPawn) {
-            if (test.isOnBoard()) {
-                if (board.isOccupiedByColor(test, Color.BLACK) && board.isOccupiedBySpecificPiece(test, Color.BLACK, Pawn.class)) {
-                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
-                }
-            }
-        }
+        //enemy pawn checking players king
+        pawnCheckingKing(this.position, board, possibleActions, -1, 1, Color.BLACK);
+        pawnCheckingKing(this.position, board, possibleActions, -1, -1, Color.BLACK);
+
         return possibleActions;
     }
 
+    @Override
     public PossibleActions piecesPositionsCheckingBlackKing (Board board) {
         PossibleActions possibleActions = new PossibleActions();
 
+        //enemy king checking players king
+        kingCheckingKing(board, possibleActions);
+
+        //enemy king checking players king
+        knightCheckingKing(board, possibleActions);
+
+        //enemy queen or bishop checking players king
+        queenBishopCheckingKing(this.position, board, possibleActions, 1, 1, Color.WHITE);
+        queenBishopCheckingKing(this.position, board, possibleActions, 1, -1, Color.WHITE);
+        queenBishopCheckingKing(this.position, board, possibleActions, -1, 1, Color.WHITE);
+        queenBishopCheckingKing(this.position, board, possibleActions, -1, -1, Color.WHITE);
+
+        //enemy queen or rook checking players king
+        queenRookCheckingKing(this.position, board, possibleActions, 0, 1, Color.WHITE);
+        queenRookCheckingKing(this.position, board, possibleActions, 0, -1, Color.WHITE);
+        queenRookCheckingKing(this.position, board, possibleActions, 1, 0, Color.WHITE);
+        queenRookCheckingKing(this.position, board, possibleActions, -1, 0, Color.WHITE);
+
+        //enemy pawn checking players king
+        pawnCheckingKing(this.position, board, possibleActions, 1, 1, Color.WHITE);
+        pawnCheckingKing(this.position, board, possibleActions, 1, -1, Color.WHITE);
+
+        return possibleActions;
+    }
+
+    @Override
+    public void kingCheckingKing (Board board, PossibleActions possibleActions) {
         Position[] checkedByKing = new Position[8];
 
+        // possible position of enemy king checking players king
         checkedByKing[0] = this.position.getNewPositionByVector(0, 1);
         checkedByKing[1] = this.position.getNewPositionByVector(0, -1);
         checkedByKing[2] = this.position.getNewPositionByVector(1, 0);
@@ -227,13 +125,20 @@ public class King extends Piece {
         checkedByKing[7] = this.position.getNewPositionByVector(-1, -1);
         for (Position test : checkedByKing) {
             if (test.isOnBoard()) {
-                if (board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedBySpecificPiece(test, Color.WHITE, King.class)) {
+                if (this.color == Color.BLACK && board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedBySpecificPiece(test, Color.WHITE, King.class)) {
+                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
+                }else if (this.color == Color.WHITE && board.isOccupiedByColor(test, Color.BLACK) && board.isOccupiedBySpecificPiece(test, Color.BLACK, King.class)) {
                     possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
                 }
             }
         }
+    }
 
+    @Override
+    public void knightCheckingKing (Board board, PossibleActions possibleActions) {
         Position[] checkedByKnight = new Position[8];
+
+        // possible position of enemy king checking players king
         checkedByKnight[0] = this.position.getNewPositionByVector(1, 2);
         checkedByKnight[1] = this.position.getNewPositionByVector(1, -2);
         checkedByKnight[2] = this.position.getNewPositionByVector(2, 1);
@@ -242,114 +147,64 @@ public class King extends Piece {
         checkedByKnight[5] = this.position.getNewPositionByVector(-1, -2);
         checkedByKnight[6] = this.position.getNewPositionByVector(-2, 1);
         checkedByKnight[7] = this.position.getNewPositionByVector(-2, -1);
-        for (Position test : checkedByKnight) {
-            if (test.isOnBoard()) {
-                if (board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedBySpecificPiece(test, Color.WHITE, Knight.class)) {
-                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
+        for (Position knightPossibleMovePosition : checkedByKnight) {
+            if (knightPossibleMovePosition.isOnBoard()) {
+                if (this.color == Color.BLACK && board.isOccupiedByColor(knightPossibleMovePosition, Color.WHITE) && board.isOccupiedBySpecificPiece(knightPossibleMovePosition, Color.WHITE, Knight.class)) {
+                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(knightPossibleMovePosition);
+                }else if (this.color == Color.WHITE && board.isOccupiedByColor(knightPossibleMovePosition, Color.BLACK) && board.isOccupiedBySpecificPiece(knightPossibleMovePosition, Color.BLACK, Knight.class)) {
+                        possibleActions.addPiecesPositionsWhichAreCheckingTheKing(knightPossibleMovePosition);
                 }
             }
         }
+    }
 
-        Position[] checkedByQueenBishopRook = new Position[8];
-        checkedByQueenBishopRook[0] = this.position.getNewPositionByVector(1, 1);
-        checkedByQueenBishopRook[1] = this.position.getNewPositionByVector(1, -1);
-        checkedByQueenBishopRook[2] = this.position.getNewPositionByVector(-1, 1);
-        checkedByQueenBishopRook[3] = this.position.getNewPositionByVector(-1, -1);
+    @Override
+    public void pawnCheckingKing (Position kingPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift, Color opponentsColor) {
+        //potential position knowing row and columns shifts
+        Position potentialPawnPositionCheckingKing = kingPosition.getNewPositionByVector(rowShift, columnShift);
 
-        checkedByQueenBishopRook[4] = this.position.getNewPositionByVector(0, 1);
-        checkedByQueenBishopRook[5] = this.position.getNewPositionByVector(0, -1);
-        checkedByQueenBishopRook[6] = this.position.getNewPositionByVector(1, 0);
-        checkedByQueenBishopRook[7] = this.position.getNewPositionByVector(-1, 0);
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[0].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[0]))
-                checkedByQueenBishopRook[0] = this.position.getNewPositionByVector(1 + i, 1 + i);
-            else if (checkedByQueenBishopRook[0].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[0]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[0], Color.WHITE, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[0], Color.WHITE, Bishop.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[0]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[1].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[1]))
-                checkedByQueenBishopRook[1] = this.position.getNewPositionByVector(1 + i, -1 - i);
-            else if (checkedByQueenBishopRook[1].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[1]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[1], Color.WHITE, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[1], Color.WHITE, Bishop.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[1]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[2].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[2]))
-                checkedByQueenBishopRook[2] = this.position.getNewPositionByVector(-1 - i, 1 + i);
-            else if (checkedByQueenBishopRook[2].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[2]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[2], Color.WHITE, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[2], Color.WHITE, Bishop.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[2]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[3].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[3]))
-                checkedByQueenBishopRook[3] = this.position.getNewPositionByVector(-1 - i, -1 - i);
-            else if (checkedByQueenBishopRook[3].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[3]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[3], Color.WHITE, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[3], Color.WHITE, Bishop.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[3]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[4].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[4]))
-                checkedByQueenBishopRook[4] = this.position.getNewPositionByVector(0, 1 + i);
-            else if (checkedByQueenBishopRook[4].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[4]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[4], Color.WHITE, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[4], Color.WHITE, Rook.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[4]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[5].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[5]))
-                checkedByQueenBishopRook[5] = this.position.getNewPositionByVector(0, -1 - i);
-            else if (checkedByQueenBishopRook[5].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[5]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[5], Color.WHITE, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[5], Color.WHITE, Rook.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[5]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[6].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[6]))
-                checkedByQueenBishopRook[6] = this.position.getNewPositionByVector(+1 + i, 0);
-            else if (checkedByQueenBishopRook[6].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[6]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[6], Color.WHITE, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[6], Color.WHITE, Rook.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[6]);
-                break;
-            } else
-                break;
-        }
-        for (int i = 1; i < 8; i++) {
-            if (checkedByQueenBishopRook[7].isOnBoard() && !board.isOccupied(checkedByQueenBishopRook[7]))
-                checkedByQueenBishopRook[7] = this.position.getNewPositionByVector(-1 - i, 0);
-            else if (checkedByQueenBishopRook[7].isOnBoard() && board.isOccupied(checkedByQueenBishopRook[7]) &&
-                    (board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[7], Color.WHITE, Queen.class) || board.isOccupiedBySpecificPiece(checkedByQueenBishopRook[7], Color.WHITE, Rook.class))) {
-                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(checkedByQueenBishopRook[7]);
-                break;
-            } else
-                break;
-        }
-        Position[] checkedByPawn = new Position[2];
-        checkedByPawn[0] = this.position.getNewPositionByVector(1, 1);
-        checkedByPawn[1] = this.position.getNewPositionByVector(1, -1);
-        for (Position test : checkedByPawn) {
-            if (test.isOnBoard()) {
-                if (board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedBySpecificPiece(test, Color.WHITE, Pawn.class)) {
-                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
-                }
+        if (potentialPawnPositionCheckingKing.isOnBoard()) {
+            if (board.isOccupiedBySpecificPiece(potentialPawnPositionCheckingKing, opponentsColor, Pawn.class)) {
+                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(potentialPawnPositionCheckingKing);
             }
         }
-        return possibleActions;
+    }
+
+    @Override
+    public void queenRookCheckingKing (Position kingPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift, Color opponentsColor) {
+        //first iteration - potential position knowing row and columns shifts
+        Position potentialQueenRookPositionCheckingKing = kingPosition.getNewPositionByVector(rowShift, columnShift);
+
+        while (potentialQueenRookPositionCheckingKing.isOnBoard()) {
+            if (!board.isOccupied(potentialQueenRookPositionCheckingKing)) {
+                potentialQueenRookPositionCheckingKing = potentialQueenRookPositionCheckingKing.getNewPositionByVector(rowShift, columnShift);
+            } else if (board.isOccupied(potentialQueenRookPositionCheckingKing) &&
+                    (board.isOccupiedBySpecificPiece(potentialQueenRookPositionCheckingKing, opponentsColor, Queen.class)
+                            || board.isOccupiedBySpecificPiece(potentialQueenRookPositionCheckingKing, opponentsColor, Rook.class))) {
+                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(potentialQueenRookPositionCheckingKing);
+                break;
+            } else {
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void queenBishopCheckingKing (Position kingPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift, Color opponentsColor) {
+        //first iteration - potential position knowing row and columns shifts
+        Position potentialQueenBishopPositionCheckingKing = kingPosition.getNewPositionByVector(rowShift, columnShift);
+
+        while (potentialQueenBishopPositionCheckingKing.isOnBoard()) {
+            if (!board.isOccupied(potentialQueenBishopPositionCheckingKing)) {
+                potentialQueenBishopPositionCheckingKing = potentialQueenBishopPositionCheckingKing.getNewPositionByVector(rowShift, columnShift);
+            } else if (board.isOccupied(potentialQueenBishopPositionCheckingKing) &&
+                    (board.isOccupiedBySpecificPiece(potentialQueenBishopPositionCheckingKing, opponentsColor, Queen.class)
+                            || board.isOccupiedBySpecificPiece(potentialQueenBishopPositionCheckingKing, opponentsColor, Bishop.class))) {
+                possibleActions.addPiecesPositionsWhichAreCheckingTheKing(potentialQueenBishopPositionCheckingKing);
+                break;
+            } else {
+                break;
+            }
+        }
     }
 }

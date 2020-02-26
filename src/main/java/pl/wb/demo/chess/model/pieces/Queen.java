@@ -4,6 +4,7 @@ import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
+import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.MoveValidation;
 
 public class Queen extends Piece implements MoveValidation {
 
@@ -29,23 +30,23 @@ public class Queen extends Piece implements MoveValidation {
     }
 
     @Override
-    public PossibleActions moveValidation (Position queenMove, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+    public PossibleActions moveValidation (Position queenPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+        //first iteration - potential position knowing row and columns shifts
+        queenPosition = queenPosition.getNewPositionByVector(rowShift, columnShift);
 
-            queenMove = queenMove.getNewPositionByVector(rowShift, columnShift);
-
-            while (queenMove.isOnBoard()) {
-                if(this.color == Color.BLACK && board.isOccupiedByColor(queenMove, Color.BLACK)
-                        || this.color == Color.WHITE && board.isOccupiedByColor(queenMove, Color.WHITE)){
-                    break;
-                } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenMove, Color.BLACK)
-                        || (this.color == Color.BLACK && board.isOccupiedByColor(queenMove, Color.WHITE))) {
-                    possibleActions.addPossibleCapture(queenMove);
-                    return possibleActions;
-                } else if (!board.isOccupied(queenMove)) {
-                    possibleActions.addPossibleMove(queenMove);
-                    queenMove = queenMove.getNewPositionByVector(rowShift, columnShift);
-                }
+        while (queenPosition.isOnBoard()) {
+            if (this.color == Color.BLACK && board.isOccupiedByColor(queenPosition, Color.BLACK)
+                    || this.color == Color.WHITE && board.isOccupiedByColor(queenPosition, Color.WHITE)) {
+                break;
+            } else if (this.color == Color.WHITE && board.isOccupiedByColor(queenPosition, Color.BLACK)
+                    || (this.color == Color.BLACK && board.isOccupiedByColor(queenPosition, Color.WHITE))) {
+                possibleActions.addPossibleCapture(queenPosition);
+                return possibleActions;
+            } else if (!board.isOccupied(queenPosition)) {
+                possibleActions.addPossibleMove(queenPosition);
+                queenPosition = queenPosition.getNewPositionByVector(rowShift, columnShift);
             }
-            return possibleActions;
         }
+        return possibleActions;
+    }
 }
