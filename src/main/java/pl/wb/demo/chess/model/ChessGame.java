@@ -6,6 +6,7 @@ import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 import pl.wb.demo.chess.model.pieces.King;
 import pl.wb.demo.chess.model.pieces.Piece;
+import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.CheckingPiecesPositions;
 
 public class ChessGame {
 
@@ -24,17 +25,20 @@ public class ChessGame {
     }
 
     public static boolean isWhiteKingChecked () {
+        CheckingPiecesPositions positions = new CheckingPiecesPositions();
         King whiteKing = new King(board.getWhiteKingPosition(), Color.WHITE, "&#9812;", 0);
-        PossibleActions whiteKingCheckedPositions = whiteKing.piecesPositionsCheckingWhiteKing(board);
+
+        PossibleActions whiteKingCheckedPositions = positions.piecesPositionsCheckingWhiteKing(board, whiteKing.getPosition());
 
         whiteKingCheckedPositions.printPositionsOfPiecesThatAreCheckingKing();
         return !whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
     }
 
     public static boolean isBlackKingChecked () {
+        CheckingPiecesPositions positions = new CheckingPiecesPositions();
         King blackKing = new King(board.getBlackKingPosition(), Color.BLACK, "&#9818;", 0);
 
-        PossibleActions blackKingCheckedPositions = blackKing.piecesPositionsCheckingBlackKing(board);
+        PossibleActions blackKingCheckedPositions = positions.piecesPositionsCheckingBlackKing(board, blackKing.getPosition());
 
         blackKingCheckedPositions.printPositionsOfPiecesThatAreCheckingKing();
         return !blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
@@ -405,7 +409,7 @@ public class ChessGame {
             System.out.println(game.isKingMated(Color.WHITE));
         }
         game.selectWhitePiece(7, 4);
-        if (game.newPiecePositionByMove(new Position(6, 5))) {
+        if (game.newPiecePositionByMove(new Position(7, 5))) {
             System.out.println(game.isKingMated(Color.BLACK));
         }
         board.printBoard();

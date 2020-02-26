@@ -7,18 +7,18 @@ import pl.wb.demo.chess.model.piece_properties.Position;
 
 public interface CheckValidation {
 
-    PossibleActions piecesPositionsCheckingBlackKing (Board board);
+    PossibleActions piecesPositionsCheckingBlackKing (Board board, Position position);
 
-    PossibleActions piecesPositionsCheckingWhiteKing (Board board);
+    PossibleActions piecesPositionsCheckingWhiteKing (Board board, Position position);
 
-    void kingCheckingKing (Board board, PossibleActions possibleActions);
+    void kingCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions);
 
-    void knightCheckingKing (Board board, PossibleActions possibleActions);
+    void knightCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions);
 
-    void pawnCheckingKing (Position kingPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift, Color opponentsColor);
+    void pawnCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions, int rowShift, int columnShift, Color opponentsColor);
 
-    void queenRookCheckingKing (Position potentialQueenRookPositionCheckingKing, Board board, PossibleActions possibleActions, int rowShift, int columnShift, Color opponentsColor);
+    void queenRookCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions, int rowShift, int columnShift, Color opponentsColor);
 
-    void queenBishopCheckingKing (Position potentialQueenBishopPositionCheckingKing, Board board, PossibleActions possibleActions, int rowShift, int columnShift, Color opponentsColor);
+    void queenBishopCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions, int rowShift, int columnShift, Color opponentsColor);
 
 }
