@@ -4,10 +4,10 @@ import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
-import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.CastlingKingMovesValidation;
-import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.MoveValidation;
+import pl.wb.demo.chess.model.pieces.MoveGenerator.CastlingKingMovesValidation;
+import pl.wb.demo.chess.model.pieces.MoveGenerator.StandardMoveGenerator;
 
-public class King extends Piece implements MoveValidation {
+public class King extends Piece implements StandardMoveGenerator {
 
     public King (Position position, Color color, String code, int countMoves) {
         super(position, color, code, countMoves);
@@ -17,14 +17,14 @@ public class King extends Piece implements MoveValidation {
     public PossibleActions generatePossibleActions (Board board) {
         PossibleActions possibleActions = new PossibleActions();
 
-        moveValidation(this.position, board, possibleActions,0, 1);
-        moveValidation(this.position, board, possibleActions,0, -1);
-        moveValidation(this.position, board, possibleActions,1, 0);
-        moveValidation(this.position, board, possibleActions,-1, 0);
-        moveValidation(this.position, board, possibleActions,1, 1);
-        moveValidation(this.position, board, possibleActions,1, -1);
-        moveValidation(this.position, board, possibleActions,-1, 1);
-        moveValidation(this.position, board, possibleActions,-1, -1);
+        moveGenerator(this.position, board, possibleActions,0, 1);
+        moveGenerator(this.position, board, possibleActions,0, -1);
+        moveGenerator(this.position, board, possibleActions,1, 0);
+        moveGenerator(this.position, board, possibleActions,-1, 0);
+        moveGenerator(this.position, board, possibleActions,1, 1);
+        moveGenerator(this.position, board, possibleActions,1, -1);
+        moveGenerator(this.position, board, possibleActions,-1, 1);
+        moveGenerator(this.position, board, possibleActions,-1, -1);
 
         CastlingKingMovesValidation possibleKingCastleMoves = new CastlingKingMovesValidation(possibleActions, this.color, board, this.position);
         possibleKingCastleMoves.kingMovesForCastling();
@@ -33,7 +33,7 @@ public class King extends Piece implements MoveValidation {
     }
 
     @Override
-    public PossibleActions moveValidation (Position kingPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+    public PossibleActions moveGenerator (Position kingPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
         //potential position knowing row and columns shifts
         Position kingPossibleMovePosition = kingPosition.getNewPositionByVector(rowShift, columnShift);
 

@@ -4,9 +4,10 @@ import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
-import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.MoveValidation;
+import pl.wb.demo.chess.model.pieces.MoveGenerator.CaptureGenerator;
+import pl.wb.demo.chess.model.pieces.MoveGenerator.StandardMoveGenerator;
 
-public class Pawn extends Piece implements MoveValidation {
+public class Pawn extends Piece implements StandardMoveGenerator, CaptureGenerator {
 
     public Pawn (Position position, Color color, String code, int countMoves) {
         super(position, color, code, countMoves);
@@ -18,33 +19,33 @@ public class Pawn extends Piece implements MoveValidation {
         PossibleActions possibleActions = new PossibleActions();
 
         if (this.color == Color.BLACK) {
-            moveValidation(this.position, board, possibleActions, 1, 0);
-            captureValidation(this.position, board, possibleActions, 1, 1, Color.WHITE);
-            captureValidation(this.position, board, possibleActions, 1, -1, Color.WHITE);
+            moveGenerator(this.position, board, possibleActions, 1, 0);
+            captureGenerator(this.position, board, possibleActions, 1, 1, Color.WHITE);
+            captureGenerator(this.position, board, possibleActions, 1, -1, Color.WHITE);
         } else if (this.color == Color.WHITE) {
-            moveValidation(this.position, board, possibleActions, -1, 0);
-            captureValidation(this.position, board, possibleActions, -1, 1, Color.BLACK);
-            captureValidation(this.position, board, possibleActions, -1, -1, Color.BLACK);
+            moveGenerator(this.position, board, possibleActions, -1, 0);
+            captureGenerator(this.position, board, possibleActions, -1, 1, Color.BLACK);
+            captureGenerator(this.position, board, possibleActions, -1, -1, Color.BLACK);
         }
         return possibleActions;
     }
 
     @Override
-    public PossibleActions moveValidation (Position pawnPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
+    public PossibleActions moveGenerator (Position pawnPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
         //potential position knowing row and columns shifts
         Position pawnPossibleMovePosition = pawnPosition.getNewPositionByVector(rowShift, columnShift);
 
         if (!board.isOccupied(pawnPossibleMovePosition)) {
             possibleActions.addPossibleMove(pawnPossibleMovePosition);
             if ((this.position.getRow() == 1 && pawnPossibleMovePosition.getRow() == 2) || (this.position.getRow() == 6 && pawnPossibleMovePosition.getRow() == 5)) {
-                moveValidation(pawnPossibleMovePosition, board, possibleActions, rowShift, columnShift);
+                moveGenerator(pawnPossibleMovePosition, board, possibleActions, rowShift, columnShift);
             }
         }
         return possibleActions;
     }
 
-
-    public PossibleActions captureValidation (Position pawnCapture, Board board, PossibleActions possibleActions, int rowShift, int columnShift, Color opponentsColor) {
+    @Override
+    public PossibleActions captureGenerator (Position pawnCapture, Board board, PossibleActions possibleActions, int rowShift, int columnShift, Color opponentsColor) {
 
         pawnCapture = pawnCapture.getNewPositionByVector(rowShift, columnShift);
 

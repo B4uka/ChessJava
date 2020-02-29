@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures;
+package pl.wb.demo.chess.model.pieces.MoveGenerator;
 
 import pl.wb.demo.chess.model.ChessGame;
 import pl.wb.demo.chess.model.board.Board;

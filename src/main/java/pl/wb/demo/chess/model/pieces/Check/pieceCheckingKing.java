@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures;
+package pl.wb.demo.chess.model.pieces.Check;
 
 import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
@@ -6,17 +6,17 @@ import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 import pl.wb.demo.chess.model.pieces.*;
 
-public class CheckingPiecesPositions extends PossibleActions implements CheckValidation {
+public class pieceCheckingKing extends PossibleActions implements CheckValidation {
     protected Position position;
 
-    public CheckingPiecesPositions (){
+    public pieceCheckingKing (){
         super();
     }
 
     @Override
     public PossibleActions piecesPositionsCheckingWhiteKing (Board board, Position position) {
         this.position = position;
-        CheckingPiecesPositions possibleActions = new CheckingPiecesPositions();
+        pieceCheckingKing possibleActions = new pieceCheckingKing();
 
         //enemy king checking players king
         kingCheckingKing(this.position, board, possibleActions);
@@ -46,7 +46,7 @@ public class CheckingPiecesPositions extends PossibleActions implements CheckVal
     @Override
     public PossibleActions piecesPositionsCheckingBlackKing (Board board, Position position) {
         this.position = position;
-        CheckingPiecesPositions possibleActions = new CheckingPiecesPositions();
+        pieceCheckingKing possibleActions = new pieceCheckingKing();
 
         //enemy king checking players king
         kingCheckingKing(this.position, board, possibleActions);
@@ -74,7 +74,7 @@ public class CheckingPiecesPositions extends PossibleActions implements CheckVal
     }
 
     @Override
-    public void kingCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions) {
+    public void kingCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions) {
         Position[] checkedByKing = new Position[8];
 
         // possible position of enemy king checking players king
@@ -98,7 +98,7 @@ public class CheckingPiecesPositions extends PossibleActions implements CheckVal
     }
 
     @Override
-    public void knightCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions) {
+    public void knightCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions) {
         Position[] checkedByKnight = new Position[8];
 
         // possible position of enemy king checking players king
@@ -122,7 +122,7 @@ public class CheckingPiecesPositions extends PossibleActions implements CheckVal
     }
 
     @Override
-    public void pawnCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions, int rowShift, int columnShift, Color opponentsColor) {
+    public void pawnCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor) {
         //potential position knowing row and columns shifts
         Position potentialPawnPositionCheckingKing = kingPosition.getNewPositionByVector(rowShift, columnShift);
 
@@ -134,7 +134,7 @@ public class CheckingPiecesPositions extends PossibleActions implements CheckVal
     }
 
     @Override
-    public void queenRookCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions, int rowShift, int columnShift, Color opponentsColor) {
+    public void queenRookCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor) {
         //first iteration - potential position knowing row and columns shifts
         Position potentialQueenRookPositionCheckingKing = kingPosition.getNewPositionByVector(rowShift, columnShift);
 
@@ -153,7 +153,7 @@ public class CheckingPiecesPositions extends PossibleActions implements CheckVal
     }
 
     @Override
-    public void queenBishopCheckingKing (Position kingPosition, Board board, CheckingPiecesPositions possibleActions, int rowShift, int columnShift, Color opponentsColor) {
+    public void queenBishopCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor) {
         //first iteration - potential position knowing row and columns shifts
         Position potentialQueenBishopPositionCheckingKing = kingPosition.getNewPositionByVector(rowShift, columnShift);
 

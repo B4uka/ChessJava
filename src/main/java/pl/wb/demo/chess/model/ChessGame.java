@@ -6,7 +6,7 @@ import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 import pl.wb.demo.chess.model.pieces.King;
 import pl.wb.demo.chess.model.pieces.Piece;
-import pl.wb.demo.chess.model.pieces.ValidationForMovesChecksCaptures.CheckingPiecesPositions;
+import pl.wb.demo.chess.model.pieces.Check.pieceCheckingKing;
 
 public class ChessGame {
 
@@ -25,7 +25,7 @@ public class ChessGame {
     }
 
     public static boolean isWhiteKingChecked () {
-        CheckingPiecesPositions positions = new CheckingPiecesPositions();
+        pieceCheckingKing positions = new pieceCheckingKing();
         King whiteKing = new King(board.getWhiteKingPosition(), Color.WHITE, "&#9812;", 0);
 
         PossibleActions whiteKingCheckedPositions = positions.piecesPositionsCheckingWhiteKing(board, whiteKing.getPosition());
@@ -35,7 +35,7 @@ public class ChessGame {
     }
 
     public static boolean isBlackKingChecked () {
-        CheckingPiecesPositions positions = new CheckingPiecesPositions();
+        pieceCheckingKing positions = new pieceCheckingKing();
         King blackKing = new King(board.getBlackKingPosition(), Color.BLACK, "&#9818;", 0);
 
         PossibleActions blackKingCheckedPositions = positions.piecesPositionsCheckingBlackKing(board, blackKing.getPosition());
