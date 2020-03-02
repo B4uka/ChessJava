@@ -5,6 +5,7 @@ import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 import pl.wb.demo.chess.model.pieces.King;
+import pl.wb.demo.chess.model.pieces.MoveGenerator.CastlingRookMovesValidation;
 import pl.wb.demo.chess.model.pieces.Piece;
 import pl.wb.demo.chess.model.pieces.Check.pieceCheckingKing;
 
@@ -150,7 +151,7 @@ public class ChessGame {
         }
     }
 
-    private void revertNewMove (Position piecePositionOLD) {
+    public void revertNewMove (Position piecePositionOLD) {
         this.piecePositionOLD = piecePositionOLD;
 
         piecePositionNEW = piecePositionOLD;
@@ -221,49 +222,9 @@ public class ChessGame {
         return false;
     }
 
-    private void rookMoveWhenCastling () {
-        Piece[] rookOnBoard = new Piece[4];
-        rookOnBoard[0] = (board.getPiece(0, 0));
-        rookOnBoard[1] = (board.getPiece(0, 7));
-        rookOnBoard[2] = (board.getPiece(7, 0));
-        rookOnBoard[3] = (board.getPiece(7, 7));
-
-        if (this.possibleActions.getKingCastlingActions().contains(piecePositionNEW)) {
-            if (piecePositionNEW.getRow() == 0 && piecePositionNEW.getColumn() == 2 && rookOnBoard[0].getCountMoves() == 0) {
-                currentlySelectedRookForCastle = board.getPiece(0, 0);
-                rookCastlingMove = currentlySelectedRookForCastle.getPosition();
-                board.setEmptyByPosition(rookCastlingMove);
-                this.currentlySelectedRookForCastle.setPosition(0, 3);
-                board.setPiece(currentlySelectedRookForCastle);
-            } else revertNewMove(piecePositionNEW);
-            if (piecePositionNEW.getRow() == 0 && piecePositionNEW.getColumn() == 6 && rookOnBoard[1].getCountMoves() == 0) {
-                currentlySelectedRookForCastle = board.getPiece(0, 7);
-                rookCastlingMove = currentlySelectedRookForCastle.getPosition();
-                board.setEmptyByPosition(rookCastlingMove);
-                this.currentlySelectedRookForCastle.setPosition(0, 5);
-                board.setPiece(currentlySelectedRookForCastle);
-            } else revertNewMove(piecePositionNEW);
-            if (piecePositionNEW.getRow() == 7 && piecePositionNEW.getColumn() == 2 && rookOnBoard[2].getCountMoves() == 0) {
-                currentlySelectedRookForCastle = board.getPiece(7, 0);
-                rookCastlingMove = currentlySelectedRookForCastle.getPosition();
-                board.setEmptyByPosition(rookCastlingMove);
-                this.currentlySelectedRookForCastle.setPosition(7, 3);
-                board.setPiece(currentlySelectedRookForCastle);
-            } else revertNewMove(piecePositionNEW);
-            if (piecePositionNEW.getRow() == 7 && piecePositionNEW.getColumn() == 6 && rookOnBoard[3].getCountMoves() == 0) {
-                currentlySelectedRookForCastle = board.getPiece(7, 7);
-                rookCastlingMove = currentlySelectedRookForCastle.getPosition();
-                board.setEmptyByPosition(rookCastlingMove);
-                this.currentlySelectedRookForCastle.setPosition(7, 5);
-                board.setPiece(currentlySelectedRookForCastle);
-            } else revertNewMove(piecePositionNEW);
-            // System.out.println("How many times rook moved?: " + rookCountMove);
-        } else if (!this.possibleActions.getKingCastlingActions().contains(piecePositionNEW)) {
-            revertNewMove(piecePositionNEW);
-        }
-    }
 
     public boolean newPiecePositionByMove (Position piecePositionNEW) {
+        CastlingRookMovesValidation rookMoves = new CastlingRookMovesValidation(board, possibleActions, piecePositionNEW, ChessGame.this);
         //  NEXT MOVE - validation
         if (newMoveIfIsPossible(piecePositionNEW)) {
             if ((isWhiteKingChecked() && currentlySelected.getColor() == Color.WHITE)
@@ -284,11 +245,11 @@ public class ChessGame {
                     return false;
                 } // rook move when castling
                 if (currentlySelected.getColor() == Color.WHITE) {
-                    rookMoveWhenCastling();
+                    currentlySelectedRookForCastle = rookMoves.rookMoveWhenCastling();
                     board.getPiece(currentlySelectedRookForCastle.getPosition().getRow(), currentlySelectedRookForCastle.getPosition().getColumn()).countMoveAdd();
                     whiteCastled = true;
                 } else if (currentlySelected.getColor() == Color.BLACK) {
-                    rookMoveWhenCastling();
+                    currentlySelectedRookForCastle = rookMoves.rookMoveWhenCastling();
                     board.getPiece(currentlySelectedRookForCastle.getPosition().getRow(), currentlySelectedRookForCastle.getPosition().getColumn()).countMoveAdd();
                     blackCastled = true;
                 }
@@ -404,14 +365,22 @@ public class ChessGame {
         if (game.newPiecePositionByMove(new Position(5, 7))) {
             System.out.println(game.isKingMated(Color.BLACK));
         }
-        game.selectBlackPiece(0, 3);
-        if (game.newPiecePositionByMove(new Position(4, 7))) {
-            System.out.println(game.isKingMated(Color.WHITE));
-        }
-        game.selectWhitePiece(7, 4);
-        if (game.newPiecePositionByMove(new Position(7, 5))) {
+        game.selectWhitePiece(7, 6);
+        if (game.newPiecePositionByMove(new Position(5, 5))) {
             System.out.println(game.isKingMated(Color.BLACK));
         }
+        game.selectWhitePiece(7, 4);
+        if (game.newPiecePositionByMove(new Position(7, 6))) {
+            System.out.println(game.isKingMated(Color.BLACK));
+        }
+//        game.selectBlackPiece(0, 3);
+//        if (game.newPiecePositionByMove(new Position(4, 7))) {
+//            System.out.println(game.isKingMated(Color.WHITE));
+//        }
+//        game.selectWhitePiece(7, 4);
+//        if (game.newPiecePositionByMove(new Position(7, 5))) {
+//            System.out.println(game.isKingMated(Color.BLACK));
+//        }
         board.printBoard();
     }
 }
