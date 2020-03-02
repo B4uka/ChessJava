@@ -1,5 +1,6 @@
 package pl.wb.demo.chess.model;
 
+import pl.wb.demo.chess.model.board.AllPossibleActions.WhiteOrBlackAllActions;
 import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
@@ -45,65 +46,12 @@ public class ChessGame {
         return !blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
     }
 
-    // all actions that white player can do
-    public PossibleActions allWhitePiecesPossibleActions () {
-        board.getAllWhitePiecesPosition();
-        possibleMovesOrCaptures = new PossibleActions();
-
-        for (Position test : board.whitePiecesPositions) {
-            selectWhitePiece(test.getRow(), test.getColumn());
-            for (Position position : possibleActions.getPossibleMoves()) {
-                if (isCheckAfterTheMove(position)) {
-                    continue;
-                } else {
-                    possibleMovesOrCaptures.addPossibleMove(position);
-                }
-                // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
-            }
-            for (Position position : possibleActions.getPossibleCaptures()) {
-                if (isCheckAfterTheCapture(position)) {
-                    continue;
-                } else {
-                    possibleMovesOrCaptures.addPossibleCapture(position);
-                    // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
-                }
-            }
-        }
-        return possibleMovesOrCaptures;
-    }
-
-    //all actions that black player can do
-    public PossibleActions allBlackPiecesPossibleActions () {
-        board.getAllBlackPiecesPosition();
-        possibleMovesOrCaptures = new PossibleActions();
-
-        for (Position test : board.blackPiecesPositions) {
-            selectBlackPiece(test.getRow(), test.getColumn());
-            for (Position position : possibleActions.getPossibleMoves()) {
-                if (isCheckAfterTheMove(position)) {
-                    continue;
-                } else {
-                    possibleMovesOrCaptures.addPossibleMove(position);
-                }
-                // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
-            }
-            for (Position position : possibleActions.getPossibleCaptures()) {
-                if (isCheckAfterTheCapture(position)) {
-                    continue;
-                } else {
-                    possibleMovesOrCaptures.addPossibleCapture(position);
-                    //  System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
-                }
-            }
-        }
-
-        return possibleMovesOrCaptures;
-    }
-
     // mate or stalemate
     public Boolean isKingMated (Color color) {
+        WhiteOrBlackAllActions allPossibleActionsByWhiteOrBlack = new WhiteOrBlackAllActions(board, possibleMovesOrCaptures, possibleActions, ChessGame.this);
+
         if (color == Color.WHITE) {
-            allWhitePiecesPossibleActions();
+            possibleMovesOrCaptures = allPossibleActionsByWhiteOrBlack.allWhitePiecesPossibleActions();
             if (isWhiteKingChecked()) {
                 return possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().isEmpty();
             } else if (!isWhiteKingChecked() && possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().size() == 0) {
@@ -111,7 +59,7 @@ public class ChessGame {
                 return false;
             }
         } else if (color == Color.BLACK) {
-            allBlackPiecesPossibleActions();
+            possibleMovesOrCaptures = allPossibleActionsByWhiteOrBlack.allBlackPiecesPossibleActions();
             if (isBlackKingChecked()) {
                 return possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().isEmpty();
             } else if (!isBlackKingChecked() && possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().size() == 0) {
@@ -206,7 +154,7 @@ public class ChessGame {
             return false;
     }
 
-    private boolean isCheckAfterTheMove (Position piecePositionNEW) {
+    public boolean isCheckAfterTheMove (Position piecePositionNEW) {
         if (newMoveIfIsPossible(piecePositionNEW)) {
             if ((isWhiteKingChecked() && currentlySelected.getColor() == Color.WHITE)
                     || (isBlackKingChecked() && currentlySelected.getColor() == Color.BLACK)) {

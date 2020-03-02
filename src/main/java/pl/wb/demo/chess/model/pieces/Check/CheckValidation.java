@@ -11,9 +11,9 @@ public interface CheckValidation {
 
     PossibleActions piecesPositionsCheckingWhiteKing (Board board, Position position);
 
-    void kingCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions);
+    void kingCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, Color opponentsColor);
 
-    void knightCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions);
+    void knightCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, Color opponentsColor);
 
     void pawnCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor);
 

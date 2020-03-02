@@ -19,10 +19,10 @@ public class pieceCheckingKing extends PossibleActions implements CheckValidatio
         pieceCheckingKing possibleActions = new pieceCheckingKing();
 
         //enemy king checking players king
-        kingCheckingKing(this.position, board, possibleActions);
+        kingCheckingKing(this.position, board, possibleActions, Color.BLACK);
 
         //enemy king checking players king
-        knightCheckingKing(this.position, board, possibleActions);
+        knightCheckingKing(this.position, board, possibleActions, Color.BLACK);
 
         //enemy queen or bishop checking players king
         queenBishopCheckingKing(this.position, board, possibleActions, 1, 1, Color.BLACK);
@@ -49,10 +49,10 @@ public class pieceCheckingKing extends PossibleActions implements CheckValidatio
         pieceCheckingKing possibleActions = new pieceCheckingKing();
 
         //enemy king checking players king
-        kingCheckingKing(this.position, board, possibleActions);
+        kingCheckingKing(this.position, board, possibleActions, Color.WHITE);
 
         //enemy king checking players king
-        knightCheckingKing(this.position, board, possibleActions);
+        knightCheckingKing(this.position, board, possibleActions, Color.WHITE);
 
         //enemy queen or bishop checking players king
         queenBishopCheckingKing(this.position, board, possibleActions, 1, 1, Color.WHITE);
@@ -74,7 +74,7 @@ public class pieceCheckingKing extends PossibleActions implements CheckValidatio
     }
 
     @Override
-    public void kingCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions) {
+    public void kingCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, Color opponentColor) {
         Position[] checkedByKing = new Position[8];
 
         // possible position of enemy king checking players king
@@ -86,19 +86,17 @@ public class pieceCheckingKing extends PossibleActions implements CheckValidatio
         checkedByKing[5] = this.position.getNewPositionByVector(1, -1);
         checkedByKing[6] = this.position.getNewPositionByVector(-1, 1);
         checkedByKing[7] = this.position.getNewPositionByVector(-1, -1);
-        for (Position test : checkedByKing) {
-            if (test.isOnBoard()) {
-                if (this.color == Color.BLACK && board.isOccupiedByColor(test, Color.WHITE) && board.isOccupiedBySpecificPiece(test, Color.WHITE, King.class)) {
-                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
-                }else if (this.color == Color.WHITE && board.isOccupiedByColor(test, Color.BLACK) && board.isOccupiedBySpecificPiece(test, Color.BLACK, King.class)) {
-                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(test);
+        for (Position kingPossibleMovePosition : checkedByKing) {
+            if (kingPossibleMovePosition.isOnBoard()) {
+                if (board.isOccupiedBySpecificPiece(kingPossibleMovePosition, opponentColor, King.class)) {
+                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(kingPossibleMovePosition);
                 }
             }
         }
     }
 
     @Override
-    public void knightCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions) {
+    public void knightCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, Color opponentColor) {
         Position[] checkedByKnight = new Position[8];
 
         // possible position of enemy king checking players king
@@ -112,9 +110,7 @@ public class pieceCheckingKing extends PossibleActions implements CheckValidatio
         checkedByKnight[7] = this.position.getNewPositionByVector(-2, -1);
         for (Position knightPossibleMovePosition : checkedByKnight) {
             if (knightPossibleMovePosition.isOnBoard()) {
-                if (this.color == Color.BLACK && board.isOccupiedByColor(knightPossibleMovePosition, Color.WHITE) && board.isOccupiedBySpecificPiece(knightPossibleMovePosition, Color.WHITE, Knight.class)) {
-                    possibleActions.addPiecesPositionsWhichAreCheckingTheKing(knightPossibleMovePosition);
-                }else if (this.color == Color.WHITE && board.isOccupiedByColor(knightPossibleMovePosition, Color.BLACK) && board.isOccupiedBySpecificPiece(knightPossibleMovePosition, Color.BLACK, Knight.class)) {
+                if (board.isOccupiedBySpecificPiece(knightPossibleMovePosition, opponentColor, Knight.class)) {
                     possibleActions.addPiecesPositionsWhichAreCheckingTheKing(knightPossibleMovePosition);
                 }
             }
