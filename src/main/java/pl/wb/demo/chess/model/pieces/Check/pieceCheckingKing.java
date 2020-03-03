@@ -6,7 +6,7 @@ import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 import pl.wb.demo.chess.model.pieces.*;
 
-public class pieceCheckingKing extends PossibleActions implements CheckValidation {
+public class pieceCheckingKing extends PossibleActions implements CheckSearch {
     protected Position position;
 
     public pieceCheckingKing (){

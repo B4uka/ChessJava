@@ -5,7 +5,7 @@ import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 
-public interface CheckValidation {
+public interface CheckSearch {
 
     PossibleActions piecesPositionsCheckingBlackKing (Board board, Position position);
 

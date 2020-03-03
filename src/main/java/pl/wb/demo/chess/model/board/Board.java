@@ -163,6 +163,19 @@ public class Board {
         }
         return piecesPositionsWithCode;
     }
+    public Boolean isPieceOnThisPosition (int row, int column, Color color) {
+        if (this.boardOfPieces[row][column].getColor() == color) {
+            return true;
+        }
+        return false;
+    }
+
+    public Piece getPieceByColor (int row, int column, Color color) {
+        if (this.boardOfPieces[row][column].getColor() == color) {
+            return boardOfPieces[row][column];
+        }
+        return null;
+    }
 
     public Piece getWhitePiece (int row, int column) {
         if (this.boardOfPieces[row][column].getColor() == Color.WHITE) {

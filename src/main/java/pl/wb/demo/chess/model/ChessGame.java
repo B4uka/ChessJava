@@ -71,21 +71,28 @@ public class ChessGame {
     }
 
     public PossibleActions selectWhitePiece (int row, int column) {
-        currentlySelected = board.getWhitePiece(row, column);
-        generateActionsForCurrentlySelected();
+        try {currentlySelected = board.getPieceByColor(row, column, Color.WHITE);
+            generateActionsForCurrentlySelected();
+        }catch (NullPointerException e) {
+            System.out.println("There is no piece on this cell!");
+            // No piece on this cell!
+        }
         System.out.println();
         return possibleActions;
     }
 
     public PossibleActions selectBlackPiece (int row, int column) {
-        currentlySelected = board.getBlackPiece(row, column);
-        generateActionsForCurrentlySelected();
+        try { currentlySelected = board.getPieceByColor(row, column, Color.BLACK);
+            generateActionsForCurrentlySelected();
+        }catch (NullPointerException e) {
+            System.out.println("There is no piece on this cell!");
+            // No piece on this cell!
+        }
         System.out.println();
         return possibleActions;
     }
 
     private void generateActionsForCurrentlySelected () {
-        try {
             possibleActions = currentlySelected.generatePossibleActions(board);
             // possible actions without check validation
             //  System.out.println(currentlySelected.getColor() + " " + currentlySelected.getClass().getSimpleName() + " from: " + currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn());
@@ -93,10 +100,6 @@ public class ChessGame {
             possibleActions.printPossibleCaptures();
             possibleActions.printPossibleChecks();
             possibleActions.printPossibleCastlingKingMoves();
-        } catch (NullPointerException e) {
-            // No piece on this cell
-            // System.out.println(currentlySelected.getPosition().getRow() + "\t" + currentlySelected.getPosition().getColumn() + "\t there is no piece on this position!");
-        }
     }
 
     public void revertNewMove (Position piecePositionOLD) {
@@ -321,10 +324,10 @@ public class ChessGame {
         if (game.newPiecePositionByMove(new Position(7, 6))) {
             System.out.println(game.isKingMated(Color.BLACK));
         }
-//        game.selectBlackPiece(0, 3);
-//        if (game.newPiecePositionByMove(new Position(4, 7))) {
-//            System.out.println(game.isKingMated(Color.WHITE));
-//        }
+        game.selectWhitePiece(4, 1);
+        if (game.newPiecePositionByMove(new Position(4, 7))) {
+            System.out.println(game.isKingMated(Color.WHITE));
+        }
 //        game.selectWhitePiece(7, 4);
 //        if (game.newPiecePositionByMove(new Position(7, 5))) {
 //            System.out.println(game.isKingMated(Color.BLACK));

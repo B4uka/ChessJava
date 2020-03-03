@@ -19,6 +19,7 @@ public class MainController {
 
     private ChessGame chessGame = new ChessGame();
     private Boolean whitePlayer = true;
+    protected Move nextMove;
 
     @RequestMapping(value = {"/selection"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -63,25 +64,9 @@ public class MainController {
     @RequestMapping(value = {"/move"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<String> move (@RequestParam int player, @RequestParam String fieldId) throws Exception {
-        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
 
-        Position positionWhereWeWantToMove = new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn());
-        if (ChessGame.board.isOccupied(positionWhereWeWantToMove)) {
-            if (!chessGame.newPiecePositionByCapture(positionWhereWeWantToMove)) {
-                whitePlayer = !whitePlayer;
-                throw new EmptyStackException();
-            }
-        } else if (!chessGame.newPiecePositionByMove(positionWhereWeWantToMove)) {
-            whitePlayer = !whitePlayer;
-            throw new EmptyStackException();
-        }
-        ChessGame.board.getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(ChessGame.board.boardFieldAndCodes);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
-        String jsonResponse = new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
-        return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
+        nextMove = new Move(this.chessGame, this.whitePlayer);
+        return nextMove.move(fieldId);
     }
 
     @RequestMapping(value = {"/mate"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -89,18 +74,18 @@ public class MainController {
     ResponseEntity<String> isMated (@RequestParam int player) {
         ArrayList<String> isMated = new ArrayList<>();
 
-        if (whitePlayer){
+        if (whitePlayer) {
             Boolean isWhiteMated = chessGame.isKingMated(Color.WHITE);
-             if (isWhiteMated) {
-                 isMated.add("true");
-             }else isMated.add("false");
-        }else {
+            if (isWhiteMated) {
+                isMated.add("true");
+            } else isMated.add("false");
+        } else {
             Boolean isBlackMated = chessGame.isKingMated(Color.BLACK);
             if (isBlackMated) {
                 isMated.add("true");
-            }else isMated.add("false");
+            } else isMated.add("false");
         }
-        if (ChessGame.isStalemate){
+        if (ChessGame.isStalemate) {
             isMated.add("stalamate");
         }
 
@@ -112,7 +97,7 @@ public class MainController {
 
     @RequestMapping(value = {"/actualBoard"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<String> actualBoard  (@RequestParam int player) throws Exception {
+    ResponseEntity<String> actualBoard (@RequestParam int player) throws Exception {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
         ChessGame.board.getBoard();
         ChessGame.board.getBoardFieldAndCodes();
@@ -126,11 +111,11 @@ public class MainController {
 
     @RequestMapping(value = {"/newGame"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<String> newGame  (@RequestParam int player) throws Exception {
+    ResponseEntity<String> newGame (@RequestParam int player) throws Exception {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
         new ChessGame();
 
-        whitePlayer = true;
+        this.whitePlayer = true;
         ChessGame.board.getBoard();
         ChessGame.board.getBoardFieldAndCodes();
         codeOfTheFieldsWithPiecesOnThem.putAll(ChessGame.board.boardFieldAndCodes);
