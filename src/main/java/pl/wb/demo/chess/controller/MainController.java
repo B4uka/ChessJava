@@ -19,7 +19,6 @@ public class MainController {
 
     private ChessGame chessGame = new ChessGame();
     private Boolean whitePlayer = true;
-    protected Move nextMove;
 
     @RequestMapping(value = {"/selection"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -65,34 +64,32 @@ public class MainController {
     @ResponseBody
     ResponseEntity<String> move (@RequestParam int player, @RequestParam String fieldId) throws Exception {
 
-        nextMove = new Move(this.chessGame, this.whitePlayer);
-        return nextMove.move(fieldId);
+        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
+
+        Position positionWhereWeWantToMove = new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn());
+        if (ChessGame.board.isOccupied(positionWhereWeWantToMove)) {
+            if (!chessGame.newPiecePositionByCapture(positionWhereWeWantToMove)) {
+                this.whitePlayer = !whitePlayer;
+                throw new EmptyStackException();
+            }
+        } else if (!chessGame.newPiecePositionByMove(positionWhereWeWantToMove)) {
+            this.whitePlayer = !whitePlayer;
+            throw new EmptyStackException();
+        }
+        ChessGame.board.getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(ChessGame.board.boardFieldAndCodes);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        String jsonResponse = new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
+        return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
     }
 
     @RequestMapping(value = {"/mate"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<String> isMated (@RequestParam int player) {
-        ArrayList<String> isMated = new ArrayList<>();
-
-        if (whitePlayer) {
-            Boolean isWhiteMated = chessGame.isKingMated(Color.WHITE);
-            if (isWhiteMated) {
-                isMated.add("true");
-            } else isMated.add("false");
-        } else {
-            Boolean isBlackMated = chessGame.isKingMated(Color.BLACK);
-            if (isBlackMated) {
-                isMated.add("true");
-            } else isMated.add("false");
-        }
-        if (ChessGame.isStalemate) {
-            isMated.add("stalamate");
-        }
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
-        String jsonResponse = new Gson().toJson(isMated);
-        return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
+        Mate mate = new Mate(this.chessGame, this.whitePlayer);
+        return mate.mate();
     }
 
     @RequestMapping(value = {"/actualBoard"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -26,11 +26,11 @@ public class Move {
         Position positionWhereWeWantToMove = new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn());
         if (ChessGame.board.isOccupied(positionWhereWeWantToMove)) {
             if (!chessGame.newPiecePositionByCapture(positionWhereWeWantToMove)) {
-                whitePlayer = !whitePlayer;
+                this.whitePlayer = !whitePlayer;
                 throw new EmptyStackException();
             }
         } else if (!chessGame.newPiecePositionByMove(positionWhereWeWantToMove)) {
-            whitePlayer = !whitePlayer;
+            this.whitePlayer = !whitePlayer;
             throw new EmptyStackException();
         }
         ChessGame.board.getBoardFieldAndCodes();
