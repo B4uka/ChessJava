@@ -30,7 +30,6 @@ public class Board {
     }
 
     public boolean isOccupied (Position position) {
-
         return this.boardOfPieces[position.getRow()][position.getColumn()] != null;
     }
 
@@ -163,7 +162,7 @@ public class Board {
         }
         return piecesPositionsWithCode;
     }
-    public Boolean isPieceOnThisPosition (int row, int column, Color color) {
+    public Boolean isPieceWithThisColorOnThisPosition (int row, int column, Color color) {
         if (this.boardOfPieces[row][column].getColor() == color) {
             return true;
         }

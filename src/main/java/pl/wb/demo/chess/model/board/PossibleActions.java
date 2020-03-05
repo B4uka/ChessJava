@@ -1,6 +1,5 @@
 package pl.wb.demo.chess.model.board;
 
-import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.ArrayList;
 public class PossibleActions {
 
     public ArrayList<Position> possibleMoves, possibleCaptures, possibleChecks, listOfPiecesPositionsWhichAreCheckingTheKing, possibleMovesAndCaptures, kingCastlingActions, rookCastlingActions;
-    public Color color;
     public Position position;
 
     public PossibleActions () {
@@ -32,10 +30,6 @@ public class PossibleActions {
         this.kingCastlingActions.add(position);
     }
 
-    public void addPossibleChecks (Position position) {
-        this.possibleChecks.add(position);
-    }
-
     public void addPiecesPositionsWhichAreCheckingTheKing (Position position) {
         this.listOfPiecesPositionsWhichAreCheckingTheKing.add(position);
     }
@@ -57,7 +51,7 @@ public class PossibleActions {
         possibleMovesAndCaptures = possibleMoves;
         return possibleMovesAndCaptures;
     }
-
+    //TODO: is that needed?
     public Position getPosition () {
         return position;
     }
