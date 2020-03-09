@@ -5,10 +5,10 @@ import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
+import pl.wb.demo.chess.model.pieces.Check.CheckValidation;
 import pl.wb.demo.chess.model.pieces.King;
 import pl.wb.demo.chess.model.pieces.MoveGenerator.CastlingRookMovesValidation;
 import pl.wb.demo.chess.model.pieces.Piece;
-import pl.wb.demo.chess.model.pieces.Check.pieceCheckingKing;
 
 public class ChessGame {
 
@@ -27,23 +27,13 @@ public class ChessGame {
     }
 
     public static boolean isWhiteKingChecked () {
-        pieceCheckingKing positions = new pieceCheckingKing();
-        King whiteKing = new King(board.getWhiteKingPosition(), Color.WHITE, "&#9812;", 0);
-
-        PossibleActions whiteKingCheckedPositions = positions.piecesPositionsCheckingWhiteKing(board, whiteKing.getPosition());
-
-        whiteKingCheckedPositions.printPositionsOfPiecesThatAreCheckingKing();
-        return !whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
+        CheckValidation test = new CheckValidation(board);
+        return test.isWhiteKingChecked();
     }
 
     public static boolean isBlackKingChecked () {
-        pieceCheckingKing positions = new pieceCheckingKing();
-        King blackKing = new King(board.getBlackKingPosition(), Color.BLACK, "&#9818;", 0);
-
-        PossibleActions blackKingCheckedPositions = positions.piecesPositionsCheckingBlackKing(board, blackKing.getPosition());
-
-        blackKingCheckedPositions.printPositionsOfPiecesThatAreCheckingKing();
-        return !blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
+        CheckValidation test = new CheckValidation(board);
+        return test.isBlackKingChecked();
     }
 
     // mate or stalemate

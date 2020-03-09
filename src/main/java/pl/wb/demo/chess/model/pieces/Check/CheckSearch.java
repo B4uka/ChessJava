@@ -11,14 +11,14 @@ public interface CheckSearch {
 
     PossibleActions piecesPositionsCheckingWhiteKing (Board board, Position position);
 
-    void kingCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, Color opponentsColor);
+    void kingCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, Color opponentsColor);
 
-    void knightCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, Color opponentsColor);
+    void knightCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, Color opponentsColor);
 
-    void pawnCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor);
+    void pawnCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor);
 
-    void queenRookCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor);
+    void queenRookCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor);
 
-    void queenBishopCheckingKing (Position kingPosition, Board board, pieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor);
+    void queenBishopCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor);
 
 }
