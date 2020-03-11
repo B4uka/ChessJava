@@ -4,7 +4,7 @@ import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.pieces.King;
-//TODO:
+
 public class CheckValidation {
     protected Board board;
 
