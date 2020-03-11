@@ -1,12 +1,14 @@
 package pl.wb.demo.chess.model;
 
-import pl.wb.demo.chess.model.board.AllPossibleActions.WhiteOrBlackAllActions;
 import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 import pl.wb.demo.chess.model.pieces.Check.CheckValidation;
+import pl.wb.demo.chess.model.pieces.Check.IsCheck;
 import pl.wb.demo.chess.model.pieces.King;
+import pl.wb.demo.chess.model.pieces.Mate.IsMate;
+import pl.wb.demo.chess.model.pieces.Mate.MateValidation;
 import pl.wb.demo.chess.model.pieces.MoveGenerator.CastlingRookMovesValidation;
 import pl.wb.demo.chess.model.pieces.Piece;
 
@@ -17,7 +19,7 @@ public class ChessGame {
     public PossibleActions possibleActions, possibleMovesOrCaptures;
     public Position position, piecePositionNEW, piecePositionOLD, rookCastlingMove;
     public Color color;
-    public static Boolean blackCastled, whiteCastled, isStalemate;
+    public static boolean blackCastled, whiteCastled, isStalemate;
 
     public ChessGame () {
         board = new Board();
@@ -27,44 +29,26 @@ public class ChessGame {
     }
 
     public static boolean isWhiteKingChecked () {
-        CheckValidation test = new CheckValidation(board);
+        CheckValidation test = new IsCheck(board);
         return test.isWhiteKingChecked();
     }
 
     public static boolean isBlackKingChecked () {
-        CheckValidation test = new CheckValidation(board);
+        CheckValidation test = new IsCheck(board);
         return test.isBlackKingChecked();
     }
 
-    // mate or stalemate
-    public Boolean isKingMated (Color color) {
-        WhiteOrBlackAllActions allPossibleActionsByWhiteOrBlack = new WhiteOrBlackAllActions(board, possibleMovesOrCaptures, possibleActions, ChessGame.this);
-
-        if (color == Color.WHITE) {
-            possibleMovesOrCaptures = allPossibleActionsByWhiteOrBlack.allWhitePiecesPossibleActions();
-            if (isWhiteKingChecked()) {
-                return possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().isEmpty();
-            } else if (!isWhiteKingChecked() && possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().size() == 0) {
-                isStalemate = true;
-                return false;
-            }
-        } else if (color == Color.BLACK) {
-            possibleMovesOrCaptures = allPossibleActionsByWhiteOrBlack.allBlackPiecesPossibleActions();
-            if (isBlackKingChecked()) {
-                return possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().isEmpty();
-            } else if (!isBlackKingChecked() && possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().size() == 0) {
-                isStalemate = true;
-                return false;
-            }
-        }
-        return false;
+    // Mate is returned. Inside method from class IsMate is also validation for stalemate -> for know class Mate in controller catches this event
+    public boolean isKingMated (Color color) {
+        MateValidation test = new IsMate(board, color, possibleMovesOrCaptures, possibleActions, ChessGame.this);
+        return test.isKingMated(color);
     }
 
     public PossibleActions selectWhitePiece (int row, int column) {
         try {currentlySelected = board.getPieceByColor(row, column, Color.WHITE);
             generateActionsForCurrentlySelected();
         }catch (NullPointerException e) {
-            System.out.println("There is no piece on this cell!");
+            throw new IllegalStateException("There is no piece on this cell!", e);
             // No piece on this cell!
         }
         System.out.println();
@@ -75,7 +59,7 @@ public class ChessGame {
         try { currentlySelected = board.getPieceByColor(row, column, Color.BLACK);
             generateActionsForCurrentlySelected();
         }catch (NullPointerException e) {
-            System.out.println("There is no piece on this cell!");
+            throw new IllegalStateException("There is no piece on this cell!", e);
             // No piece on this cell!
         }
         System.out.println();
