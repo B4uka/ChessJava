@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.model.DataBase;
+package pl.wb.demo.chess.model.dataBase;
 
 import java.text.DateFormat;
 

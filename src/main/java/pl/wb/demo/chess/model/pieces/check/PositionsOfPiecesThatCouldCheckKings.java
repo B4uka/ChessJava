@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.model.pieces.Check;
+package pl.wb.demo.chess.model.pieces.check;
 
 import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;

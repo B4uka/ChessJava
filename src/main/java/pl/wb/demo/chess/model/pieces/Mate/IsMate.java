@@ -1,7 +1,7 @@
 package pl.wb.demo.chess.model.pieces.Mate;
 
 import pl.wb.demo.chess.model.ChessGame;
-import pl.wb.demo.chess.model.board.AllPossibleActions.WhiteOrBlackAllActions;
+import pl.wb.demo.chess.model.board.allPossibleActions.WhiteOrBlackAllActions;
 import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;

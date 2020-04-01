@@ -45,25 +45,3 @@ public class Bishop extends Piece implements StandardMoveGenerator {
         return possibleActions;
     }
 }
-//    public void bishopMoveValidation (Position bishopPosition, Board board, PossibleActions possibleActions, int directionForRow, int directionForColumn){
-//
-//        while (bishopPosition.isOnBoard() && (this.color == Color.BLACK && !board.isOccupiedByColor(bishopPosition, Color.BLACK)) ||
-//                (this.color == Color.WHITE && !board.isOccupiedByColor(bishopPosition, Color.WHITE))) {
-//            if (!board.isOccupied(bishopPosition)) {
-//                possibleActions.addPossibleMove(bishopPosition);
-//            } else if (this.color == Color.WHITE && board.isOccupiedBySpecificPiece(bishopPosition, Color.BLACK, King.class)) {
-//                possibleActions.addPossibleChecks(bishopPosition);
-//                break;
-//            } else if (this.color == Color.WHITE && board.isOccupiedByColor(bishopPosition, Color.BLACK)) {
-//                possibleActions.addPossibleCapture(bishopPosition);
-//                break;
-//            } else if (this.color == Color.BLACK && board.isOccupiedBySpecificPiece(bishopPosition, Color.WHITE, King.class)) {
-//                possibleActions.addPossibleChecks(bishopPosition);
-//                break;
-//            } else if (this.color == Color.BLACK && board.isOccupiedByColor(bishopPosition, Color.WHITE)) {
-//                possibleActions.addPossibleCapture(bishopPosition);
-//                break;
-//            }
-//            bishopPosition = bishopPosition.getNewPositionByVector(directionForRow, directionForColumn);
-//        }
-//    }

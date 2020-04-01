@@ -1,5 +1,8 @@
 package pl.wb.demo.chess.model.piece_properties;
 
+import lombok.Getter;
+
+@Getter
 public class Position {
 
     private int row;
@@ -19,14 +22,6 @@ public class Position {
         return new Position(this.row, this.column);
     }
 
-    public int getRow () {
-        return this.row;
-    }
-
-    public int getColumn () {
-        return this.column;
-    }
-
     public Position getNewPositionByVector (int plusRow, int plusColumn) {
         return new Position(this.row + plusRow, this.column + plusColumn);
     }
@@ -38,18 +33,7 @@ public class Position {
     public boolean isOnBoard () {
         return 0 <= row && row <= 7 && 0 <= column && column <= 7;
     }
-    public Position bishopMove1 (){
-        return new Position(this.row + 1, this.column + 1);
-    }
-    public Position bishopMove2 (){
-        return new Position(this.row + 1, this.column - 1);
-    }
-    public Position bishopMove3 (){
-        return new Position(this.row - 1, this.column + 1);
-    }
-    public Position bishopMove4 (){
-        return new Position(this.row - 1, this.column - 1);
-    }
+
     @Override
     public boolean equals (Object o) {
         if (this == o) return true;

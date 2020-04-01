@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.model.pieces.Check;
+package pl.wb.demo.chess.model.pieces.check;
 
 public interface CheckValidation {
 

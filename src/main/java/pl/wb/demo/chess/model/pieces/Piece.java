@@ -1,10 +1,12 @@
 package pl.wb.demo.chess.model.pieces;
 
+import lombok.Getter;
 import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 
+@Getter
 public abstract class Piece {
 
     protected Position position;
@@ -21,20 +23,8 @@ public abstract class Piece {
 
     public abstract PossibleActions generatePossibleActions (Board board);
 
-    public Position getPosition () {
-        return position;
-    }
-
-    public Color getColor () {
-        return this.color;
-    }
-
     public int countMoveAdd () {
         return countMoves++;
-    }
-
-    public String getCode () {
-        return code;
     }
 
     public void setPosition (Position position) {
@@ -43,10 +33,6 @@ public abstract class Piece {
 
     public void setPosition (int row, int column) {
         this.position.setRowAndColumn(row, column);
-    }
-
-    public int getCountMoves () {
-        return countMoves;
     }
 }
 
