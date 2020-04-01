@@ -298,10 +298,10 @@ public class ChessGame {
         if (game.newPiecePositionByMove(new Position(7, 6))) {
             System.out.println(game.isKingMated(Color.BLACK));
         }
-        game.selectWhitePiece(4, 1);
-        if (game.newPiecePositionByMove(new Position(4, 7))) {
-            System.out.println(game.isKingMated(Color.WHITE));
-        }
+//        game.selectWhitePiece(4, 1);
+//        if (game.newPiecePositionByMove(new Position(4, 7))) {
+//            System.out.println(game.isKingMated(Color.WHITE));
+//        }
 //        game.selectWhitePiece(7, 4);
 //        if (game.newPiecePositionByMove(new Position(7, 5))) {
 //            System.out.println(game.isKingMated(Color.BLACK));

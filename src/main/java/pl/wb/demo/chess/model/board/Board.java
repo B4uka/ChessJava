@@ -51,11 +51,8 @@ public class Board {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
-                try {
-                    if (boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.BLACK) {
-                        blackKingPosition = new Position(i, j);
-                    }
-                } catch (NullPointerException e) {
+                if (this.boardOfPieces[i][j] != null && boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.BLACK) {
+                    blackKingPosition = new Position(i, j);
                 }
             }
         }
@@ -66,11 +63,8 @@ public class Board {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
-                try {
-                    if (boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.BLACK) {
-                        blackKingPosition = new Position(i, j);
-                    }
-                } catch (NullPointerException e) {
+                if (this.boardOfPieces[i][j] != null && boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.BLACK) {
+                    blackKingPosition = new Position(i, j);
                 }
             }
         }
@@ -81,11 +75,8 @@ public class Board {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
-                try {
-                    if (boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.WHITE) {
-                        whiteKingPosition = new Position(i, j);
-                    }
-                } catch (NullPointerException e) {
+                if (this.boardOfPieces[i][j] != null && boardOfPieces[i][j] != null && boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.WHITE) {
+                    whiteKingPosition = new Position(i, j);
                 }
             }
         }
@@ -96,11 +87,8 @@ public class Board {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
-                try {
-                    if (this.boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.WHITE) {
-                        whiteKingPosition = new Position(i, j);
-                    }
-                } catch (NullPointerException e) {
+                if (this.boardOfPieces[i][j] != null && this.boardOfPieces[i][j].getClass() == King.class && this.boardOfPieces[i][j].getColor() == Color.WHITE) {
+                    whiteKingPosition = new Position(i, j);
                 }
             }
         }
@@ -113,12 +101,9 @@ public class Board {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
-                try {
-                    if (this.boardOfPieces[i][j].getClass() != null && this.boardOfPieces[i][j].getColor() == Color.WHITE) {
-                        whitesPosition = new Position(i, j);
-                        whitePiecesPositions.add(whitesPosition);
-                    }
-                } catch (NullPointerException e) {
+                if (this.boardOfPieces[i][j] != null && this.boardOfPieces[i][j].getClass() != null && this.boardOfPieces[i][j].getColor() == Color.WHITE) {
+                    whitesPosition = new Position(i, j);
+                    whitePiecesPositions.add(whitesPosition);
                 }
             }
         }
@@ -128,15 +113,12 @@ public class Board {
     //TODO all black Pieces
     public ArrayList<Position> getAllBlackPiecesPosition () {
         blackPiecesPositions = new ArrayList<>();
+
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
-                try {
-                    this.boardOfPieces[i][j].getClass();
-                    if (this.boardOfPieces[i][j].getClass() != null && this.boardOfPieces[i][j].getColor() == Color.BLACK) {
-                        blacksPositions = new Position(i, j);
-                        blackPiecesPositions.add(blacksPositions);
-                    }
-                } catch (NullPointerException e) {
+                if (this.boardOfPieces[i][j] != null && this.boardOfPieces[i][j].getClass() != null && this.boardOfPieces[i][j].getColor() == Color.BLACK) {
+                    blacksPositions = new Position(i, j);
+                    blackPiecesPositions.add(blacksPositions);
                 }
             }
         }
@@ -146,27 +128,19 @@ public class Board {
     public ArrayList<String> getBoardWithPiecesActualCodes () {
         piecesPositionsWithCode = new ArrayList<>();
         String codeOfThePiece;
+
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
-                try {
-                    if (this.boardOfPieces[i][j].getCode() == null) {
-                        codeOfThePiece = "";
-                        piecesPositionsWithCode.add(codeOfThePiece);
-                    } else if (this.boardOfPieces[i][j].getCode() != null) {
-                        codeOfThePiece = boardOfPieces[i][j].getCode();
-                        piecesPositionsWithCode.add(codeOfThePiece);
-                    }
-                } catch (NullPointerException e) {
+                if (this.boardOfPieces[i][j].getCode() == null) {
+                    codeOfThePiece = "";
+                    piecesPositionsWithCode.add(codeOfThePiece);
+                } else if (this.boardOfPieces[i][j].getCode() != null) {
+                    codeOfThePiece = boardOfPieces[i][j].getCode();
+                    piecesPositionsWithCode.add(codeOfThePiece);
                 }
             }
         }
         return piecesPositionsWithCode;
-    }
-    public Boolean isPieceWithThisColorOnThisPosition (int row, int column, Color color) {
-        if (this.boardOfPieces[row][column].getColor() == color) {
-            return true;
-        }
-        return false;
     }
 
     public Piece getPieceByColor (int row, int column, Color color) {
@@ -200,14 +174,6 @@ public class Board {
 
     public void setEmptyByPosition (Position position) {
         boardOfPieces[position.getRow()][position.getColumn()] = null;
-    }
-
-    public void setEmptyByRowAndColumn (int row, int column) {
-        boardOfPieces[row][column] = null;
-    }
-
-    public String getPieceCode (Piece piece) {
-        return boardOfPieces[piece.getPosition().getRow()][piece.getPosition().getColumn()].getCode();
     }
 
     private void fillBoardWithPieces () {
@@ -255,36 +221,32 @@ public class Board {
     public void printBoard () {
         for (int i = 0; i < boardOfPieces.length; i++) {
             for (int j = 0; j < boardOfPieces.length; j++) {
-                try {
-                    if (boardOfPieces[i][j].getClass() == Rook.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
-                        System.out.print("r  ");
-                    } else if (boardOfPieces[i][j].getClass() == Pawn.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
-                        System.out.print("p  ");
-                    } else if (boardOfPieces[i][j].getClass() == Queen.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
-                        System.out.print("q  ");
-                    } else if (boardOfPieces[i][j].getClass() == Knight.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
-                        System.out.print("n  ");
-                    } else if (boardOfPieces[i][j].getClass() == King.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
-                        System.out.print("k  ");
-                    } else if (boardOfPieces[i][j].getClass() == Bishop.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
-                        System.out.print("b  ");
-                    } else if (boardOfPieces[i][j].getClass() == Rook.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
-                        System.out.print("R  ");
-                    } else if (boardOfPieces[i][j].getClass() == Pawn.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
-                        System.out.print("P  ");
-                    } else if (boardOfPieces[i][j].getClass() == Queen.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
-                        System.out.print("Q  ");
-                    } else if (boardOfPieces[i][j].getClass() == Knight.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
-                        System.out.print("N  ");
-                    } else if (boardOfPieces[i][j].getClass() == King.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
-                        System.out.print("K  ");
-                    } else if (boardOfPieces[i][j].getClass() == Bishop.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
-                        System.out.print("B  ");
-
-                    }
-                } catch (NullPointerException e) {
+                if (boardOfPieces[i][j] == null) {
                     System.out.print(".  ");
-                    continue;
+                } else if (boardOfPieces[i][j].getClass() == Rook.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
+                    System.out.print("r  ");
+                } else if (boardOfPieces[i][j].getClass() == Pawn.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
+                    System.out.print("p  ");
+                } else if (boardOfPieces[i][j].getClass() == Queen.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
+                    System.out.print("q  ");
+                } else if (boardOfPieces[i][j].getClass() == Knight.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
+                    System.out.print("n  ");
+                } else if (boardOfPieces[i][j].getClass() == King.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
+                    System.out.print("k  ");
+                } else if (boardOfPieces[i][j].getClass() == Bishop.class && boardOfPieces[i][j].getColor() != Color.WHITE) {
+                    System.out.print("b  ");
+                } else if (boardOfPieces[i][j].getClass() == Rook.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
+                    System.out.print("R  ");
+                } else if (boardOfPieces[i][j].getClass() == Pawn.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
+                    System.out.print("P  ");
+                } else if (boardOfPieces[i][j].getClass() == Queen.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
+                    System.out.print("Q  ");
+                } else if (boardOfPieces[i][j].getClass() == Knight.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
+                    System.out.print("N  ");
+                } else if (boardOfPieces[i][j].getClass() == King.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
+                    System.out.print("K  ");
+                } else if (boardOfPieces[i][j].getClass() == Bishop.class && boardOfPieces[i][j].getColor() != Color.BLACK) {
+                    System.out.print("B  ");
                 }
             }
             System.out.println();
@@ -294,32 +256,25 @@ public class Board {
     public void printBoardWithCodes () {
         for (int i = 0; i < boardOfPieces.length; i++) {
             for (int j = 0; j < boardOfPieces.length; j++) {
-                try {
-                    System.out.print(boardOfPieces[i][j].getCode() + "\t");
-
-                } catch (NullPointerException e) {
+                if (boardOfPieces[i][j] == null) {
                     System.out.print("\t . \t");
-                    continue;
+                } else {
+                    System.out.print(boardOfPieces[i][j].getCode() + "\t");
                 }
             }
             System.out.println();
         }
     }
 
-    //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public HashMap<String, String> getBoardFieldAndCodes () {
         boardFieldAndCodes = new HashMap<>();
 
         for (int i = 0; i < boardOfPieces.length; i++) {
             for (int j = 0; j < boardOfPieces.length; j++) {
-                try {
-                    if (this.boardOfPieces[i][j].getCode() != null) {
-                        boardFieldAndCodes.put(Field.getFieldByPosition(i, j), boardOfPieces[i][j].getCode());
-                    } else {
-                        boardFieldAndCodes.put(Field.getFieldByPosition(i, j), "");
-                    }
-                } catch (NullPointerException f) {
+                if (this.boardOfPieces[i][j] == null) {
                     boardFieldAndCodes.put(Field.getFieldByPosition(i, j), "");
+                } else {
+                    boardFieldAndCodes.put(Field.getFieldByPosition(i, j), boardOfPieces[i][j].getCode());
                 }
             }
         }
