@@ -3,10 +3,13 @@ package pl.wb.demo.chess.model.board;
 import pl.wb.demo.chess.model.piece_properties.Position;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PossibleActions {
 
-    public ArrayList<Position> possibleMoves, possibleCaptures, possibleChecks, listOfPiecesPositionsWhichAreCheckingTheKing, possibleMovesAndCaptures, kingCastlingActions, rookCastlingActions;
+    public ArrayList<Position> possibleMoves, possibleCaptures, possibleChecks, possibleMovesAndCaptures, kingCastlingActions, rookCastlingActions;
+    public Set<Position> listOfPiecesPositionsWhichAreCheckingTheKing;
     public Position position;
 
     public PossibleActions () {
@@ -15,7 +18,7 @@ public class PossibleActions {
         this.possibleChecks = new ArrayList<>();
         this.kingCastlingActions = new ArrayList<>();
         this.rookCastlingActions = new ArrayList<>();
-        this.listOfPiecesPositionsWhichAreCheckingTheKing = new ArrayList<>();
+        this.listOfPiecesPositionsWhichAreCheckingTheKing = new HashSet<>();
     }
 
     public void addPossibleCapture (Position position) {

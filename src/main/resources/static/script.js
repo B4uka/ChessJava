@@ -98,7 +98,7 @@ function updateDisplay() {
   });
   $.post("http://195.181.247.79:8087/chessWebApp/actualBoard",
       {
-      player: 1,
+         player: 1,
       },
       function(fieldsArray, status, xhr){
           $('#info').empty();
@@ -111,6 +111,7 @@ function updateDisplay() {
     alert("error2: " + status);
   });
 }
+
 function newGame() {
   $("td").css({'background' : '',
                 'border' : 'solid 1px black'
@@ -130,20 +131,21 @@ function newGame() {
     alert("error2: " + status);
   });
 }
+
 function mate() {
   $("td").css({'background' : '',
                 'border' : 'solid 1px black'
   });
   $.post("http://195.181.247.79:8087/chessWebApp/mate",
       {
-      player: 1,
+        player: 1,
       },
-      function(booleanMate, status, xhr){
-          $.each(booleanMate, function(index, mate) {
+      function(mateOrStalemate, status, xhr){
+          $.each(mateOrStalemate, function(index, mate) {
           if (mate == "true"){
            window.open('images/mate.jpg');
-          } else if (mate == "stalamate"){
-            window.open('images/stalamate.jpg');
+          } else if (mate == "stalemate"){
+            window.open('images/stalemate.jpg');
           }
          });
     }, 'json')

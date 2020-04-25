@@ -3,6 +3,7 @@ package pl.wb.demo.chess.model.board.allPossibleActions;
 import pl.wb.demo.chess.model.ChessGame;
 import pl.wb.demo.chess.model.board.Board;
 import pl.wb.demo.chess.model.board.PossibleActions;
+import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 
 public class WhiteOrBlackAllActions {
@@ -24,7 +25,7 @@ public class WhiteOrBlackAllActions {
         possibleMovesOrCaptures = new PossibleActions();
 
         for (Position test : board.whitePiecesPositions) {
-            possibleActions = game.selectWhitePiece(test.getRow(), test.getColumn());
+            possibleActions = game.selectPiece(test.getRow(), test.getColumn(), Color.WHITE);
             for (Position position : possibleActions.getPossibleMoves()) {
                 if (!game.isCheckAfterTheMove(position)) {
                     possibleMovesOrCaptures.addPossibleMove(position);
@@ -47,7 +48,7 @@ public class WhiteOrBlackAllActions {
         possibleMovesOrCaptures = new PossibleActions();
 
         for (Position test : board.blackPiecesPositions) {
-            possibleActions = game.selectBlackPiece(test.getRow(), test.getColumn());
+            possibleActions = game.selectPiece(test.getRow(), test.getColumn(), Color.BLACK);
             for (Position position : possibleActions.getPossibleMoves()) {
                 if (!game.isCheckAfterTheMove(position)) {
                      possibleMovesOrCaptures.addPossibleMove(position);

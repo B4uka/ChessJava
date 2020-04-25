@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.controller;
+package pl.wb.demo.chess.controller.ResponseEntity;
 
 import com.google.gson.Gson;
 import org.springframework.http.HttpHeaders;

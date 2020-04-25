@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.wb.demo.chess.communication.field.Field;
+import pl.wb.demo.chess.controller.ResponseEntity.Mate;
 import pl.wb.demo.chess.model.ChessGame;
 import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
@@ -32,12 +33,12 @@ public class MainController {
 
         Color color = ChessGame.board.getColorFromTheBoardOnCurrentPosition(piecePositionThatIsSelected);
         if (whitePlayer) {
-            chessGame.selectWhitePiece(selectedPiece.getRow(), selectedPiece.getColumn());
+            chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), Color.WHITE);
             if (color == Color.WHITE) {
                 whitePlayer = false;
             } else throw new EmptyStackException();
         } else {
-            chessGame.selectBlackPiece(selectedPiece.getRow(), selectedPiece.getColumn());
+            chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), Color.BLACK);
             if (color == Color.BLACK) {
                 whitePlayer = true;
             } else throw new EmptyStackException();

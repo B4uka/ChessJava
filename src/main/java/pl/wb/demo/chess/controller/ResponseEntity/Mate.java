@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.controller;
+package pl.wb.demo.chess.controller.ResponseEntity;
 
 import com.google.gson.Gson;
 import org.springframework.http.HttpHeaders;
@@ -9,30 +9,30 @@ import pl.wb.demo.chess.model.piece_properties.Color;
 import java.util.ArrayList;
 
 public class Mate {
-    protected ChessGame chessGame;
-    protected Boolean whitePlayer;
+    private ChessGame chessGame;
+    private Boolean whitePlayer;
 
-    protected Mate(ChessGame chessGame, Boolean whitePlayer){
+    public Mate(ChessGame chessGame, Boolean whitePlayer){
         this.chessGame = chessGame;
         this.whitePlayer = whitePlayer;
     }
 
-    protected ResponseEntity<String> mate(){
+    public ResponseEntity<String> mate(){
         ArrayList<String> isMated = new ArrayList<>();
 
         if (whitePlayer) {
-            Boolean isWhiteMated = chessGame.isKingMated(Color.WHITE);
+            boolean isWhiteMated = chessGame.isKingMated(Color.WHITE);
             if (isWhiteMated) {
                 isMated.add("true");
             } else isMated.add("false");
         } else {
-            Boolean isBlackMated = chessGame.isKingMated(Color.BLACK);
+            boolean isBlackMated = chessGame.isKingMated(Color.BLACK);
             if (isBlackMated) {
                 isMated.add("true");
             } else isMated.add("false");
         }
         if (ChessGame.isStalemate) {
-            isMated.add("stalamate");
+            isMated.add("stalemate");
         }
 
         HttpHeaders responseHeaders = new HttpHeaders();
