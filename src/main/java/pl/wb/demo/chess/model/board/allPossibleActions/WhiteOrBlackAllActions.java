@@ -27,13 +27,13 @@ public class WhiteOrBlackAllActions {
         for (Position test : board.whitePiecesPositions) {
             possibleActions = game.selectPiece(test.getRow(), test.getColumn(), Color.WHITE);
             for (Position position : possibleActions.getPossibleMoves()) {
-                if (!game.move.isCheckAfterTheMove(position)) {
+                if (!game.getMove().isCheckAfterTheMove(position)) {
                     possibleMovesOrCaptures.addPossibleMove(position);
                 }
                 // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
             }
             for (Position position : possibleActions.getPossibleCaptures()) {
-                if (!game.move.isCheckAfterTheCapture(position)) {
+                if (!game.getMove().isCheckAfterTheCapture(position)) {
                     possibleMovesOrCaptures.addPossibleCapture(position);
                     // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
                 }
@@ -50,13 +50,13 @@ public class WhiteOrBlackAllActions {
         for (Position test : board.blackPiecesPositions) {
             possibleActions = game.selectPiece(test.getRow(), test.getColumn(), Color.BLACK);
             for (Position position : possibleActions.getPossibleMoves()) {
-                if (!game.move.isCheckAfterTheMove(position)) {
+                if (!game.getMove().isCheckAfterTheMove(position)) {
                      possibleMovesOrCaptures.addPossibleMove(position);
                 }
                 // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
             }
             for (Position position : possibleActions.getPossibleCaptures()) {
-                if (!game.move.isCheckAfterTheCapture(position)) {
+                if (!game.getMove().isCheckAfterTheCapture(position)) {
                    possibleMovesOrCaptures.addPossibleCapture(position);
                     //  System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
                 }

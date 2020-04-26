@@ -24,17 +24,17 @@ public class Move {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
 
         Position positionWhereWeWantToMove = new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn());
-        if (chessGame.board.isOccupied(positionWhereWeWantToMove)) {
-            if (!chessGame.move.newPiecePositionByCapture(positionWhereWeWantToMove)) {
+        if (chessGame.getBoard().isOccupied(positionWhereWeWantToMove)) {
+            if (!chessGame.getMove().newPiecePositionByCapture(positionWhereWeWantToMove)) {
                 this.whitePlayer = !whitePlayer;
                 throw new EmptyStackException();
             }
-        } else if (!chessGame.move.newPiecePositionByMove(positionWhereWeWantToMove)) {
+        } else if (!chessGame.getMove().newPiecePositionByMove(positionWhereWeWantToMove)) {
             this.whitePlayer = !whitePlayer;
             throw new EmptyStackException();
         }
-        chessGame.board.getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.board.boardFieldAndCodes);
+        chessGame.getBoard().getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().boardFieldAndCodes);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");

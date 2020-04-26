@@ -15,13 +15,13 @@ import pl.wb.demo.chess.model.pieces.Mate.MateValidation;
 @Setter
 public class ChessGame {
 
-    public Board board;
-    public PossibleActions possibleActions, possibleMovesOrCaptures;
-    public Position position;
-    public Color whoIsUpToMove = Color.WHITE;
+    private Board board;
+    private PossibleActions possibleActions, possibleMovesOrCaptures;
+    private Position position;
+    private Color whoIsUpToMove = Color.WHITE;
     public static boolean blackCastled, whiteCastled, isStalemate;
-    public Selection playersSelection;
-    public MoveOnTheChessBoard move;
+    private Selection playersSelection;
+    private MoveOnTheChessBoard move;
 
     public ChessGame () {
         this.board = new Board();
@@ -42,16 +42,10 @@ public class ChessGame {
         return possibleActions;
     }
 
-    private void printActualPositionAndGetPositionOfBothKings () {
-        board.printBoard();
-        board.getWhiteKingPosition();
-        board.getBlackKingPosition();
-    }
-
     public static void main (String[] args) {
 
         ChessGame game = new ChessGame();
-        game.printActualPositionAndGetPositionOfBothKings();
+        game.board.printBoard();
 
         game.selectPiece(1,3, Color.BLACK);
         game.move.newPiecePositionByMove(new Position(3,3));

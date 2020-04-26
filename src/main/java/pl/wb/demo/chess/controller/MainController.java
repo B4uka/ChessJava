@@ -31,7 +31,7 @@ public class MainController {
 
         Position piecePositionThatIsSelected = new Position(selectedPiece.getRow(), selectedPiece.getColumn());
 
-        Color color = chessGame.board.getColorFromTheBoardOnCurrentPosition(piecePositionThatIsSelected);
+        Color color = chessGame.getBoard().getColorFromTheBoardOnCurrentPosition(piecePositionThatIsSelected);
         if (whitePlayer) {
             chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), Color.WHITE);
             if (color == Color.WHITE) {
@@ -43,9 +43,9 @@ public class MainController {
                 whitePlayer = true;
             } else throw new EmptyStackException();
         }
-        ArrayList<Position> possibleMovesToMake = chessGame.possibleActions.getPossibleMoves();
-        ArrayList<Position> possibleCapturesToMake = chessGame.possibleActions.getPossibleCaptures();
-        ArrayList<Position> possibleCastling = chessGame.possibleActions.getKingCastlingActions();
+        ArrayList<Position> possibleMovesToMake = chessGame.getPossibleActions().getPossibleMoves();
+        ArrayList<Position> possibleCapturesToMake = chessGame.getPossibleActions().getPossibleCaptures();
+        ArrayList<Position> possibleCastling = chessGame.getPossibleActions().getKingCastlingActions();
 
         allPossibleActions.addAll(possibleCapturesToMake);
         allPossibleActions.addAll(possibleMovesToMake);
@@ -68,17 +68,17 @@ public class MainController {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
 
         Position positionWhereWeWantToMove = new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn());
-        if (chessGame.board.isOccupied(positionWhereWeWantToMove)) {
-            if (!chessGame.move.newPiecePositionByCapture(positionWhereWeWantToMove)) {
+        if (chessGame.getBoard().isOccupied(positionWhereWeWantToMove)) {
+            if (!chessGame.getMove().newPiecePositionByCapture(positionWhereWeWantToMove)) {
                 this.whitePlayer = !whitePlayer;
                 throw new EmptyStackException();
             }
-        } else if (!chessGame.move.newPiecePositionByMove(positionWhereWeWantToMove)) {
+        } else if (!chessGame.getMove().newPiecePositionByMove(positionWhereWeWantToMove)) {
             this.whitePlayer = !whitePlayer;
             throw new EmptyStackException();
         }
-        chessGame.board.getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.board.boardFieldAndCodes);
+        chessGame.getBoard().getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().boardFieldAndCodes);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
@@ -97,9 +97,9 @@ public class MainController {
     @ResponseBody
     ResponseEntity<String> actualBoard (@RequestParam int player) throws Exception {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
-        chessGame.board.getBoard();
-        chessGame.board.getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.board.boardFieldAndCodes);
+        chessGame.getBoard().getBoard();
+        chessGame.getBoard().getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().boardFieldAndCodes);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
@@ -115,8 +115,8 @@ public class MainController {
 
         this.whitePlayer = true;
         chessGame.getBoard();
-        chessGame.board.getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.board.boardFieldAndCodes);
+        chessGame.getBoard().getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().boardFieldAndCodes);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
