@@ -23,7 +23,7 @@ public class MoveOnTheChessBoard {
     private PossibleActions possibleActions;
     private RevertMoveIfIncorrect moveBack;
 
-    public MoveOnTheChessBoard (Selection playersSelection, Board board, PossibleActions possibleActions){
+    public MoveOnTheChessBoard (Selection playersSelection, Board board, PossibleActions possibleActions) {
         this.playersSelection = playersSelection;
         this.board = board;
         this.possibleActions = possibleActions;
@@ -36,7 +36,7 @@ public class MoveOnTheChessBoard {
 
         moveBack = new RevertMoveIfIncorrect(board, piecePositionOLD, piecePositionNEW, currentlySelected, temporaryBeaten);
 
-        CastlingRookMovesValidation rookMoves = new CastlingRookMovesValidation(board, possibleActions, piecePositionNEW);
+        CastlingRookMovesValidation rookMoves = new CastlingRookMovesValidation(board, possibleActions, piecePositionNEW, this);
 
         //  NEXT MOVE - validation
         if (newMoveIfIsPossible(piecePositionNEW)) {
@@ -150,6 +150,7 @@ public class MoveOnTheChessBoard {
         } else
             return false;
     }
+
     public boolean isCheckAfterTheMove (Position piecePositionNEW) {
         CheckValidation test = new IsCheck(board);
 
@@ -175,28 +176,23 @@ public class MoveOnTheChessBoard {
         if (newCaptureIfIsPossible(piecePositionNEW)) {
 
             if (test.isBlackKingChecked() && test.isWhiteKingChecked()) {
-                revertNewMove(piecePositionOLD);
                 revertNewMoveAndRestoreTempBeaten(piecePositionOLD);
                 return true;
             }
             if (currentlySelected.getColor() != Color.WHITE) { //because currently piece color  changed after we captured!
                 if (test.isBlackKingChecked()) {
-                    revertNewMove(piecePositionOLD);
                     revertNewMoveAndRestoreTempBeaten(piecePositionOLD);
                     return true;
                 }
             } else if (currentlySelected.getColor() != Color.BLACK) {  //because currently piece color  changed after we captured!
                 if (test.isWhiteKingChecked()) {
-                    revertNewMove(piecePositionOLD);
                     revertNewMoveAndRestoreTempBeaten(piecePositionOLD);
                     return true;
                 }
             }
-            revertNewMove(piecePositionOLD);
             revertNewMoveAndRestoreTempBeaten(piecePositionOLD);
             return false;
         } else {
-            revertNewMove(piecePositionOLD);
             revertNewMoveAndRestoreTempBeaten(piecePositionOLD);
             return false;
         }

@@ -54,6 +54,7 @@ public class PossibleActions {
         possibleMovesAndCaptures = possibleMoves;
         return possibleMovesAndCaptures;
     }
+
     //TODO: is that needed?
     public Position getPosition () {
         return position;

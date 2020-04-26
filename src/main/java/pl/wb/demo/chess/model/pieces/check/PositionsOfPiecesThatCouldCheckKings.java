@@ -20,5 +20,4 @@ public interface PositionsOfPiecesThatCouldCheckKings {
     void queenRookCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor);
 
     void queenBishopCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor);
-
 }

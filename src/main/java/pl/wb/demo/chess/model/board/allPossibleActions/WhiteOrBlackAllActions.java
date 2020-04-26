@@ -11,7 +11,7 @@ public class WhiteOrBlackAllActions {
     protected PossibleActions possibleMovesOrCaptures, possibleActions;
     protected ChessGame game;
 
-    public WhiteOrBlackAllActions(Board board, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame game){
+    public WhiteOrBlackAllActions (Board board, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame game) {
         this.board = board;
         this.possibleMovesOrCaptures = possibleMovesOrCaptures;
         this.possibleActions = possibleActions;
@@ -51,13 +51,13 @@ public class WhiteOrBlackAllActions {
             possibleActions = game.selectPiece(test.getRow(), test.getColumn(), Color.BLACK);
             for (Position position : possibleActions.getPossibleMoves()) {
                 if (!game.getMove().isCheckAfterTheMove(position)) {
-                     possibleMovesOrCaptures.addPossibleMove(position);
+                    possibleMovesOrCaptures.addPossibleMove(position);
                 }
                 // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
             }
             for (Position position : possibleActions.getPossibleCaptures()) {
                 if (!game.getMove().isCheckAfterTheCapture(position)) {
-                   possibleMovesOrCaptures.addPossibleCapture(position);
+                    possibleMovesOrCaptures.addPossibleCapture(position);
                     //  System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
                 }
             }

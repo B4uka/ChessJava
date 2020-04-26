@@ -13,7 +13,7 @@ public class IsCheck implements CheckValidation {
     }
 
     public boolean isWhiteKingChecked () {
-        pieceCheckingKing positions = new pieceCheckingKing();
+        PieceCheckingKing positions = new PieceCheckingKing();
         King whiteKing = new King(board.getWhiteKingPosition(), Color.WHITE, "&#9812;", 0);
 
         PossibleActions whiteKingCheckedPositions = positions.piecesPositionsCheckingWhiteKing(board, whiteKing.getPosition());
@@ -22,7 +22,7 @@ public class IsCheck implements CheckValidation {
     }
 
     public boolean isBlackKingChecked () {
-        pieceCheckingKing positions = new pieceCheckingKing();
+        PieceCheckingKing positions = new PieceCheckingKing();
         King blackKing = new King(board.getBlackKingPosition(), Color.BLACK, "&#9818;", 0);
 
         PossibleActions blackKingCheckedPositions = positions.piecesPositionsCheckingBlackKing(board, blackKing.getPosition());

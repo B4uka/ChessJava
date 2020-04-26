@@ -15,7 +15,7 @@ public class IsMate implements MateValidation {
     protected boolean isStalemate;
     protected Color color;
 
-    public IsMate(Board board, Color color, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame chessGame){
+    public IsMate (Board board, Color color, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame chessGame) {
         this.board = board;
         this.color = color;
         this.possibleMovesOrCaptures = possibleMovesOrCaptures;

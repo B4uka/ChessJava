@@ -17,14 +17,14 @@ public class CastlingKingMovesValidation {
     public PossibleActions possibleActions;
     public Position position;
 
-    public CastlingKingMovesValidation(PossibleActions possibleActions, Color color, Board board, Position position){
+    public CastlingKingMovesValidation (PossibleActions possibleActions, Color color, Board board, Position position) {
         this.possibleActions = possibleActions;
         this.color = color;
         this.board = board;
         this.position = position;
     }
 
-    public void kingMovesForCastling() {
+    public void kingMovesForCastling () {
         CheckValidation test = new IsCheck(board);
         if (this.color == Color.BLACK && !blackCastled && board.getBlackKingPiece().getCountMoves() == 0) {
             if (!board.isBoardOccupiedByAnyPiece(0, 6) && board.getBlackPiece(0, 7).getClass() == Rook.class) {

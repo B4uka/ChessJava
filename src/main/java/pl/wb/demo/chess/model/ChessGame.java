@@ -47,12 +47,12 @@ public class ChessGame {
         ChessGame game = new ChessGame();
         game.board.printBoard();
 
-        game.selectPiece(1,3, Color.BLACK);
-        game.move.newPiecePositionByMove(new Position(3,3));
+        game.selectPiece(1, 3, Color.BLACK);
+        game.move.newPiecePositionByMove(new Position(3, 3));
         System.out.println();
 
-        game.selectPiece(6,0, Color.WHITE);
-        game.move.newPiecePositionByMove(new Position(4,0));
+        game.selectPiece(6, 0, Color.WHITE);
+        game.move.newPiecePositionByMove(new Position(4, 0));
 
         System.out.println();
         game.selectPiece(1, 4, Color.BLACK);
@@ -111,8 +111,9 @@ public class ChessGame {
             System.out.println(game.isKingMated(Color.BLACK));
         }
 
-        game.selectPiece(6,4, Color.WHITE);
-        game.move.newPiecePositionByMove(new Position(4,4));
+
+        game.selectPiece(6, 4, Color.WHITE);
+        game.move.newPiecePositionByMove(new Position(4, 4));
         game.board.printBoard();
         System.out.println(game.isKingMated(Color.BLACK));
         System.out.println(game.isKingMated(Color.WHITE));
