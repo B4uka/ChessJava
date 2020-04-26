@@ -31,7 +31,7 @@ public class MainController {
 
         Position piecePositionThatIsSelected = new Position(selectedPiece.getRow(), selectedPiece.getColumn());
 
-        Color color = ChessGame.board.getColorFromTheBoardOnCurrentPosition(piecePositionThatIsSelected);
+        Color color = chessGame.board.getColorFromTheBoardOnCurrentPosition(piecePositionThatIsSelected);
         if (whitePlayer) {
             chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), Color.WHITE);
             if (color == Color.WHITE) {
@@ -68,17 +68,17 @@ public class MainController {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
 
         Position positionWhereWeWantToMove = new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn());
-        if (ChessGame.board.isOccupied(positionWhereWeWantToMove)) {
-            if (!chessGame.newPiecePositionByCapture(positionWhereWeWantToMove)) {
+        if (chessGame.board.isOccupied(positionWhereWeWantToMove)) {
+            if (!chessGame.move.newPiecePositionByCapture(positionWhereWeWantToMove)) {
                 this.whitePlayer = !whitePlayer;
                 throw new EmptyStackException();
             }
-        } else if (!chessGame.newPiecePositionByMove(positionWhereWeWantToMove)) {
+        } else if (!chessGame.move.newPiecePositionByMove(positionWhereWeWantToMove)) {
             this.whitePlayer = !whitePlayer;
             throw new EmptyStackException();
         }
-        ChessGame.board.getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(ChessGame.board.boardFieldAndCodes);
+        chessGame.board.getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.board.boardFieldAndCodes);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
@@ -97,9 +97,9 @@ public class MainController {
     @ResponseBody
     ResponseEntity<String> actualBoard (@RequestParam int player) throws Exception {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
-        ChessGame.board.getBoard();
-        ChessGame.board.getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(ChessGame.board.boardFieldAndCodes);
+        chessGame.board.getBoard();
+        chessGame.board.getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.board.boardFieldAndCodes);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
@@ -111,12 +111,12 @@ public class MainController {
     @ResponseBody
     ResponseEntity<String> newGame (@RequestParam int player) throws Exception {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
-        new ChessGame();
+        chessGame = new ChessGame();
 
         this.whitePlayer = true;
-        ChessGame.board.getBoard();
-        ChessGame.board.getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(ChessGame.board.boardFieldAndCodes);
+        chessGame.getBoard();
+        chessGame.board.getBoardFieldAndCodes();
+        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.board.boardFieldAndCodes);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");

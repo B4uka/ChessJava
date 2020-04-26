@@ -176,7 +176,7 @@ public class Board {
         boardOfPieces[position.getRow()][position.getColumn()] = null;
     }
 
-    private void fillBoardWithPieces () {
+    public void fillBoardWithPieces () {
 
         this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK, "&#9818;", 0);
         this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE, "&#9812;", 0);

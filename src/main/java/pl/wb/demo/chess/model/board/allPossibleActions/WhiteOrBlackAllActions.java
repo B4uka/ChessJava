@@ -11,7 +11,6 @@ public class WhiteOrBlackAllActions {
     protected PossibleActions possibleMovesOrCaptures, possibleActions;
     protected ChessGame game;
 
-
     public WhiteOrBlackAllActions(Board board, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame game){
         this.board = board;
         this.possibleMovesOrCaptures = possibleMovesOrCaptures;
@@ -21,19 +20,20 @@ public class WhiteOrBlackAllActions {
 
     // all actions that white player can do
     public PossibleActions allWhitePiecesPossibleActions () {
+
         board.getAllWhitePiecesPosition();
         possibleMovesOrCaptures = new PossibleActions();
 
         for (Position test : board.whitePiecesPositions) {
             possibleActions = game.selectPiece(test.getRow(), test.getColumn(), Color.WHITE);
             for (Position position : possibleActions.getPossibleMoves()) {
-                if (!game.isCheckAfterTheMove(position)) {
+                if (!game.move.isCheckAfterTheMove(position)) {
                     possibleMovesOrCaptures.addPossibleMove(position);
                 }
                 // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
             }
             for (Position position : possibleActions.getPossibleCaptures()) {
-                if (!game.isCheckAfterTheCapture(position)) {
+                if (!game.move.isCheckAfterTheCapture(position)) {
                     possibleMovesOrCaptures.addPossibleCapture(position);
                     // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
                 }
@@ -50,13 +50,13 @@ public class WhiteOrBlackAllActions {
         for (Position test : board.blackPiecesPositions) {
             possibleActions = game.selectPiece(test.getRow(), test.getColumn(), Color.BLACK);
             for (Position position : possibleActions.getPossibleMoves()) {
-                if (!game.isCheckAfterTheMove(position)) {
+                if (!game.move.isCheckAfterTheMove(position)) {
                      possibleMovesOrCaptures.addPossibleMove(position);
                 }
                 // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
             }
             for (Position position : possibleActions.getPossibleCaptures()) {
-                if (!game.isCheckAfterTheCapture(position)) {
+                if (!game.move.isCheckAfterTheCapture(position)) {
                    possibleMovesOrCaptures.addPossibleCapture(position);
                     //  System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
                 }
