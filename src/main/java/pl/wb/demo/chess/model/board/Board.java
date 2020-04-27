@@ -176,6 +176,16 @@ public class Board {
         boardOfPieces[position.getRow()][position.getColumn()] = null;
     }
 
+    public Piece[][] clearBoardAndSetPieceOnStartingPositions () {
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                boardOfPieces[i][j] = null;
+            }
+        }
+        fillBoardWithPieces();
+        return boardOfPieces;
+    }
+
     public void fillBoardWithPieces () {
 
         this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK, "&#9818;", 0);

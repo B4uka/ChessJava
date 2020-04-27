@@ -8,19 +8,21 @@ import pl.wb.demo.chess.model.pieces.King;
 public class IsCheck implements CheckValidation {
     protected Board board;
 
-    public IsCheck (Board board){
-        this.board =  board;
+    public IsCheck (Board board) {
+        this.board = board;
     }
 
+    @Override
     public boolean isWhiteKingChecked () {
         PieceCheckingKing positions = new PieceCheckingKing();
         King whiteKing = new King(board.getWhiteKingPosition(), Color.WHITE, "&#9812;", 0);
 
         PossibleActions whiteKingCheckedPositions = positions.piecesPositionsCheckingWhiteKing(board, whiteKing.getPosition());
- //       whiteKingCheckedPositions.printPositionsOfPiecesThatAreCheckingKing();            row and column of piece that are checking king
+        //       whiteKingCheckedPositions.printPositionsOfPiecesThatAreCheckingKing();            row and column of piece that are checking king
         return !whiteKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
     }
 
+    @Override
     public boolean isBlackKingChecked () {
         PieceCheckingKing positions = new PieceCheckingKing();
         King blackKing = new King(board.getBlackKingPosition(), Color.BLACK, "&#9818;", 0);
@@ -28,5 +30,13 @@ public class IsCheck implements CheckValidation {
         PossibleActions blackKingCheckedPositions = positions.piecesPositionsCheckingBlackKing(board, blackKing.getPosition());
 //        blackKingCheckedPositions.printPositionsOfPiecesThatAreCheckingKing();            row and column of piece that are checking king
         return !blackKingCheckedPositions.listOfPiecesPositionsWhichAreCheckingTheKing.isEmpty();
+    }
+
+    @Override
+    public boolean isKingChecked (Color color) {
+        if (color == Color.WHITE) {
+            return isWhiteKingChecked();
+        }
+        return isBlackKingChecked();
     }
 }

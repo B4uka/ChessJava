@@ -15,35 +15,31 @@ public class IsMate implements MateValidation {
     protected boolean isStalemate;
     protected Color color;
 
-    public IsMate (Board board, Color color, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame chessGame) {
+    public IsMate (Board board, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame chessGame) {
         this.board = board;
-        this.color = color;
         this.possibleMovesOrCaptures = possibleMovesOrCaptures;
         this.possibleActions = possibleActions;
         this.chessGame = chessGame;
     }
 
     @Override
-    public boolean isKingMated (Color color) {
+    public boolean isKingMated () {
         CheckValidation test = new IsCheck(board);
+        Color color = chessGame.getWhoIsUpToMove();
+
         WhiteOrBlackAllActions allPossibleActionsByWhiteOrBlack = new WhiteOrBlackAllActions(board, possibleMovesOrCaptures, possibleActions, chessGame);
 
         if (color == Color.WHITE) {
             possibleMovesOrCaptures = allPossibleActionsByWhiteOrBlack.allWhitePiecesPossibleActions();
-            if (test.isWhiteKingChecked()) {
-                return possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().isEmpty();
-            } else if (!test.isWhiteKingChecked() && possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().size() == 0) {
-                isStalemate = true;
-                return false;
-            }
         } else if (color == Color.BLACK) {
             possibleMovesOrCaptures = allPossibleActionsByWhiteOrBlack.allBlackPiecesPossibleActions();
-            if (test.isBlackKingChecked()) {
-                return possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().isEmpty();
-            } else if (!test.isBlackKingChecked() && possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().size() == 0) {
-                isStalemate = true;
-                return false;
-            }
+        }
+
+        if (test.isKingChecked(color)) {
+            return possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().isEmpty();
+        } else if (!test.isKingChecked(color) && possibleMovesOrCaptures.getAllPossibleMovesAndCaptures().size() == 0) {
+            this.isStalemate = true;
+            return false;
         }
         return false;
     }

@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.model.board.Move;
+package pl.wb.demo.chess.model.board.SelectionAndMove;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
 package pl.wb.demo.chess.model.pieces.MoveGenerator;
 
 import pl.wb.demo.chess.model.board.Board;
-import pl.wb.demo.chess.model.board.Move.MoveOnTheChessBoard;
+import pl.wb.demo.chess.model.board.SelectionAndMove.MoveOnTheChessBoard;
 import pl.wb.demo.chess.model.board.PossibleActions;
 import pl.wb.demo.chess.model.piece_properties.Position;
 import pl.wb.demo.chess.model.pieces.Piece;

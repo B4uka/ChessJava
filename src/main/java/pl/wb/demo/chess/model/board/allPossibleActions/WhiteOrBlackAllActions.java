@@ -20,20 +20,20 @@ public class WhiteOrBlackAllActions {
 
     // all actions that white player can do
     public PossibleActions allWhitePiecesPossibleActions () {
-
         board.getAllWhitePiecesPosition();
         possibleMovesOrCaptures = new PossibleActions();
 
         for (Position test : board.whitePiecesPositions) {
-            possibleActions = game.selectPiece(test.getRow(), test.getColumn(), Color.WHITE);
+            game.selectPieceForCheckSearching(test.getRow(), test.getColumn(), Color.WHITE);
+            possibleActions = game.getPossibleActions();
             for (Position position : possibleActions.getPossibleMoves()) {
-                if (!game.getMove().isCheckAfterTheMove(position)) {
+                if (!game.getSearchForCheckOrMate().isCheckAfterTheMove(position)) {
                     possibleMovesOrCaptures.addPossibleMove(position);
                 }
                 // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
             }
             for (Position position : possibleActions.getPossibleCaptures()) {
-                if (!game.getMove().isCheckAfterTheCapture(position)) {
+                if (!game.getSearchForCheckOrMate().isCheckAfterTheCapture(position)) {
                     possibleMovesOrCaptures.addPossibleCapture(position);
                     // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
                 }
@@ -46,17 +46,18 @@ public class WhiteOrBlackAllActions {
     public PossibleActions allBlackPiecesPossibleActions () {
         board.getAllBlackPiecesPosition();
         possibleMovesOrCaptures = new PossibleActions();
-
         for (Position test : board.blackPiecesPositions) {
-            possibleActions = game.selectPiece(test.getRow(), test.getColumn(), Color.BLACK);
+            game.selectPieceForCheckSearching(test.getRow(), test.getColumn(), Color.BLACK);
+            possibleActions = game.getPossibleActions();
+
             for (Position position : possibleActions.getPossibleMoves()) {
-                if (!game.getMove().isCheckAfterTheMove(position)) {
+                if (!game.getSearchForCheckOrMate().isCheckAfterTheMove(position)) {
                     possibleMovesOrCaptures.addPossibleMove(position);
                 }
                 // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
             }
             for (Position position : possibleActions.getPossibleCaptures()) {
-                if (!game.getMove().isCheckAfterTheCapture(position)) {
+                if (!game.getSearchForCheckOrMate().isCheckAfterTheCapture(position)) {
                     possibleMovesOrCaptures.addPossibleCapture(position);
                     //  System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
                 }

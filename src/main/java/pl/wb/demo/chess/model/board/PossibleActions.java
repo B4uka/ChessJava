@@ -54,39 +54,4 @@ public class PossibleActions {
         possibleMovesAndCaptures = possibleMoves;
         return possibleMovesAndCaptures;
     }
-
-    //TODO: is that needed?
-    public Position getPosition () {
-        return position;
-    }
-
-    public void printPossibleMoves () {
-        for (Position position : possibleMoves) {
-            System.out.print("Possible moves: " + position.getRow() + "\t" + position.getColumn() + "\t");
-        }
-    }
-
-    public void printPossibleCaptures () {
-        for (Position position : possibleCaptures) {
-            System.out.print("Possible captures: " + position.getRow() + "\t" + position.getColumn() + "\t");
-        }
-    }
-
-    public void printPossibleChecks () {
-        for (Position position : possibleChecks) {
-            System.out.print("Possible checks: " + position.getRow() + "\t" + position.getColumn() + "\t");
-        }
-    }
-
-    public void printPossibleCastlingKingMoves () {
-        for (Position position : kingCastlingActions) {
-            System.out.print("Possible castlings King moves: " + position.getRow() + "\t" + position.getColumn() + "\t");
-        }
-    }
-
-    public void printPositionsOfPiecesThatAreCheckingKing () {
-        for (Position position : listOfPiecesPositionsWhichAreCheckingTheKing) {
-            System.out.println("Row: " + position.getRow() + "\t Column: " + position.getColumn());
-        }
-    }
 }

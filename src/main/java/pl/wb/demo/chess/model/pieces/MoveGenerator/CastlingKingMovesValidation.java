@@ -30,13 +30,13 @@ public class CastlingKingMovesValidation {
             if (!board.isBoardOccupiedByAnyPiece(0, 6) && board.getBlackPiece(0, 7).getClass() == Rook.class) {
                 Position castlingKingMove1 = this.position.setNewPosition(0, 6);
                 if (!test.isBlackKingChecked() && !board.isBoardOccupiedByAnyPiece(0, 5) && board.getPiece(0, 7).getCountMoves() == 0) {
-                    possibleActions.addPossibleCastlingKingMove(castlingKingMove1);//King move
+                    possibleActions.addPossibleCastlingKingMove(castlingKingMove1);//King searchForCheckOrMate
                 }
             }
             if (!board.isBoardOccupiedByAnyPiece(0, 3) & !board.isBoardOccupiedByAnyPiece(0, 2) && !board.isBoardOccupiedByAnyPiece(0, 1) && board.getBlackPiece(0, 0).getClass() == Rook.class) {
                 Position castlingKingMove2 = this.position.setNewPosition(0, 2);
                 if (!test.isBlackKingChecked() && !board.isBoardOccupiedByAnyPiece(0, 3) && board.getPiece(0, 0).getCountMoves() == 0) {
-                    possibleActions.addPossibleCastlingKingMove(castlingKingMove2);//King move
+                    possibleActions.addPossibleCastlingKingMove(castlingKingMove2);//King searchForCheckOrMate
                 }
             }
         } else if (this.color == Color.WHITE && !whiteCastled && board.getWhiteKingPiece().getCountMoves() == 0) {
@@ -44,13 +44,13 @@ public class CastlingKingMovesValidation {
                 Position castlingKingMove1 = this.position.setNewPosition(7, 6);
                 if (!test.isWhiteKingChecked() && board.getPiece(7, 7).getCountMoves() == 0
                         && board.getWhitePiece(7, 7).getClass() == Rook.class) {
-                    possibleActions.addPossibleCastlingKingMove(castlingKingMove1);//King move
+                    possibleActions.addPossibleCastlingKingMove(castlingKingMove1);//King searchForCheckOrMate
                 }
             }
             if (!board.isBoardOccupiedByAnyPiece(7, 3) && !board.isBoardOccupiedByAnyPiece(7, 2) && !board.isBoardOccupiedByAnyPiece(7, 1) && board.getWhitePiece(7, 0).getClass() == Rook.class) {
                 Position castlingKingMove2 = this.position.setNewPosition(7, 2);
                 if (!test.isWhiteKingChecked() && !board.isBoardOccupiedByAnyPiece(7, 3) && board.getPiece(7, 0).getCountMoves() == 0) {
-                    possibleActions.addPossibleCastlingKingMove(castlingKingMove2);//King move
+                    possibleActions.addPossibleCastlingKingMove(castlingKingMove2);//King searchForCheckOrMate
                 }
             }
         }

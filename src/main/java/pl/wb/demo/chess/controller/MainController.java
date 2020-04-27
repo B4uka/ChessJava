@@ -12,14 +12,12 @@ import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.HashMap;
 
 @RestController
 public class MainController {
 
     private ChessGame chessGame = new ChessGame();
-    private Boolean whitePlayer = true;
 
     @RequestMapping(value = {"/selection"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody // can delete all of this response body probably!
@@ -27,22 +25,10 @@ public class MainController {
 
         ArrayList<String> fieldsToMark = new ArrayList<>();
         ArrayList<Position> allPossibleActions = new ArrayList<>();
-        Field selectedPiece = Field.getFieldByString(fieldId);
+        Field selectedPiece = Field.valueOf(fieldId);
 
-        Position piecePositionThatIsSelected = new Position(selectedPiece.getRow(), selectedPiece.getColumn());
+        chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), chessGame.getWhoIsUpToMove());
 
-        Color color = chessGame.getBoard().getColorFromTheBoardOnCurrentPosition(piecePositionThatIsSelected);
-        if (whitePlayer) {
-            chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), Color.WHITE);
-            if (color == Color.WHITE) {
-                whitePlayer = false;
-            } else throw new EmptyStackException();
-        } else {
-            chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), Color.BLACK);
-            if (color == Color.BLACK) {
-                whitePlayer = true;
-            } else throw new EmptyStackException();
-        }
         ArrayList<Position> possibleMovesToMake = chessGame.getPossibleActions().getPossibleMoves();
         ArrayList<Position> possibleCapturesToMake = chessGame.getPossibleActions().getPossibleCaptures();
         ArrayList<Position> possibleCastling = chessGame.getPossibleActions().getKingCastlingActions();
@@ -67,16 +53,9 @@ public class MainController {
 
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
 
-        Position positionWhereWeWantToMove = new Position(Field.getFieldByString(fieldId).getRow(), Field.getFieldByString(fieldId).getColumn());
-        if (chessGame.getBoard().isOccupied(positionWhereWeWantToMove)) {
-            if (!chessGame.getMove().newPiecePositionByCapture(positionWhereWeWantToMove)) {
-                this.whitePlayer = !whitePlayer;
-                throw new EmptyStackException();
-            }
-        } else if (!chessGame.getMove().newPiecePositionByMove(positionWhereWeWantToMove)) {
-            this.whitePlayer = !whitePlayer;
-            throw new EmptyStackException();
-        }
+        Position positionWhereWeWantToMove = new Position(Field.valueOf(fieldId).getRow(), Field.valueOf(fieldId).getColumn());
+        chessGame.movePiece(positionWhereWeWantToMove.getRow(), positionWhereWeWantToMove.getColumn());
+
         chessGame.getBoard().getBoardFieldAndCodes();
         codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().boardFieldAndCodes);
 
@@ -89,8 +68,8 @@ public class MainController {
     @RequestMapping(value = {"/mate"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<String> isMated (@RequestParam int player) {
-        Mate mate = new Mate(this.chessGame, this.whitePlayer);
-        return mate.mate();
+        Mate test = new Mate(chessGame);
+        return test.mate();
     }
 
     @RequestMapping(value = {"/actualBoard"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -111,12 +90,12 @@ public class MainController {
     @ResponseBody
     ResponseEntity<String> newGame (@RequestParam int player) throws Exception {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
-        chessGame = new ChessGame();
 
-        this.whitePlayer = true;
-        chessGame.getBoard();
-        chessGame.getBoard().getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().boardFieldAndCodes);
+        chessGame.getBoard().clearBoardAndSetPieceOnStartingPositions();
+        chessGame.setWhoIsUpToMove(Color.WHITE);
+
+        new ChessGame();
+        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().getBoardFieldAndCodes());
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
