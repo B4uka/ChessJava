@@ -35,7 +35,7 @@ public class Selection {
             this.currentlySelected = board.getPieceByColor(row, column, color);
             generateActionsForCurrentlySelected();
         } catch (NullPointerException e) {
-            throw new IllegalStateException("There is no piece on this cell!", e);
+            throw new NullPointerException();
         }
     }
 }

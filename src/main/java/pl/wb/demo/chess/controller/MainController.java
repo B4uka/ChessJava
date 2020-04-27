@@ -26,9 +26,13 @@ public class MainController {
         ArrayList<String> fieldsToMark = new ArrayList<>();
         ArrayList<Position> allPossibleActions = new ArrayList<>();
         Field selectedPiece = Field.valueOf(fieldId);
+        Color selectedPieceColor = chessGame.getBoard().getColorFromTheBoardOnCurrentPosition(new Position(selectedPiece.getRow(), selectedPiece.getColumn()));
 
-        chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), chessGame.getWhoIsUpToMove());
-
+        if (!chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), selectedPieceColor)){
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("Access-Control-Allow-Origin", "*");
+            return ResponseEntity.status(400).headers(responseHeaders).body("It is not your move or you already lost!");
+        }
         ArrayList<Position> possibleMovesToMake = chessGame.getPossibleActions().getPossibleMoves();
         ArrayList<Position> possibleCapturesToMake = chessGame.getPossibleActions().getPossibleCaptures();
         ArrayList<Position> possibleCastling = chessGame.getPossibleActions().getKingCastlingActions();
