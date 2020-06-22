@@ -1,5 +1,7 @@
 package pl.wb.demo.chess.communication.field;
 
+import pl.wb.demo.chess.model.pieces.Piece;
+
 public enum Field {
     A1(7, 0),
     A2(6, 0),
@@ -76,20 +78,20 @@ public enum Field {
     private int row;
     private int column;
 
-    Field (int row, int column) {
+    Field(int row, int column) {
         this.row = row;
         this.column = column;
     }
 
-    public int getRow () {
+    public int getRow() {
         return row;
     }
 
-    public int getColumn () {
+    public int getColumn() {
         return column;
     }
 
-    public static String getFieldByPosition (int row, int column) {
+    public static String getFieldByPosition(int row, int column) {
         Field[] fields = Field.values();
         for (Field field : fields) {
             if (row == field.getRow() && column == field.getColumn())

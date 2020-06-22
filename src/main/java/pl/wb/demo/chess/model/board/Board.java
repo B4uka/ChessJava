@@ -168,6 +168,10 @@ public class Board {
         return boardOfPieces[row][column];
     }
 
+    public String getPieceNameByFieldID(Field fieldID) {
+        return boardOfPieces[fieldID.getRow()][fieldID.getColumn()].getClass().getSimpleName();
+    }
+
     public void setPiece (Piece piece) {
         boardOfPieces[piece.getPosition().getRow()][piece.getPosition().getColumn()] = piece;
     }
@@ -177,8 +181,8 @@ public class Board {
     }
 
     public Piece[][] clearBoardAndSetPieceOnStartingPositions () {
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 boardOfPieces[i][j] = null;
             }
         }

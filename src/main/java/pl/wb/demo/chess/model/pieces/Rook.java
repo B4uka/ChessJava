@@ -30,8 +30,8 @@ public class Rook extends Piece implements StandardMoveGenerator {
         Position rookPossibleMovePosition = rookPosition.getNewPositionByVector(rowShift, columnShift);
 
         while (rookPossibleMovePosition.isOnBoard()) {
-            if(this.color == Color.BLACK && board.isOccupiedByColor(rookPossibleMovePosition, Color.BLACK)
-                    || this.color == Color.WHITE && board.isOccupiedByColor(rookPossibleMovePosition, Color.WHITE)){
+            if (this.color == Color.BLACK && board.isOccupiedByColor(rookPossibleMovePosition, Color.BLACK)
+                    || this.color == Color.WHITE && board.isOccupiedByColor(rookPossibleMovePosition, Color.WHITE)) {
                 break;
             } else if (this.color == Color.WHITE && board.isOccupiedByColor(rookPossibleMovePosition, Color.BLACK)
                     || (this.color == Color.BLACK && board.isOccupiedByColor(rookPossibleMovePosition, Color.WHITE))) {

@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.model.dataBase;
+package pl.wb.demo.chess.model.gameNotation;
 
 public enum Result {
     WhiteWon,
