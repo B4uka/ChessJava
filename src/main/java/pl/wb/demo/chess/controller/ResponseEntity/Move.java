@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class Move {
     private ChessGame chessGame;
 
-    public Move (ChessGame chessGame){
+    public Move(ChessGame chessGame) {
         this.chessGame = chessGame;
     }
 

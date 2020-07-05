@@ -1,19 +1,12 @@
 package pl.wb.demo.chess.controller;
 
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.wb.demo.chess.communication.field.Field;
 import pl.wb.demo.chess.controller.ResponseEntity.*;
 import pl.wb.demo.chess.model.ChessGame;
-import pl.wb.demo.chess.model.piece_properties.Color;
-import pl.wb.demo.chess.model.piece_properties.Position;
-import pl.wb.demo.chess.model.pieces.Piece;
-
-import java.util.HashMap;
 
 @RestController
 @Slf4j

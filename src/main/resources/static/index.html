@@ -2,182 +2,200 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
-  <title>Play chess!</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Play chess!</title>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="favicon.ico">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-  <!-- background  image-->
-  <section id="title">
+<!-- background  image-->
+<section id="title">
     <div class="container-fluid" id="intro">
-      <!-- Navigation section  -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="https://en.wikipedia.org/wiki/Chess" target="_blank">Lets play!</a>
+        <!-- Navigation section  -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="https://en.wikipedia.org/wiki/Chess" target="_blank">Lets play!</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="contact_me.html">Contact</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://chess24.com/en/watch/live-tournaments"  target="_blank">Live Tournaments</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://chess-db.com/public/pinfo.jsp?id=1134060">My Fide Profile</a>
-            </li>
-          </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact_me.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://chess24.com/en/watch/live-tournaments" target="_blank">Live
+                            Tournaments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://chess-db.com/public/pinfo.jsp?id=1134060">My Fide Profile</a>
+                    </li>
+                </ul>
 
-        </div>
-      </nav>
+            </div>
+        </nav>
     </div>
-  </section>
+</section>
 
-  <section>
+<section>
     <!-- CHESSBOARD -->
     <div class="row text-center">
-      <div class="col-3 d-none d-lg-block ratings">
-        <a href="https://2700chess.com/women" target="_blank"><img border="0" src="https://2700chess.com/files/topten_women.png" alt="2700chess.com for more details and full list" title="2700chess.com for more details and full list" /></a>
-        <a href="https://2700chess.com" target="_blank"><img border="0" src="https://2700chess.com/files/topten.png" alt="2700chess.com for more details and full list" title="2700chess.com for more details and full list"style=" margin-top: 10px;" /></a>
-      </div>
+        <div class="col-3 d-none d-lg-block ratings">
+            <a href="https://2700chess.com/women" target="_blank"><img border="0"
+                                                                       src="https://2700chess.com/files/topten_women.png"
+                                                                       alt="2700chess.com for more details and full list"
+                                                                       title="2700chess.com for more details and full list"/></a>
+            <a href="https://2700chess.com" target="_blank"><img border="0" src="https://2700chess.com/files/topten.png"
+                                                                 alt="2700chess.com for more details and full list"
+                                                                 title="2700chess.com for more details and full list"
+                                                                 style=" margin-top: 10px;"/></a>
+        </div>
 
-      <div class="col-lg-6 col-md-9">
-        <!-- <div id="chessBoard"></div> -->
-        <table class="table" id="table">
-          <tbody>
-            <tr class="table char">
-              <td></td>
-              <td class="char">a</td>
-              <td class="char">b</td>
-              <td class="char">c</td>
-              <td class="char">d</td>
-              <td class="char">e</td>
-              <td class="char">f</td>
-              <td class="char">g</td>
-              <td class="char">h</td>
-            </tr>
-            <tr>
-              <td class="char">8</td>
-              <td class="cellLight ChessCell" id="A8">&#9820;</td>
-              <td class="cellDark ChessCell" id="B8">&#9822;</td>
-              <td class="cellLight ChessCell" id="C8">&#9821;</td>
-              <td class="cellDark ChessCell" id="D8">&#9819;</td>
-              <td class="cellLight ChessCell" id="E8">&#9818;</td>
-              <td class="cellDark ChessCell" id="F8">&#9821;</td>
-              <td class="cellLight ChessCell" id="G8">&#9822;</td>
-              <td class="cellDark ChessCell" id="H8">&#9820;</td>
-              <td class="char number">8</td>
-            </tr>
-            <tr>
-              <td class="char">7</td>
-              <td class="f cellDark ChessCell" id="A7">&#9823;</td>
-              <td class="f cellLight ChessCell" id="B7">&#9823;</td>
-              <td class="f cellDark ChessCell" id="C7">&#9823;</td>
-              <td class="f cellLight ChessCell" id="D7">&#9823;</td>
-              <td class="f cellDark ChessCell" id="E7">&#9823;</td>
-              <td class="f cellLight ChessCell" id="F7">&#9823;</td>
-              <td class="f cellDark ChessCell" id="G7">&#9823;</td>
-              <td class="f cellLight ChessCell" id="H7">&#9823;</td>
-              <td class="char number">7</td>
-            </tr>
-            <tr>
-              <td class="char number">6</td>
-              <td class="cellLight ChessCell" id="A6"></td>
-              <td class="cellDark ChessCell" id="B6"></td>
-              <td class="cellLight ChessCell" id="C6"></td>
-              <td class="cellDark ChessCell" id="D6"></td>
-              <td class="cellLight ChessCell" id="E6"></td>
-              <td class="cellDark ChessCell" id="F6"></td>
-              <td class="cellLight ChessCell" id="G6"></td>
-              <td class="cellDark ChessCell" id="H6"></td>
-              <td class="char number">6</td>
-            </tr>
-            <tr>
-              <td class="char number">5</td>
-              <td class="cellDark ChessCell" id="A5"></td>
-              <td class="cellLight ChessCell" id="B5"></td>
-              <td class="cellDark ChessCell" id="C5"></td>
-              <td class="cellLight ChessCell" id="D5"></td>
-              <td class="cellDark ChessCell" id="E5"></td>
-              <td class="cellLight ChessCell" id="F5"></td>
-              <td class="cellDark ChessCell" id="G5"></td>
-              <td class="cellLight ChessCell" id="H5"></td>
-              <td class="char number">5</td>
-            </tr>
-            <tr>
-              <td class="char number">4</td>
-              <td class="cellLight ChessCell" id="A4"></td>
-              <td class="cellDark ChessCell" id="B4"></td>
-              <td class="cellLight ChessCell" id="C4"></td>
-              <td class="cellDark ChessCell" id="D4"></td>
-              <td class="cellLight ChessCell" id="E4"></td>
-              <td class="cellDark ChessCell" id="F4"></td>
-              <td class="cellLight ChessCell" id="G4"></td>
-              <td class="cellDark ChessCell" id="H4"></td>
-              <td class="char number">4</td>
-            </tr>
-            <tr>
-              <td class="char number">3</td>
-              <td class="cellDark ChessCell" id="A3"></td>
-              <td class="cellLight ChessCell" id="B3"></td>
-              <td class="cellDark ChessCell" id="C3"></td>C
-              <td class="cellLight ChessCell" id="D3"></td>
-              <td class="cellDark ChessCell" id="E3"></td>
-              <td class="cellLight ChessCell" id="F3"></td>
-              <td class="cellDark ChessCell" id="G3"></td>
-              <td class="cellLight ChessCell" id="H3"></td>
-              <td class="char number">3</td>
-            </tr>
-            <tr>
-              <td class="char number">2</td>
-              <td class="cellLight ChessCell" id="A2">&#9817;</td>
-              <td class="cellDark ChessCell" id="B2">&#9817;</td>
-              <td class="cellLight ChessCell" id="C2">&#9817;</td>
-              <td class="cellDark ChessCell" id="D2">&#9817;</td>
-              <td class="cellLight ChessCell" id="E2">&#9817;</td>
-              <td class="cellDark ChessCell" id="F2">&#9817;</td>
-              <td class="cellLight ChessCell" id="G2">&#9817;</td>
-              <td class="cellDark ChessCell" id="H2">&#9817;</td>
-              <td class="char number">2</td>
-            </tr>
-            <tr>
-              <td class="char number">1</td>
-              <td class="cellDark ChessCell" id="A1">&#9814;</td>
-              <td class="cellLight ChessCell" id="B1">&#9816;</td>
-              <td class="cellDark ChessCell" id="C1">&#9815;</td>
-              <td class="cellLight ChessCell" id="D1">&#9813;</td>
-              <td class="cellDark ChessCell" id="E1">&#9812;</td>
-              <td class="cellLight ChessCell" id="F1">&#9815;</td>
-              <td class="cellDark ChessCell" id="G1">&#9816;</td>
-              <td class="cellLight ChessCell" id="H1">&#9814;</td>
-              <td class="char number">1</td>
-            </tr>
-            <tr class="char number">
-              <td></td>
-              <td class="char">a</td>
-              <td class="char">b</td>
-              <td class="char">c</td>
-              <td class="char">d</td>
-              <td class="char">e</td>
-              <td class="char">f</td>
-              <td class="char">g</td>
-              <td class="char">h</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="col-lg-6 col-md-9">
+            <!-- <div id="chessBoard"></div> -->
+            <table class="table" id="table">
+                <tbody>
+                <tr class="table char">
+                    <td></td>
+                    <td class="char">a</td>
+                    <td class="char">b</td>
+                    <td class="char">c</td>
+                    <td class="char">d</td>
+                    <td class="char">e</td>
+                    <td class="char">f</td>
+                    <td class="char">g</td>
+                    <td class="char">h</td>
+                </tr>
+                <tr>
+                    <td class="char">8</td>
+                    <td class="cellLight ChessCell" id="A8">&#9820;</td>
+                    <td class="cellDark ChessCell" id="B8">&#9822;</td>
+                    <td class="cellLight ChessCell" id="C8">&#9821;</td>
+                    <td class="cellDark ChessCell" id="D8">&#9819;</td>
+                    <td class="cellLight ChessCell" id="E8">&#9818;</td>
+                    <td class="cellDark ChessCell" id="F8">&#9821;</td>
+                    <td class="cellLight ChessCell" id="G8">&#9822;</td>
+                    <td class="cellDark ChessCell" id="H8">&#9820;</td>
+                    <td class="char number">8</td>
+                </tr>
+                <tr>
+                    <td class="char">7</td>
+                    <td class="f cellDark ChessCell" id="A7">&#9823;</td>
+                    <td class="f cellLight ChessCell" id="B7">&#9823;</td>
+                    <td class="f cellDark ChessCell" id="C7">&#9823;</td>
+                    <td class="f cellLight ChessCell" id="D7">&#9823;</td>
+                    <td class="f cellDark ChessCell" id="E7">&#9823;</td>
+                    <td class="f cellLight ChessCell" id="F7">&#9823;</td>
+                    <td class="f cellDark ChessCell" id="G7">&#9823;</td>
+                    <td class="f cellLight ChessCell" id="H7">&#9823;</td>
+                    <td class="char number">7</td>
+                </tr>
+                <tr>
+                    <td class="char number">6</td>
+                    <td class="cellLight ChessCell" id="A6"></td>
+                    <td class="cellDark ChessCell" id="B6"></td>
+                    <td class="cellLight ChessCell" id="C6"></td>
+                    <td class="cellDark ChessCell" id="D6"></td>
+                    <td class="cellLight ChessCell" id="E6"></td>
+                    <td class="cellDark ChessCell" id="F6"></td>
+                    <td class="cellLight ChessCell" id="G6"></td>
+                    <td class="cellDark ChessCell" id="H6"></td>
+                    <td class="char number">6</td>
+                </tr>
+                <tr>
+                    <td class="char number">5</td>
+                    <td class="cellDark ChessCell" id="A5"></td>
+                    <td class="cellLight ChessCell" id="B5"></td>
+                    <td class="cellDark ChessCell" id="C5"></td>
+                    <td class="cellLight ChessCell" id="D5"></td>
+                    <td class="cellDark ChessCell" id="E5"></td>
+                    <td class="cellLight ChessCell" id="F5"></td>
+                    <td class="cellDark ChessCell" id="G5"></td>
+                    <td class="cellLight ChessCell" id="H5"></td>
+                    <td class="char number">5</td>
+                </tr>
+                <tr>
+                    <td class="char number">4</td>
+                    <td class="cellLight ChessCell" id="A4"></td>
+                    <td class="cellDark ChessCell" id="B4"></td>
+                    <td class="cellLight ChessCell" id="C4"></td>
+                    <td class="cellDark ChessCell" id="D4"></td>
+                    <td class="cellLight ChessCell" id="E4"></td>
+                    <td class="cellDark ChessCell" id="F4"></td>
+                    <td class="cellLight ChessCell" id="G4"></td>
+                    <td class="cellDark ChessCell" id="H4"></td>
+                    <td class="char number">4</td>
+                </tr>
+                <tr>
+                    <td class="char number">3</td>
+                    <td class="cellDark ChessCell" id="A3"></td>
+                    <td class="cellLight ChessCell" id="B3"></td>
+                    <td class="cellDark ChessCell" id="C3"></td>
+                    C
+                    <td class="cellLight ChessCell" id="D3"></td>
+                    <td class="cellDark ChessCell" id="E3"></td>
+                    <td class="cellLight ChessCell" id="F3"></td>
+                    <td class="cellDark ChessCell" id="G3"></td>
+                    <td class="cellLight ChessCell" id="H3"></td>
+                    <td class="char number">3</td>
+                </tr>
+                <tr>
+                    <td class="char number">2</td>
+                    <td class="cellLight ChessCell" id="A2">&#9817;</td>
+                    <td class="cellDark ChessCell" id="B2">&#9817;</td>
+                    <td class="cellLight ChessCell" id="C2">&#9817;</td>
+                    <td class="cellDark ChessCell" id="D2">&#9817;</td>
+                    <td class="cellLight ChessCell" id="E2">&#9817;</td>
+                    <td class="cellDark ChessCell" id="F2">&#9817;</td>
+                    <td class="cellLight ChessCell" id="G2">&#9817;</td>
+                    <td class="cellDark ChessCell" id="H2">&#9817;</td>
+                    <td class="char number">2</td>
+                </tr>
+                <tr>
+                    <td class="char number">1</td>
+                    <td class="cellDark ChessCell" id="A1">&#9814;</td>
+                    <td class="cellLight ChessCell" id="B1">&#9816;</td>
+                    <td class="cellDark ChessCell" id="C1">&#9815;</td>
+                    <td class="cellLight ChessCell" id="D1">&#9813;</td>
+                    <td class="cellDark ChessCell" id="E1">&#9812;</td>
+                    <td class="cellLight ChessCell" id="F1">&#9815;</td>
+                    <td class="cellDark ChessCell" id="G1">&#9816;</td>
+                    <td class="cellLight ChessCell" id="H1">&#9814;</td>
+                    <td class="char number">1</td>
+                </tr>
+                <tr class="char number">
+                    <td></td>
+                    <td class="char">a</td>
+                    <td class="char">b</td>
+                    <td class="char">c</td>
+                    <td class="char">d</td>
+                    <td class="char">e</td>
+                    <td class="char">f</td>
+                    <td class="char">g</td>
+                    <td class="char">h</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-3 d-none d-lg-block ratings">
+            <ul id="streamer", class="p-3 mb-2 bg-dark text-success">
+                <button id="switch" type="button" class="btn btn-link text-warning" onclick="showLiveStreamers()">Show Live Lichess Streamers</button>
+            </ul>
+        </div>
     </div>
     </div>
 
@@ -186,40 +204,43 @@
 <!-- Features -->
 <section id="features" class="bottom">
 
-  <div id="info" class="information text-center"></div>
+    <div id="info" class="information text-center"></div>
 
-  <div style="margin-bottom:10px;" class="text-center">
-    <button class="btn btn-success" onclick="updateDisplay()">Refresh pieces positions</button>
-  </div>
-  <div style="margin-bottom:10px;" class="text-center">
-    <button class="btn btn-warning" onclick="newGame()">New Game</button>
-  </div>
-  <div class="row">
-    <div class="feature-box col-lg-4">
-      <i class="fas fa-user fa-2x icon"></i>
-      <div  style="background:#222831;">
-        <h3 class="textAndBackground">Have fun!</h3>
-        <p class="textAndBackground" style="height: 55px;">Just log in and play with your friends in best strategy game was ever created!</p>
-      </div>
+    <div style="margin-bottom:10px;" class="text-center">
+        <button class="btn btn-success" onclick="updateDisplay()">Refresh pieces positions</button>
     </div>
-    <div class="feature-box col-lg-4">
-      <i class="fas fa-chess-board fa-2x icon"></i>
-      <div  style="background:#222831;">
-        <h3 class="textAndBackground">Choose your pace</h3>
-        <p class="textAndBackground">Are you fast enough to play bullet game?</p>
-        <h6 class="textAndBackground" style="height: 40px;">Not available yet :)</h6>
-      </div>
+    <div style="margin-bottom:10px;" class="text-center">
+        <button class="btn btn-warning" onclick="newGame()">New Game</button>
     </div>
-    <div class="feature-box col-lg-4">
-      <i class="fas fa-chess fa-2x icon"></i>
-      <div  style="background:#222831;height:88px;">
-         <h3 class="textAndBackground" >Want to be better player?</h3>
-         <a class="textAndBackground" style="height: 49px;" href="https://www.chess.com/learn-how-to-play-chess">Learn the rules of the game! </a>
-      </div>
+    <div class="row">
+        <div class="feature-box col-lg-4">
+            <i class="fas fa-user fa-2x icon"></i>
+            <div style="background:#222831;">
+                <h3 class="textAndBackground">Have fun!</h3>
+                <p class="textAndBackground" style="height: 55px;">Just log in and play with your friends in best
+                    strategy game was ever created!</p>
+            </div>
+        </div>
+        <div class="feature-box col-lg-4">
+            <i class="fas fa-chess-board fa-2x icon"></i>
+            <div style="background:#222831;">
+                <h3 class="textAndBackground">Choose your pace</h3>
+                <p class="textAndBackground">Are you fast enough to play bullet game?</p>
+                <h6 class="textAndBackground" style="height: 40px;">Not available yet :)</h6>
+            </div>
+        </div>
+        <div class="feature-box col-lg-4">
+            <i class="fas fa-chess fa-2x icon"></i>
+            <div style="background:#222831;height:88px;">
+                <h3 class="textAndBackground">Want to be better player?</h3>
+                <a class="textAndBackground" style="height: 49px;" href="https://www.chess.com/learn-how-to-play-chess">Learn
+                    the rules of the game! </a>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <script src="script.js"></script>
 

@@ -199,8 +199,14 @@ table, td {
 .table td, .table th {
   padding: 0rem;
 }
+
+li, a {
+  color: #faf5e4;
+  font-size: medium;
+  font-family: "Agency FB";
+}
+
 .char {
-  width: 15px;
   width: 15px;
 }
 .number {

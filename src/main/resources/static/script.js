@@ -31,7 +31,7 @@ function select(field_id) {
     currentPiece = document.getElementById(currentCell).innerHTML;
 
     $.ajax({
-        url: 'http://195.181.247.79:8087/chessWebApp/selection/',
+        url: 'selection/',
         type: 'PUT',
         data: {player: '1', fieldId: field_id},
     }).done(function (fieldsArray, status, xhr) { // success callback function
@@ -64,7 +64,7 @@ function move(field_id) {
         'border': 'solid 1px black'
     });
 
-    $.post("http://195.181.247.79:8087/chessWebApp/move", // url
+    $.post("/move", // url
         {
             player: 1,
             fieldId: field_id
@@ -96,7 +96,7 @@ function updateDisplay() {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("http://195.181.247.79:8087/chessWebApp/actualBoard",
+    $.post("/actualBoard",
         {
             player: 1,
         },
@@ -117,7 +117,7 @@ function newGame() {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("http://195.181.247.79:8087/chessWebApp/newGame",
+    $.post("/newGame",
         {
             player: 1,
         },
@@ -138,7 +138,7 @@ function mate() {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("http://195.181.247.79:8087/chessWebApp/mate",
+    $.post("/mate",
         {
             player: 1,
         },
@@ -153,4 +153,25 @@ function mate() {
         .fail(function (data, status) {
             alert("error2: " + status);
         });
+}
+
+function showLiveStreamers() {
+    $.get("/streamer", function (data, status) {
+        $.each(data, function (i, item) {
+            if (item.title == null) {
+                item.title = " untitled";
+            }
+            let node = document.createElement("LI");
+            $('<a>', {
+                text: "lichess.org/streamer/" + item.id + ", chess title: " + item.title,
+                href: "https://lichess.org/streamer/" + item.id,
+            }).appendTo(node)
+            document.getElementById("streamer").appendChild(node);
+            disableButton();
+        });
+    });
+}
+
+function disableButton(){
+    document.getElementById("switch").disabled = true;
 }
