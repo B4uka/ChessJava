@@ -1,9 +1,7 @@
 package pl.wb.demo.chess.service;
 
 import com.google.gson.Gson;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import pl.wb.demo.chess.model.ChessGame;
 import pl.wb.demo.chess.model.piece_properties.Color;
 
@@ -23,7 +21,6 @@ public class NewGame {
         chessGame.getBoard().clearBoardAndSetPieceOnStartingPositions();
         chessGame.setWhoIsUpToMove(Color.WHITE);
 
-        new ChessGame();
         codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().getBoardFieldAndCodes());
         return new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
     }

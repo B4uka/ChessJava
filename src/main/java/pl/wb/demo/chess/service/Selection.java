@@ -2,9 +2,6 @@ package pl.wb.demo.chess.service;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
 import pl.wb.demo.chess.communication.field.Field;
 import pl.wb.demo.chess.model.ChessGame;
 import pl.wb.demo.chess.model.piece_properties.Color;

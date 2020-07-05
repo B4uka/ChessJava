@@ -31,7 +31,7 @@ function select(field_id) {
     currentPiece = document.getElementById(currentCell).innerHTML;
 
     $.ajax({
-        url: 'selection/',
+        url: 'http://195.181.247.79:8087/chessWebApp/selection/',
         type: 'PUT',
         data: {player: '1', fieldId: field_id},
     }).done(function (fieldsArray, status, xhr) { // success callback function
@@ -63,8 +63,7 @@ function move(field_id) {
         'background': '',
         'border': 'solid 1px black'
     });
-
-    $.post("/move", // url
+    $.post("http://195.181.247.79:8087/chessWebApp/move", // url
         {
             player: 1,
             fieldId: field_id
@@ -96,7 +95,7 @@ function updateDisplay() {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("/actualBoard",
+    $.post("http://195.181.247.79:8087/chessWebApp/actualBoard",
         {
             player: 1,
         },
@@ -117,7 +116,7 @@ function newGame() {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("/newGame",
+    $.post("http://195.181.247.79:8087/chessWebApp/newGame",
         {
             player: 1,
         },
@@ -138,7 +137,7 @@ function mate() {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("/mate",
+    $.post("http://195.181.247.79:8087/chessWebApp/mate",
         {
             player: 1,
         },
@@ -156,7 +155,7 @@ function mate() {
 }
 
 function showLiveStreamers() {
-    $.get("/streamer", function (data, status) {
+    $.get("http://195.181.247.79:8087/chessWebApp/streamer", function (data, status) {
         $.each(data, function (i, item) {
             if (item.title == null) {
                 item.title = " untitled";

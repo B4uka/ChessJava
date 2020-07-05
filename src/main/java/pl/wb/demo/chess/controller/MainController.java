@@ -15,7 +15,6 @@ public class MainController {
 
     private ChessGame chessGame = new ChessGame();
 
-
     @PutMapping(value = {"/selection"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> selection(@RequestParam int player, @RequestParam("fieldId") String fieldId) {
 
@@ -24,7 +23,7 @@ public class MainController {
         Selection selection = new Selection(chessGame);
         String jsonResponse = selection.select(player, fieldId);
         if (jsonResponse.equals("It is not your move or you already lost!")) {
-            ResponseEntity
+            return ResponseEntity
                     .status(403)
                     .header("Access-Control-Allow-Origin", "*")
                     .body(jsonResponse);
