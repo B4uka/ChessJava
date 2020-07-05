@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.controller.ResponseEntity;
+package pl.wb.demo.chess.service;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class Selection {
         this.chessGame = chessGame;
     }
 
-    public ResponseEntity<String> select(int player, String fieldId) {
+    public String select(int player, String fieldId) {
         log.info("processing " + fieldId);
 
         ArrayList<String> fieldsToMark = new ArrayList<>();
@@ -29,13 +29,9 @@ public class Selection {
         Color selectedPieceColor = chessGame.getBoard().getColorFromTheBoardOnCurrentPosition(new Position(selectedPiece.getRow(), selectedPiece.getColumn()));
 
         if (!chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), selectedPieceColor)) {
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("Access-Control-Allow-Origin", "*");
-            return ResponseEntity
-                    .status(403)
-                    .headers(responseHeaders)
-                    .body("It is not your move or you already lost!");
+            return "It is not your move or you already lost!";
         }
+
         ArrayList<Position> possibleMovesToMake = chessGame.getPossibleActions().getPossibleMoves();
         ArrayList<Position> possibleCapturesToMake = chessGame.getPossibleActions().getPossibleCaptures();
         ArrayList<Position> possibleCastling = chessGame.getPossibleActions().getKingCastlingActions();
@@ -47,12 +43,6 @@ public class Selection {
         for (Position position : allPossibleActions) {
             fieldsToMark.add(Field.getFieldByPosition(position.getRow(), position.getColumn()));
         }
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
-        String jsonResponse = new Gson().toJson(fieldsToMark);
-
-        return ResponseEntity.ok()
-                .headers(responseHeaders)
-                .body(jsonResponse);
+        return  new Gson().toJson(fieldsToMark);
     }
 }

@@ -1,4 +1,4 @@
-package pl.wb.demo.chess.controller.ResponseEntity;
+package pl.wb.demo.chess.service;
 
 import com.google.gson.Gson;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +17,7 @@ public class NewGame {
         this.chessGame = chessGame;
     }
 
-    public ResponseEntity<String> newGame(int player) throws Exception {
+    public String newGame(int player) throws Exception {
         HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
 
         chessGame.getBoard().clearBoardAndSetPieceOnStartingPositions();
@@ -25,13 +25,6 @@ public class NewGame {
 
         new ChessGame();
         codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().getBoardFieldAndCodes());
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
-        String jsonResponse = new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
-
-        return ResponseEntity.ok()
-                .headers(responseHeaders)
-                .body(jsonResponse);
+        return new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
     }
 }

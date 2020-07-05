@@ -14,7 +14,7 @@ public class Board {
     public Position blackKingPosition, whiteKingPosition, blacksPositions, whitesPosition;
     public ArrayList<Position> whitePiecesPositions, blackPiecesPositions;
     public ArrayList<String> piecesPositionsWithCode;
-    public HashMap<String, String> boardFieldAndCodes;
+    private HashMap<String, String> boardFieldAndCodes;
 
     public Board () {
         this.boardOfPieces = new Piece[8][8];
@@ -24,6 +24,11 @@ public class Board {
     public Piece[][] getBoard () {
         return boardOfPieces;
     }
+
+    public void setBoardFieldAndCodes(HashMap<String, String> boardFieldAndCodes) {
+        this.boardFieldAndCodes = boardFieldAndCodes;
+    }
+
 
     public Color getColorFromTheBoardOnCurrentPosition (Position position) {
         return this.boardOfPieces[position.getRow()][position.getColumn()].getColor();
@@ -125,7 +130,7 @@ public class Board {
         return blackPiecesPositions;
     }
 
-    public ArrayList<String> getBoardWithPiecesActualCodes () {
+    public ArrayList<String> getBoardWithPiecesCodes() {
         piecesPositionsWithCode = new ArrayList<>();
         String codeOfThePiece;
 
