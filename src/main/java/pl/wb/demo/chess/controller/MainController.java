@@ -41,7 +41,7 @@ public class MainController {
         log.info("Moved to " + fieldId);
 
         String jsonResponse = nextMove.makeMove(player, fieldId);
-        if (jsonResponse.equals("You cant make that move!")) {
+        if (jsonResponse.equals("You can't make that move!")) {
             return ResponseEntity.status(403).
                     header("Access-Control-Allow-Origin", "*").
                     body("You cant make that move!");

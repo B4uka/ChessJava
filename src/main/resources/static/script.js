@@ -31,7 +31,7 @@ function select(field_id) {
     currentPiece = document.getElementById(currentCell).innerHTML;
 
     $.ajax({
-        url: 'http://195.181.247.79:8087/chessWebApp/selection/',
+        url: 'selection/',
         type: 'PUT',
         data: {player: '1', fieldId: field_id},
     }).done(function (fieldsArray, status, xhr) { // success callback function
@@ -171,6 +171,6 @@ function showLiveStreamers() {
     });
 }
 
-function disableButton(){
+function disableButton() {
     document.getElementById("switch").disabled = true;
 }
