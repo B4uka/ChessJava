@@ -20,7 +20,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body onload="connect()">
 <!-- background  image-->
 <section id="title">
     <div class="container-fluid" id="intro">
@@ -191,10 +191,42 @@
                 </tbody>
             </table>
         </div>
+
+        <!--Lichess top10 live streamers-->
         <div class="col-3 d-none d-lg-block ratings">
-            <ul id="streamer", class="p-3 mb-2 bg-dark text-success">
-                <button id="switch" type="button" class="btn btn-link text-warning" onclick="showLiveStreamers()">Show Live Lichess Streamers</button>
-            </ul>
+            <div class="row">
+                <ul id="streamer", class="p-3 mb-2 bg-dark text-success">
+                    <button id="switch" type="button" class="btn btn-link text-warning" onclick="showLiveStreamers()">
+                        Show
+                        Live Lichess Streamers
+                    </button>
+                </ul>
+            </div>
+
+            <!--    CHAT    -->
+            <div class="row">
+                <div class="chatContent row">
+                    <label>User: </label>
+                    <input id="user" type="text"/><br>
+                </div>
+                <div class="chatContent row">
+                    <label>Your message:</label>
+                    <input id="messageToSend" type="text"/><br>
+                </div>
+                <div class="chatHeader">
+                    <h2>Be nice to each other, please!</h2>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="myBar"></div>
+                    </div>
+                    <p id="response"></p>
+                </div>
+
+                <div class="chatContent">
+                    <div>
+                        <button onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     </div>
@@ -239,11 +271,13 @@
         </div>
     </div>
 </section>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+</script>
 
 <script src="script.js"></script>
+<script src="chat.js"></script>
 
 </body>
-
 </html>
