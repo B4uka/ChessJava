@@ -20,6 +20,7 @@ public class NewGame {
 
         chessGame.getBoard().clearBoardAndSetPieceOnStartingPositions();
         chessGame.setWhoIsUpToMove(Color.WHITE);
+        new ChessGame();
 
         codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().getBoardFieldAndCodes());
         return new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
