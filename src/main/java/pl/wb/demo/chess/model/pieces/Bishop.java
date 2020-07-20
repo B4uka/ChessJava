@@ -8,6 +8,10 @@ import pl.wb.demo.chess.model.pieces.MoveGenerator.StandardMoveGenerator;
 
 public class Bishop extends Piece implements StandardMoveGenerator {
 
+    public Bishop (Position position, Color color, String code) {
+        super(position, color, code);
+    }
+
     public Bishop (Position position, Color color, String code, int countMoves) {
         super(position, color, code, countMoves);
     }

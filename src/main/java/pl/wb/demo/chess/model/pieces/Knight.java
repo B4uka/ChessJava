@@ -8,6 +8,10 @@ import pl.wb.demo.chess.model.pieces.MoveGenerator.StandardMoveGenerator;
 
 public class Knight extends Piece implements StandardMoveGenerator {
 
+    public Knight (Position position, Color color, String code) {
+        super(position, color, code);
+    }
+
     public Knight (Position position, Color color, String code, int countMoves) {
         super(position, color, code, countMoves);
     }

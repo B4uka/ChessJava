@@ -9,6 +9,10 @@ import pl.wb.demo.chess.model.pieces.MoveGenerator.StandardMoveGenerator;
 
 public class Pawn extends Piece implements StandardMoveGenerator, CaptureGenerator {
 
+    public Pawn (Position position, Color color, String code) {
+        super(position, color, code);
+    }
+
     public Pawn (Position position, Color color, String code, int countMoves) {
         super(position, color, code, countMoves);
     }

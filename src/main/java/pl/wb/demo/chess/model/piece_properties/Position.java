@@ -1,8 +1,10 @@
 package pl.wb.demo.chess.model.piece_properties;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class Position {
 
     private int row;

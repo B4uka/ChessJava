@@ -13,6 +13,10 @@ public class King extends Piece implements StandardMoveGenerator {
         super(position, color, code, countMoves);
     }
 
+    public King (Position position, Color color, String code) {
+        super(position, color, code);
+    }
+
     @Override
     public PossibleActions generatePossibleActions (Board board) {
         PossibleActions possibleActions = new PossibleActions();
