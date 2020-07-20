@@ -200,69 +200,67 @@ public class Board {
 
     public void fillBoardWithPieces() {
 
-        this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK, "&#9818;", 0);
-        this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE, "&#9812;", 0);
+        this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK, "&#9818;");
+        this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE, "&#9812;");
 
-        this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK, "&#9819;", 0);
-        this.boardOfPieces[7][3] = new Queen(new Position(7, 3), Color.WHITE, "&#9813;", 0);
+        this.boardOfPieces[0][3] = new Queen(new Position(0, 3), Color.BLACK, "&#9819;");
+        this.boardOfPieces[7][3] = new Queen(new Position(7, 3), Color.WHITE, "&#9813;");
 
-        this.boardOfPieces[0][0] = new Rook(new Position(0, 0), Color.BLACK, "&#9820;", 0);
-        this.boardOfPieces[0][7] = new Rook(new Position(0, 7), Color.BLACK, "&#9820;", 0);
-        this.boardOfPieces[7][0] = new Rook(new Position(7, 0), Color.WHITE, "&#9814;", 0);
-        this.boardOfPieces[7][7] = new Rook(new Position(7, 7), Color.WHITE, "&#9814;", 0);
+        this.boardOfPieces[0][0] = new Rook(new Position(0, 0), Color.BLACK, "&#9820;");
+        this.boardOfPieces[0][7] = new Rook(new Position(0, 7), Color.BLACK, "&#9820;");
+        this.boardOfPieces[7][0] = new Rook(new Position(7, 0), Color.WHITE, "&#9814;");
+        this.boardOfPieces[7][7] = new Rook(new Position(7, 7), Color.WHITE, "&#9814;");
 
-        this.boardOfPieces[0][1] = new Knight(new Position(0, 1), Color.BLACK, "&#9822;", 0);
-        this.boardOfPieces[0][6] = new Knight(new Position(0, 6), Color.BLACK, "&#9822;", 0);
-        this.boardOfPieces[7][1] = new Knight(new Position(7, 1), Color.WHITE, "&#9816;", 0);
-        this.boardOfPieces[7][6] = new Knight(new Position(7, 6), Color.WHITE, "&#9816;", 0);
+        this.boardOfPieces[0][1] = new Knight(new Position(0, 1), Color.BLACK, "&#9822;");
+        this.boardOfPieces[0][6] = new Knight(new Position(0, 6), Color.BLACK, "&#9822;");
+        this.boardOfPieces[7][1] = new Knight(new Position(7, 1), Color.WHITE, "&#9816;");
+        this.boardOfPieces[7][6] = new Knight(new Position(7, 6), Color.WHITE, "&#9816;");
 
-        this.boardOfPieces[0][2] = new Bishop(new Position(0, 2), Color.BLACK, "&#9821;", 0);
-        this.boardOfPieces[0][5] = new Bishop(new Position(0, 5), Color.BLACK, "&#9821;", 0);
-        this.boardOfPieces[7][2] = new Bishop(new Position(7, 2), Color.WHITE, "&#9815;", 0);
-        this.boardOfPieces[7][5] = new Bishop(new Position(7, 5), Color.WHITE, "&#9815;", 0);
+        this.boardOfPieces[0][2] = new Bishop(new Position(0, 2), Color.BLACK, "&#9821;");
+        this.boardOfPieces[0][5] = new Bishop(new Position(0, 5), Color.BLACK, "&#9821;");
+        this.boardOfPieces[7][2] = new Bishop(new Position(7, 2), Color.WHITE, "&#9815;");
+        this.boardOfPieces[7][5] = new Bishop(new Position(7, 5), Color.WHITE, "&#9815;");
 
-        this.boardOfPieces[1][0] = new Pawn(new Position(1, 0), Color.BLACK, "&#9823;", 0);
-        this.boardOfPieces[1][1] = new Pawn(new Position(1, 1), Color.BLACK, "&#9823;", 0);
-        this.boardOfPieces[1][2] = new Pawn(new Position(1, 2), Color.BLACK, "&#9823;", 0);
-        this.boardOfPieces[1][3] = new Pawn(new Position(1, 3), Color.BLACK, "&#9823;", 0);
-        this.boardOfPieces[1][4] = new Pawn(new Position(1, 4), Color.BLACK, "&#9823;", 0);
-        this.boardOfPieces[1][5] = new Pawn(new Position(1, 5), Color.BLACK, "&#9823;", 0);
-        this.boardOfPieces[1][6] = new Pawn(new Position(1, 6), Color.BLACK, "&#9823;", 0);
-        this.boardOfPieces[1][7] = new Pawn(new Position(1, 7), Color.BLACK, "&#9823;", 0);
+        this.boardOfPieces[1][0] = new Pawn(new Position(1, 0), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][1] = new Pawn(new Position(1, 1), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][2] = new Pawn(new Position(1, 2), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][3] = new Pawn(new Position(1, 3), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][4] = new Pawn(new Position(1, 4), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][5] = new Pawn(new Position(1, 5), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][6] = new Pawn(new Position(1, 6), Color.BLACK, "&#9823;");
+        this.boardOfPieces[1][7] = new Pawn(new Position(1, 7), Color.BLACK, "&#9823;");
 
-        this.boardOfPieces[6][0] = new Pawn(new Position(6, 0), Color.WHITE, "&#9817;", 0);
-        this.boardOfPieces[6][1] = new Pawn(new Position(6, 1), Color.WHITE, "&#9817;", 0);
-        this.boardOfPieces[6][2] = new Pawn(new Position(6, 2), Color.WHITE, "&#9817;", 0);
-        this.boardOfPieces[6][3] = new Pawn(new Position(6, 3), Color.WHITE, "&#9817;", 0);
-        this.boardOfPieces[6][4] = new Pawn(new Position(6, 4), Color.WHITE, "&#9817;", 0);
-        this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE, "&#9817;", 0);
-        this.boardOfPieces[6][6] = new Pawn(new Position(6, 6), Color.WHITE, "&#9817;", 0);
-        this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE, "&#9817;", 0);
+        this.boardOfPieces[6][0] = new Pawn(new Position(6, 0), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][1] = new Pawn(new Position(6, 1), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][2] = new Pawn(new Position(6, 2), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][3] = new Pawn(new Position(6, 3), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][4] = new Pawn(new Position(6, 4), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][5] = new Pawn(new Position(6, 5), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][6] = new Pawn(new Position(6, 6), Color.WHITE, "&#9817;");
+        this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE, "&#9817;");
     }
 
     public void addNewPieceOnTheBoard(String piece, int row, int column, String code, Color color) {
-        Piece newPiece = null;
         switch (piece) {
             case "King":
-                newPiece = new King(new Position(row, column), color, code, 0);
+                this.boardOfPieces[row][column] = new King(new Position(row, column), color, code);
                 break;
             case "Queen":
-                newPiece = new Queen(new Position(row, column), color, code, 0);
+                this.boardOfPieces[row][column] = new Queen(new Position(row, column), color, code);
                 break;
             case "Rook":
-                newPiece = new Rook(new Position(row, column), color, code, 0);
+                this.boardOfPieces[row][column] = new Rook(new Position(row, column), color, code);
                 break;
             case "Bishop":
-                newPiece = new Bishop(new Position(row, column), color, code, 0);
+                this.boardOfPieces[row][column] = new Bishop(new Position(row, column), color, code);
                 break;
             case "Knight":
-                newPiece = new Knight(new Position(row, column), color, code, 0);
+                this.boardOfPieces[row][column] = new Knight(new Position(row, column), color, code);
                 break;
             case "Pawn":
-                newPiece = new Pawn(new Position(row, column), color, code, 0);
+                this.boardOfPieces[row][column] = new Pawn(new Position(row, column), color, code);
                 break;
         }
-        this.boardOfPieces[row][column] = newPiece;
     }
 
     public void printBoard() {
