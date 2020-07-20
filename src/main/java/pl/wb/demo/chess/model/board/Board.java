@@ -5,8 +5,11 @@ import pl.wb.demo.chess.model.piece_properties.Color;
 import pl.wb.demo.chess.model.piece_properties.Position;
 import pl.wb.demo.chess.model.pieces.*;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class Board {
 
@@ -16,12 +19,12 @@ public class Board {
     public ArrayList<String> piecesPositionsWithCode;
     private HashMap<String, String> boardFieldAndCodes;
 
-    public Board () {
+    public Board() {
         this.boardOfPieces = new Piece[8][8];
         fillBoardWithPieces();
     }
 
-    public Piece[][] getBoard () {
+    public Piece[][] getBoard() {
         return boardOfPieces;
     }
 
@@ -30,29 +33,29 @@ public class Board {
     }
 
 
-    public Color getColorFromTheBoardOnCurrentPosition (Position position) {
+    public Color getColorFromTheBoardOnCurrentPosition(Position position) {
         return this.boardOfPieces[position.getRow()][position.getColumn()].getColor();
     }
 
-    public boolean isOccupied (Position position) {
+    public boolean isOccupied(Position position) {
         return this.boardOfPieces[position.getRow()][position.getColumn()] != null;
     }
 
-    public boolean isBoardOccupiedByAnyPiece (int row, int column) {
+    public boolean isBoardOccupiedByAnyPiece(int row, int column) {
         return this.boardOfPieces[row][column] != null;
     }
 
-    public boolean isOccupiedByColor (Position position, Color color) {
+    public boolean isOccupiedByColor(Position position, Color color) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
         return piece != null && piece.getColor() == color;
     }
 
-    public boolean isOccupiedBySpecificPiece (Position position, Color color, Class pieceClass) {
+    public boolean isOccupiedBySpecificPiece(Position position, Color color, Class pieceClass) {
         Piece piece = this.boardOfPieces[position.getRow()][position.getColumn()];
         return piece != null && piece.getClass() == pieceClass && piece.getColor() == color;
     }
 
-    public Position getBlackKingPosition () {
+    public Position getBlackKingPosition() {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
@@ -64,7 +67,7 @@ public class Board {
         return blackKingPosition;
     }
 
-    public Piece getBlackKingPiece () {
+    public Piece getBlackKingPiece() {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
@@ -76,7 +79,7 @@ public class Board {
         return boardOfPieces[blackKingPosition.getRow()][blackKingPosition.getColumn()];
     }
 
-    public Piece getWhiteKingPiece () {
+    public Piece getWhiteKingPiece() {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
@@ -88,7 +91,7 @@ public class Board {
         return boardOfPieces[whiteKingPosition.getRow()][whiteKingPosition.getColumn()];
     }
 
-    public Position getWhiteKingPosition () {
+    public Position getWhiteKingPosition() {
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
             for (int j = 0; j < this.boardOfPieces.length; j++) {
@@ -101,7 +104,7 @@ public class Board {
     }
 
     //TODO all white Pieces
-    public ArrayList<Position> getAllWhitePiecesPosition () {
+    public ArrayList<Position> getAllWhitePiecesPosition() {
         whitePiecesPositions = new ArrayList<>();
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
@@ -116,7 +119,7 @@ public class Board {
     }
 
     //TODO all black Pieces
-    public ArrayList<Position> getAllBlackPiecesPosition () {
+    public ArrayList<Position> getAllBlackPiecesPosition() {
         blackPiecesPositions = new ArrayList<>();
 
         for (int i = 0; i < this.boardOfPieces.length; i++) {
@@ -148,28 +151,28 @@ public class Board {
         return piecesPositionsWithCode;
     }
 
-    public Piece getPieceByColor (int row, int column, Color color) {
+    public Piece getPieceByColor(int row, int column, Color color) {
         if (this.boardOfPieces[row][column].getColor() == color) {
             return boardOfPieces[row][column];
         }
         return null;
     }
 
-    public Piece getWhitePiece (int row, int column) {
+    public Piece getWhitePiece(int row, int column) {
         if (this.boardOfPieces[row][column].getColor() == Color.WHITE) {
             return boardOfPieces[row][column];
         }
         return null;
     }
 
-    public Piece getBlackPiece (int row, int column) {
+    public Piece getBlackPiece(int row, int column) {
         if (this.boardOfPieces[row][column].getColor() == Color.BLACK) {
             return boardOfPieces[row][column];
         }
         return null;
     }
 
-    public Piece getPiece (int row, int column) {
+    public Piece getPiece(int row, int column) {
         return boardOfPieces[row][column];
     }
 
@@ -177,15 +180,15 @@ public class Board {
         return boardOfPieces[fieldID.getRow()][fieldID.getColumn()].getClass().getSimpleName();
     }
 
-    public void setPiece (Piece piece) {
+    public void setPiece(Piece piece) {
         boardOfPieces[piece.getPosition().getRow()][piece.getPosition().getColumn()] = piece;
     }
 
-    public void setEmptyByPosition (Position position) {
+    public void setEmptyByPosition(Position position) {
         boardOfPieces[position.getRow()][position.getColumn()] = null;
     }
 
-    public Piece[][] clearBoardAndSetPieceOnStartingPositions () {
+    public Piece[][] clearBoardAndSetPieceOnStartingPositions() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 boardOfPieces[i][j] = null;
@@ -195,7 +198,7 @@ public class Board {
         return boardOfPieces;
     }
 
-    public void fillBoardWithPieces () {
+    public void fillBoardWithPieces() {
 
         this.boardOfPieces[0][4] = new King(new Position(0, 4), Color.BLACK, "&#9818;", 0);
         this.boardOfPieces[7][4] = new King(new Position(7, 4), Color.WHITE, "&#9812;", 0);
@@ -237,7 +240,32 @@ public class Board {
         this.boardOfPieces[6][7] = new Pawn(new Position(6, 7), Color.WHITE, "&#9817;", 0);
     }
 
-    public void printBoard () {
+    public void addNewPieceOnTheBoard(String piece, int row, int column, String code, Color color) {
+        Piece newPiece = null;
+        switch (piece) {
+            case "King":
+                newPiece = new King(new Position(row, column), color, code, 0);
+                break;
+            case "Queen":
+                newPiece = new Queen(new Position(row, column), color, code, 0);
+                break;
+            case "Rook":
+                newPiece = new Rook(new Position(row, column), color, code, 0);
+                break;
+            case "Bishop":
+                newPiece = new Bishop(new Position(row, column), color, code, 0);
+                break;
+            case "Knight":
+                newPiece = new Knight(new Position(row, column), color, code, 0);
+                break;
+            case "Pawn":
+                newPiece = new Pawn(new Position(row, column), color, code, 0);
+                break;
+        }
+        this.boardOfPieces[row][column] = newPiece;
+    }
+
+    public void printBoard() {
         for (int i = 0; i < boardOfPieces.length; i++) {
             for (int j = 0; j < boardOfPieces.length; j++) {
                 if (boardOfPieces[i][j] == null) {
@@ -272,7 +300,7 @@ public class Board {
         }
     }
 
-    public void printBoardWithCodes () {
+    public void printBoardWithCodes() {
         for (int i = 0; i < boardOfPieces.length; i++) {
             for (int j = 0; j < boardOfPieces.length; j++) {
                 if (boardOfPieces[i][j] == null) {
@@ -285,7 +313,7 @@ public class Board {
         }
     }
 
-    public HashMap<String, String> getBoardFieldAndCodes () {
+    public HashMap<String, String> getBoardFieldAndCodes() {
         boardFieldAndCodes = new HashMap<>();
 
         for (int i = 0; i < boardOfPieces.length; i++) {
