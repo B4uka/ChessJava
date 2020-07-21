@@ -225,3 +225,7 @@ a {
   width: 80%;
   color: #faf5e4;
 }
+
+.nav-link .logout-button {
+  color: crimson;
+}

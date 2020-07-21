@@ -12,7 +12,7 @@
 
     <groupId>pl.wb.demo.chess</groupId>
     <artifactId>pl.wb.demo.chess</artifactId>
-    <version>1.0</version>
+    <version>2.0</version>
     <packaging>war</packaging>
     <name>demo</name>
     <description>Demo project for my learning period!</description>
@@ -69,6 +69,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--    Thymeleaf security    -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
 
         <!-- Gson -->
         <dependency>
@@ -121,6 +135,13 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.5</version>
+        </dependency>
+
+        <!--    mysql connector    -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 </project>

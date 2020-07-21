@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Play chess!</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -43,6 +44,14 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://ratings.fide.com/profile/1134060">My Fide Profile</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://195.181.247.79:8087/chessWebApp/account">Account</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link logout-button" href="http://195.181.247.79:8087/chessWebApp/logout">LOGOUT</a>
                     </li>
                 </ul>
 
@@ -145,7 +154,6 @@
                     <td class="cellDark ChessCell" id="A3"></td>
                     <td class="cellLight ChessCell" id="B3"></td>
                     <td class="cellDark ChessCell" id="C3"></td>
-                    C
                     <td class="cellLight ChessCell" id="D3"></td>
                     <td class="cellDark ChessCell" id="E3"></td>
                     <td class="cellLight ChessCell" id="F3"></td>
@@ -195,7 +203,7 @@
         <!--Lichess top10 live streamers-->
         <div class="col-3 d-none d-lg-block ratings">
             <div class="row">
-                <ul id="streamer", class="p-3 mb-2 bg-dark text-success">
+                <ul id="streamer" , class="p-3 mb-2 bg-dark text-success">
                     <button id="switch" type="button" class="btn btn-link text-warning" onclick="showLiveStreamers()">
                         Show
                         Live Lichess Streamers

@@ -166,8 +166,8 @@ function showLiveStreamers() {
                 href: "https://lichess.org/streamer/" + item.id,
             }).appendTo(node)
             document.getElementById("streamer").appendChild(node);
-            disableButton();
         });
+        disableButton();
     });
 }
 
