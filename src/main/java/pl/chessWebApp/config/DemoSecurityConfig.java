@@ -30,8 +30,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers("/users/list").hasAnyRole()
                 .antMatchers("/actuator/**").hasRole("ADMIN")
-                .antMatchers("/**").hasRole("EMPLOYEE")
+                .antMatchers("/*").authenticated()
                 .antMatchers("/managers/**").hasRole("MANAGER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
