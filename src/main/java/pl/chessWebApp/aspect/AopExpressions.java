@@ -7,15 +7,15 @@ import org.aspectj.lang.annotation.Pointcut;
 public class AopExpressions {
 
     // setup pointcut declarations  https://www.baeldung.com/spring-aop-pointcut-tutorial
-    @Pointcut("execution(* pl.wb.demo.controller.*.*(..))")
+    @Pointcut("execution(* pl.chessWebApp.controller.*.*(..))")
     private void forControllerPackage() {
     }
 
-    @Pointcut("execution(* pl.wb.demo.service.*.*(..))")
+    @Pointcut("execution(* pl.chessWebApp.service.*.*(..))")
     private void forServicePackage() {
     }
 
-    @Pointcut("within(pl.wb.demo.dao.*)") //
+    @Pointcut("within(pl.chessWebApp.dao.*)") //
     private void forDaoPackage() {
     }
 

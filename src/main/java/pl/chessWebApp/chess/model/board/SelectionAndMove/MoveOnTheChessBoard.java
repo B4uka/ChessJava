@@ -22,16 +22,16 @@ public class MoveOnTheChessBoard {
     private Board board;
     private PossibleActions possibleActions;
 
-    public MoveOnTheChessBoard () {
+    public MoveOnTheChessBoard() {
     }
 
-    public MoveOnTheChessBoard (Selection playersSelection, Board board, PossibleActions possibleActions) {
+    public MoveOnTheChessBoard(Selection playersSelection, Board board, PossibleActions possibleActions) {
         this.playersSelection = playersSelection;
         this.board = board;
         this.possibleActions = possibleActions;
     }
 
-    public boolean newPiecePositionByMove (Position piecePositionNEW) {
+    public boolean newPiecePositionByMove(Position piecePositionNEW) {
         currentlySelected = playersSelection.getCurrentlySelected();
 
         CheckValidation checkTest = new IsCheck(board);
@@ -73,7 +73,7 @@ public class MoveOnTheChessBoard {
         return false;
     }
 
-    public boolean newPiecePositionByCapture (Position piecePositionNEW) {
+    public boolean newPiecePositionByCapture(Position piecePositionNEW) {
         currentlySelected = playersSelection.getCurrentlySelected();
 
         CheckValidation test = new IsCheck(board);
@@ -100,7 +100,7 @@ public class MoveOnTheChessBoard {
         }
     }
 
-    public Boolean newCastlingMoveIfIsPossible (Position piecePositionNEW) {
+    public Boolean newCastlingMoveIfIsPossible(Position piecePositionNEW) {
         currentlySelected = playersSelection.getCurrentlySelected();
 
         if (this.possibleActions.getKingCastlingActions().contains(piecePositionNEW)
@@ -116,8 +116,7 @@ public class MoveOnTheChessBoard {
             return false;
     }
 
-    public Boolean newMoveIfIsPossible (Position piecePositionNEW) {
-
+    public Boolean newMoveIfIsPossible(Position piecePositionNEW) {
         currentlySelected = playersSelection.getCurrentlySelected();
 
         if (this.possibleActions.getPossibleMoves().contains(piecePositionNEW)) {
@@ -131,8 +130,7 @@ public class MoveOnTheChessBoard {
             return false;
     }
 
-    public Boolean newCaptureIfIsPossible (Position piecePositionNEW) {
-
+    public Boolean newCaptureIfIsPossible(Position piecePositionNEW) {
         currentlySelected = playersSelection.getCurrentlySelected();
 
         this.temporaryBeaten = board.getPiece(piecePositionNEW.getRow(), piecePositionNEW.getColumn());
@@ -146,7 +144,7 @@ public class MoveOnTheChessBoard {
             return false;
     }
 
-    public boolean isCheckAfterTheMove (Position piecePositionNEW) {
+    public boolean isCheckAfterTheMove(Position piecePositionNEW) {
         CheckValidation test = new IsCheck(board);
 
         if (newMoveIfIsPossible(piecePositionNEW)) {
@@ -165,7 +163,7 @@ public class MoveOnTheChessBoard {
         return false;
     }
 
-    public Boolean isCheckAfterTheCapture (Position piecePositionNEW) {
+    public Boolean isCheckAfterTheCapture(Position piecePositionNEW) {
         CheckValidation test = new IsCheck(board);
         //  NEXT MOVE - validation
         if (newCaptureIfIsPossible(piecePositionNEW)) {
@@ -193,7 +191,7 @@ public class MoveOnTheChessBoard {
         }
     }
 
-    public void revertNewMove (Position piecePositionOLD) {
+    public void revertNewMove(Position piecePositionOLD) {
         this.piecePositionOLD = piecePositionOLD;
 
         this.piecePositionNEW = piecePositionOLD;
@@ -202,7 +200,7 @@ public class MoveOnTheChessBoard {
         board.setPiece(currentlySelected);
     }
 
-    public void revertNewMoveAndRestoreTempBeaten (Position piecePositionOLD) {
+    public void revertNewMoveAndRestoreTempBeaten(Position piecePositionOLD) {
         revertNewMove(piecePositionOLD);
         board.setPiece(temporaryBeaten);
     }
