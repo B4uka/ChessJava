@@ -30,7 +30,6 @@ public class Rook extends Piece implements StandardMoveGenerator {
 
     @Override
     public PossibleActions moveGenerator (Position rookPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
-        //first iteration - potential position knowing row and columns shifts
         Position rookPossibleMovePosition = rookPosition.getNewPositionByVector(rowShift, columnShift);
 
         while (rookPossibleMovePosition.isOnBoard()) {

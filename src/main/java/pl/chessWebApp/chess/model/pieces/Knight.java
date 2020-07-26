@@ -35,7 +35,6 @@ public class Knight extends Piece implements StandardMoveGenerator {
 
     @Override
     public PossibleActions moveGenerator (Position knightPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
-        //potential position knowing row and columns shifts
         Position knightPossibleMovePosition = knightPosition.getNewPositionByVector(rowShift, columnShift);
 
         if (this.color == Color.WHITE && knightPossibleMovePosition.isOnBoard()) {

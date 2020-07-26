@@ -18,25 +18,20 @@ public class PieceCheckingKing extends PossibleActions implements PositionsOfPie
         this.position = position;
         PieceCheckingKing possibleActions = new PieceCheckingKing();
 
-        //enemy king checking players king
         kingCheckingKing(this.position, board, possibleActions, Color.BLACK);
 
-        //enemy king checking players king
         knightCheckingKing(this.position, board, possibleActions, Color.BLACK);
 
-        //enemy queen or bishop checking players king
         queenBishopCheckingKing(this.position, board, possibleActions, 1, 1, Color.BLACK);
         queenBishopCheckingKing(this.position, board, possibleActions, 1, -1, Color.BLACK);
         queenBishopCheckingKing(this.position, board, possibleActions, -1, 1, Color.BLACK);
         queenBishopCheckingKing(this.position, board, possibleActions, -1, -1, Color.BLACK);
 
-        //enemy queen or rook checking players king
         queenRookCheckingKing(this.position, board, possibleActions, 0, 1, Color.BLACK);
         queenRookCheckingKing(this.position, board, possibleActions, 0, -1, Color.BLACK);
         queenRookCheckingKing(this.position, board, possibleActions, 1, 0, Color.BLACK);
         queenRookCheckingKing(this.position, board, possibleActions, -1, 0, Color.BLACK);
 
-        //enemy pawn checking players king
         pawnCheckingKing(this.position, board, possibleActions, -1, 1, Color.BLACK);
         pawnCheckingKing(this.position, board, possibleActions, -1, -1, Color.BLACK);
 
@@ -48,25 +43,20 @@ public class PieceCheckingKing extends PossibleActions implements PositionsOfPie
         this.position = position;
         PieceCheckingKing possibleActions = new PieceCheckingKing();
 
-        //enemy king checking players king
         kingCheckingKing(this.position, board, possibleActions, Color.WHITE);
 
-        //enemy king checking players king
         knightCheckingKing(this.position, board, possibleActions, Color.WHITE);
 
-        //enemy queen or bishop checking players king
         queenBishopCheckingKing(this.position, board, possibleActions, 1, 1, Color.WHITE);
         queenBishopCheckingKing(this.position, board, possibleActions, 1, -1, Color.WHITE);
         queenBishopCheckingKing(this.position, board, possibleActions, -1, 1, Color.WHITE);
         queenBishopCheckingKing(this.position, board, possibleActions, -1, -1, Color.WHITE);
 
-        //enemy queen or rook checking players king
         queenRookCheckingKing(this.position, board, possibleActions, 0, 1, Color.WHITE);
         queenRookCheckingKing(this.position, board, possibleActions, 0, -1, Color.WHITE);
         queenRookCheckingKing(this.position, board, possibleActions, 1, 0, Color.WHITE);
         queenRookCheckingKing(this.position, board, possibleActions, -1, 0, Color.WHITE);
 
-        //enemy pawn checking players king
         pawnCheckingKing(this.position, board, possibleActions, 1, 1, Color.WHITE);
         pawnCheckingKing(this.position, board, possibleActions, 1, -1, Color.WHITE);
 
@@ -77,7 +67,6 @@ public class PieceCheckingKing extends PossibleActions implements PositionsOfPie
     public void kingCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, Color opponentColor) {
         Position[] checkedByKing = new Position[8];
 
-        // possible position of enemy king checking players king
         checkedByKing[0] = this.position.getNewPositionByVector(0, 1);
         checkedByKing[1] = this.position.getNewPositionByVector(0, -1);
         checkedByKing[2] = this.position.getNewPositionByVector(1, 0);
@@ -99,7 +88,6 @@ public class PieceCheckingKing extends PossibleActions implements PositionsOfPie
     public void knightCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, Color opponentColor) {
         Position[] checkedByKnight = new Position[8];
 
-        // possible position of enemy king checking players king
         checkedByKnight[0] = this.position.getNewPositionByVector(1, 2);
         checkedByKnight[1] = this.position.getNewPositionByVector(1, -2);
         checkedByKnight[2] = this.position.getNewPositionByVector(2, 1);
@@ -119,7 +107,6 @@ public class PieceCheckingKing extends PossibleActions implements PositionsOfPie
 
     @Override
     public void pawnCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor) {
-        //potential position knowing row and columns shifts
         Position potentialPawnPositionCheckingKing = kingPosition.getNewPositionByVector(rowShift, columnShift);
 
         if (potentialPawnPositionCheckingKing.isOnBoard()) {
@@ -131,7 +118,6 @@ public class PieceCheckingKing extends PossibleActions implements PositionsOfPie
 
     @Override
     public void queenRookCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor) {
-        //first iteration - potential position knowing row and columns shifts
         Position potentialQueenRookPositionCheckingKing = kingPosition.getNewPositionByVector(rowShift, columnShift);
 
         while (potentialQueenRookPositionCheckingKing.isOnBoard()) {
@@ -150,7 +136,6 @@ public class PieceCheckingKing extends PossibleActions implements PositionsOfPie
 
     @Override
     public void queenBishopCheckingKing (Position kingPosition, Board board, PieceCheckingKing possibleActions, int rowShift, int columnShift, Color opponentsColor) {
-        //first iteration - potential position knowing row and columns shifts
         Position potentialQueenBishopPositionCheckingKing = kingPosition.getNewPositionByVector(rowShift, columnShift);
 
         while (potentialQueenBishopPositionCheckingKing.isOnBoard()) {

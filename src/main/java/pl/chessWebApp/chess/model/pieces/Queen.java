@@ -35,7 +35,6 @@ public class Queen extends Piece implements StandardMoveGenerator {
 
     @Override
     public PossibleActions moveGenerator (Position queenPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
-        //first iteration - potential position knowing row and columns shifts
         queenPosition = queenPosition.getNewPositionByVector(rowShift, columnShift);
 
         while (queenPosition.isOnBoard()) {

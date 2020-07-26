@@ -15,7 +15,7 @@ public class IsMate implements MateValidation {
     protected boolean isStalemate;
     protected Color color;
 
-    public IsMate (Board board, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame chessGame) {
+    public IsMate(Board board, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame chessGame) {
         this.board = board;
         this.possibleMovesOrCaptures = possibleMovesOrCaptures;
         this.possibleActions = possibleActions;
@@ -23,7 +23,7 @@ public class IsMate implements MateValidation {
     }
 
     @Override
-    public boolean isKingMated () {
+    public boolean isKingMated() {
         CheckValidation test = new IsCheck(board);
         Color color = chessGame.getWhoIsUpToMove();
 

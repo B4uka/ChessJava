@@ -38,7 +38,6 @@ public class King extends Piece implements StandardMoveGenerator {
 
     @Override
     public PossibleActions moveGenerator (Position kingPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
-        //potential position knowing row and columns shifts
         Position kingPossibleMovePosition = kingPosition.getNewPositionByVector(rowShift, columnShift);
 
         if (kingPossibleMovePosition.isOnBoard()) {

@@ -30,7 +30,6 @@ public class Bishop extends Piece implements StandardMoveGenerator {
 
     @Override
     public PossibleActions moveGenerator (Position bishopPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
-        //first iteration - potential position knowing row and columns shifts
         Position bishopPossibleMovePosition = bishopPosition.getNewPositionByVector(rowShift, columnShift);
 
         while (bishopPossibleMovePosition.isOnBoard()) {

@@ -11,15 +11,14 @@ public class WhiteOrBlackAllActions {
     protected PossibleActions possibleMovesOrCaptures, possibleActions;
     protected ChessGame game;
 
-    public WhiteOrBlackAllActions (Board board, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame game) {
+    public WhiteOrBlackAllActions(Board board, PossibleActions possibleMovesOrCaptures, PossibleActions possibleActions, ChessGame game) {
         this.board = board;
         this.possibleMovesOrCaptures = possibleMovesOrCaptures;
         this.possibleActions = possibleActions;
         this.game = game;
     }
 
-    // all actions that white player can do
-    public PossibleActions allWhitePiecesPossibleActions () {
+    public PossibleActions allWhitePiecesPossibleActions() {
         board.getAllWhitePiecesPosition();
         possibleMovesOrCaptures = new PossibleActions();
 
@@ -30,20 +29,17 @@ public class WhiteOrBlackAllActions {
                 if (!game.getSearchForCheckOrMate().isCheckAfterTheMove(position)) {
                     possibleMovesOrCaptures.addPossibleMove(position);
                 }
-                // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
             }
             for (Position position : possibleActions.getPossibleCaptures()) {
                 if (!game.getSearchForCheckOrMate().isCheckAfterTheCapture(position)) {
                     possibleMovesOrCaptures.addPossibleCapture(position);
-                    // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
                 }
             }
         }
         return possibleMovesOrCaptures;
     }
 
-    //all actions that black player can do
-    public PossibleActions allBlackPiecesPossibleActions () {
+    public PossibleActions allBlackPiecesPossibleActions() {
         board.getAllBlackPiecesPosition();
         possibleMovesOrCaptures = new PossibleActions();
         for (Position test : board.blackPiecesPositions) {
@@ -54,16 +50,13 @@ public class WhiteOrBlackAllActions {
                 if (!game.getSearchForCheckOrMate().isCheckAfterTheMove(position)) {
                     possibleMovesOrCaptures.addPossibleMove(position);
                 }
-                // System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
             }
             for (Position position : possibleActions.getPossibleCaptures()) {
                 if (!game.getSearchForCheckOrMate().isCheckAfterTheCapture(position)) {
                     possibleMovesOrCaptures.addPossibleCapture(position);
-                    //  System.out.println("possible moves: " + possibleMovesOrCaptures.getPosition().getRow() + possibleMovesOrCaptures.getPosition().getColumn());
                 }
             }
         }
-
         return possibleMovesOrCaptures;
     }
 }

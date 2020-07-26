@@ -34,7 +34,6 @@ public class ChessGame {
         whoIsUpToMove = Color.WHITE;
     }
 
-    // Mate is returned. Inside method from class IsMate is also validation for stalemate -> for know class Mate in controller catches this event
     public boolean isKingMated() {
         MateValidation test = new IsMate(board, possibleMovesOrCaptures, possibleActions, ChessGame.this);
         return isMate = test.isKingMated();
@@ -60,7 +59,7 @@ public class ChessGame {
     public boolean movePieceAndSwitchColor(int row, int column) {
         MoveOnTheChessBoard move = new MoveOnTheChessBoard(playersSelection, board, possibleActions);
 
-         if (isStalemate || isMate || whoIsUpToMove != playersSelection.getCurrentlySelected().getColor()) {
+        if (isStalemate || isMate || whoIsUpToMove != playersSelection.getCurrentlySelected().getColor()) {
             return false;
         } else {
             Position positionWhereWeWantToMove = new Position(row, column);
@@ -80,7 +79,6 @@ public class ChessGame {
     }
 
     private void switchColor() {
-        // changing between players
         if (this.whoIsUpToMove == Color.WHITE) {
             this.whoIsUpToMove = whoIsUpToMove.blackToMove();
         } else {

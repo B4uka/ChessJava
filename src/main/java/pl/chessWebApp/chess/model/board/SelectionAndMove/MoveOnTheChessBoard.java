@@ -38,7 +38,6 @@ public class MoveOnTheChessBoard {
 
         CastlingRookMovesValidation rookMoves = new CastlingRookMovesValidation(board, possibleActions, piecePositionNEW, this);
 
-        //  NEXT MOVE - validation
         if (newMoveIfIsPossible(piecePositionNEW)) {
             if ((checkTest.isWhiteKingChecked() && currentlySelected.getColor() == Color.WHITE)
                     || (checkTest.isBlackKingChecked() && currentlySelected.getColor() == Color.BLACK)) {
@@ -78,7 +77,6 @@ public class MoveOnTheChessBoard {
 
         CheckValidation test = new IsCheck(board);
 
-        // NEXT MOVE
         if (newCaptureIfIsPossible(piecePositionNEW)) {
             if (test.isBlackKingChecked() && test.isWhiteKingChecked()) {
                 revertNewMoveAndRestoreTempBeaten(piecePositionOLD);
@@ -165,7 +163,7 @@ public class MoveOnTheChessBoard {
 
     public Boolean isCheckAfterTheCapture(Position piecePositionNEW) {
         CheckValidation test = new IsCheck(board);
-        //  NEXT MOVE - validation
+
         if (newCaptureIfIsPossible(piecePositionNEW)) {
 
             if (test.isBlackKingChecked() && test.isWhiteKingChecked()) {
@@ -193,8 +191,8 @@ public class MoveOnTheChessBoard {
 
     public void revertNewMove(Position piecePositionOLD) {
         this.piecePositionOLD = piecePositionOLD;
-
         this.piecePositionNEW = piecePositionOLD;
+
         board.setEmptyByPosition(this.currentlySelected.getPosition());
         currentlySelected.setPosition(piecePositionNEW);
         board.setPiece(currentlySelected);

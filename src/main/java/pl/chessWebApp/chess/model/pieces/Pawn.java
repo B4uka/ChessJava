@@ -36,7 +36,6 @@ public class Pawn extends Piece implements StandardMoveGenerator, CaptureGenerat
 
     @Override
     public PossibleActions moveGenerator (Position pawnPosition, Board board, PossibleActions possibleActions, int rowShift, int columnShift) {
-        //potential position knowing row and columns shifts
         Position pawnPossibleMovePosition = pawnPosition.getNewPositionByVector(rowShift, columnShift);
 
         if (!board.isOccupied(pawnPossibleMovePosition)) {
