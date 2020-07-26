@@ -1,4 +1,4 @@
-package pl.chessWebApp.aspect.logging;
+package pl.chessWebApp.log.aop.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -16,7 +16,7 @@ public class CriticalEventLoggingAspect {
     private static final Logger LOGGER_ERR_WARN = LoggerFactory.getLogger("LOGGER_ERR_WARN");
 
     // add @AfterReturn advice when someone successfully remove any account
-    @AfterReturning("pl.chessWebApp.aspect.AopExpressions.forSavingNewAccount()")
+    @AfterReturning("pl.chessWebApp.log.aop.pointcutExpression.AopExpressions.forSavingNewAccount()")
     public void afterDeletedAccount(JoinPoint joinPoint) {
 
         // display method that we are returning

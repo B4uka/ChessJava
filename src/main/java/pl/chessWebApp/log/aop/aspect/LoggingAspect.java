@@ -1,4 +1,4 @@
-package pl.chessWebApp.aspect.logging;
+package pl.chessWebApp.log.aop.aspect;
 
 
 import org.aspectj.lang.JoinPoint;
@@ -19,7 +19,7 @@ public class LoggingAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
 
     // add @Before advice
-    @Before("pl.chessWebApp.aspect.AopExpressions.forAppFlow()")
+    @Before("pl.chessWebApp.log.aop.pointcutExpression.AopExpressions.forAppFlow()")
     public void before(JoinPoint joinPoint) {
 
         // display method that we are calling
@@ -34,7 +34,7 @@ public class LoggingAspect {
     }
 
     // add @AfterReturn advice
-    @AfterReturning(pointcut = "pl.chessWebApp.aspect.AopExpressions.forAppFlow()", returning = "result")
+    @AfterReturning(pointcut = "pl.chessWebApp.log.aop.pointcutExpression.AopExpressions.forAppFlow()", returning = "result")
     public void afterReturn(JoinPoint joinPoint, Object result) {
 
         // display method that we are returning
