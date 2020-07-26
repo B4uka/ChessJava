@@ -1,4 +1,4 @@
-package pl.chessWebApp.service;
+package pl.chessWebApp.security.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,11 +8,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.chessWebApp.dao.RoleDao;
-import pl.chessWebApp.dao.UserDao;
-import pl.chessWebApp.entity.Role;
-import pl.chessWebApp.entity.User;
-import pl.chessWebApp.user.CrmUser;
+import pl.chessWebApp.security.dao.RoleDao;
+import pl.chessWebApp.security.dao.UserDao;
+import pl.chessWebApp.security.entity.Role;
+import pl.chessWebApp.security.entity.User;
+import pl.chessWebApp.security.user.CrmUser;
 
 import java.util.Arrays;
 import java.util.Collection;

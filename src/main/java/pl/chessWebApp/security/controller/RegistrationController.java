@@ -1,4 +1,4 @@
-package pl.chessWebApp.controller;
+package pl.chessWebApp.security.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import pl.chessWebApp.entity.User;
-import pl.chessWebApp.service.UserService;
-import pl.chessWebApp.user.CrmUser;
+import pl.chessWebApp.security.entity.User;
+import pl.chessWebApp.security.service.UserService;
+import pl.chessWebApp.security.user.CrmUser;
 
 import javax.validation.Valid;
 

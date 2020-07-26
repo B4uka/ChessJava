@@ -1,10 +1,10 @@
-package pl.chessWebApp.user;
+package pl.chessWebApp.security.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.chessWebApp.validation.ValidEmail;
-import pl.chessWebApp.validation.FieldMatch;
+import pl.chessWebApp.security.validation.ValidEmail;
+import pl.chessWebApp.security.validation.FieldMatch;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

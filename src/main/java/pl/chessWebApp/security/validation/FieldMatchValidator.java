@@ -1,4 +1,4 @@
-package pl.chessWebApp.validation;
+package pl.chessWebApp.security.validation;
 
 import org.springframework.beans.BeanWrapperImpl;
 

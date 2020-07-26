@@ -1,8 +1,8 @@
-package pl.chessWebApp.service;
+package pl.chessWebApp.security.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import pl.chessWebApp.entity.User;
-import pl.chessWebApp.user.CrmUser;
+import pl.chessWebApp.security.entity.User;
+import pl.chessWebApp.security.user.CrmUser;
 
 public interface UserService extends UserDetailsService {
 

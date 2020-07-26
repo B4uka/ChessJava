@@ -1,6 +1,6 @@
-package pl.chessWebApp.dao;
+package pl.chessWebApp.security.dao;
 
-import pl.chessWebApp.entity.User;
+import pl.chessWebApp.security.entity.User;
 
 public interface UserDao {
 

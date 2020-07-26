@@ -1,11 +1,11 @@
-package pl.chessWebApp.config;
+package pl.chessWebApp.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import pl.chessWebApp.service.UserService;
-import pl.chessWebApp.entity.User;
+import pl.chessWebApp.security.service.UserService;
+import pl.chessWebApp.security.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

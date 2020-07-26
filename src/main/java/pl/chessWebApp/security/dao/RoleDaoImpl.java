@@ -1,10 +1,10 @@
-package pl.chessWebApp.dao;
+package pl.chessWebApp.security.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.chessWebApp.entity.Role;
+import pl.chessWebApp.security.entity.Role;
 
 import javax.persistence.EntityManager;
 

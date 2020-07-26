@@ -1,4 +1,4 @@
-package pl.chessWebApp.entity;
+package pl.chessWebApp.security.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
