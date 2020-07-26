@@ -1,4 +1,4 @@
-package pl.chessWebApp.chess.chat.chatConfiguration;
+package pl.chessWebApp.chat.chatConfiguration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

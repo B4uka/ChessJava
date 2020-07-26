@@ -1,9 +1,9 @@
-package pl.chessWebApp.chess.chat.controller;
+package pl.chessWebApp.chat.controller;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import pl.chessWebApp.chess.chat.model.ChatMessage;
+import pl.chessWebApp.chat.model.ChatMessage;
 
 @Controller
 public class ChatMessageController {

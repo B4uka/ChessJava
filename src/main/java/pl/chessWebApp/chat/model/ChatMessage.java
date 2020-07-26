@@ -1,4 +1,4 @@
-package pl.chessWebApp.chess.chat.model;
+package pl.chessWebApp.chat.model;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
