@@ -52,7 +52,7 @@ function select(field_id) {
         });
         $('#info').empty();
         jQuery('<div/>', {
-            text: "It's not your move!",
+            text: "It's not your turn!",
             class: 'alert alert-danger'
         }).appendTo('.information.text-center');
     });
