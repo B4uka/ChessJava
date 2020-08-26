@@ -13,7 +13,7 @@
     <groupId>pl.wb.demo.chess</groupId>
     <artifactId>pl.wb.demo.chess</artifactId>
     <version>2.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>demo</name>
     <description>Demo project for my learning period!</description>
 
@@ -35,6 +35,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://localhost:8087/manager/text</url>
+                    <server>tomcat9</server>
+                    <path>/chessWebApp</path>
+                </configuration>
             </plugin>
         </plugins>
     </build>
