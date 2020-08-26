@@ -13,7 +13,7 @@
     <groupId>pl.wb.demo.chess</groupId>
     <artifactId>pl.wb.demo.chess</artifactId>
     <version>2.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>demo</name>
     <description>Demo project for my learning period!</description>
 
