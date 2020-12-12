@@ -63,7 +63,7 @@ function move(field_id) {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("http://195.181.247.79:8087/chessWebApp/move", // url
+    $.post("http://localhost:8080/move", // url
         {
             player: 1,
             fieldId: field_id
@@ -95,7 +95,7 @@ function updateDisplay() {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("http://195.181.247.79:8087/chessWebApp/actualBoard",
+    $.post("http://localhost:8080/actualBoard",
         {
             player: 1,
         },
@@ -116,7 +116,7 @@ function newGame() {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("http://195.181.247.79:8087/chessWebApp/newGame",
+    $.post("http://localhost:8080/newGame",
         {
             player: 1,
         },
@@ -137,7 +137,7 @@ function mate() {
         'background': '',
         'border': 'solid 1px black'
     });
-    $.post("http://195.181.247.79:8087/chessWebApp/mate",
+    $.post("http://localhost:8080/mate",
         {
             player: 1,
         },
@@ -155,7 +155,7 @@ function mate() {
 }
 
 function showLiveStreamers() {
-    $.get("http://195.181.247.79:8087/chessWebApp/streamer", function (data, status) {
+    $.get("http://localhost:8080/streamer", function (data, status) {
         $.each(data, function (i, item) {
             if (item.title == null) {
                 item.title = " untitled";

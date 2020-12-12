@@ -4,7 +4,7 @@ var color;
 var localDateTime;
 
 function connect() {
-    client = Stomp.client('ws://195.181.247.79:8087/chessWebApp/chat'); //no http but web socket communication!!!
+    client = Stomp.client('ws://localhost:8080/chat'); //no http but web socket communication!!!
     color = getRandomColor();
     client.connect({}, function (frame) {
         client.subscribe("/topic/messages", function (message) {
