@@ -13,9 +13,9 @@ public class DataSourceConfig {
     public DataSource getDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
-        dataSourceBuilder.url("jdbc:mysql://localhost:3306/wojtek?useSSL=false&serverTimezone=UTC");
-        dataSourceBuilder.username("wojtek");
-        dataSourceBuilder.password("op9p6a!@dWeZu");
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/spring_security_custom_user_demo?useSSL=false&serverTimezone=UTC");
+        dataSourceBuilder.username("hbstudent");
+        dataSourceBuilder.password("hbstudent");
         return dataSourceBuilder.build();
     }
 }
