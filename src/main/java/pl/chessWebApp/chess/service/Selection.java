@@ -8,6 +8,7 @@ import pl.chessWebApp.chess.model.piece_properties.Color;
 import pl.chessWebApp.chess.model.piece_properties.Position;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Slf4j
 public class Selection {
@@ -17,7 +18,7 @@ public class Selection {
         this.chessGame = chessGame;
     }
 
-    public String select(int player, String fieldId) {
+    public Optional<String> select(int player, String fieldId) {
         log.info("processing " + fieldId);
 
         ArrayList<String> fieldsToMark = new ArrayList<>();
@@ -26,7 +27,7 @@ public class Selection {
         Color selectedPieceColor = chessGame.getBoard().getColorFromTheBoardOnCurrentPosition(new Position(selectedPiece.getRow(), selectedPiece.getColumn()));
 
         if (!chessGame.selectPiece(selectedPiece.getRow(), selectedPiece.getColumn(), selectedPieceColor)) {
-            return "It is not your move or you already lost!";
+            return Optional.empty();
         }
 
         ArrayList<Position> possibleMovesToMake = chessGame.getPossibleActions().getPossibleMoves();
@@ -40,6 +41,6 @@ public class Selection {
         for (Position position : allPossibleActions) {
             fieldsToMark.add(Field.getFieldByPosition(position.getRow(), position.getColumn()));
         }
-        return  new Gson().toJson(fieldsToMark);
+        return Optional.ofNullable(new Gson().toJson(fieldsToMark));
     }
 }

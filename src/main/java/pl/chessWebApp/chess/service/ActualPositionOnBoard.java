@@ -13,12 +13,9 @@ public class ActualPositionOnBoard {
         this.chessGame = chessGame;
     }
 
-    public String getActualPiecesPositions(int player) throws Exception {
-
-        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
+    public String getActualPiecesPositions(int player) {
         chessGame.getBoard().getBoard();
-        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().getBoardFieldAndCodes());
-
+        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>(chessGame.getBoard().getBoardFieldAndCodes());
         return new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
     }
 }

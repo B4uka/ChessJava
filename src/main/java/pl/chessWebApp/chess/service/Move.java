@@ -6,6 +6,7 @@ import pl.chessWebApp.chess.communication.field.Field;
 import pl.chessWebApp.chess.model.piece_properties.Position;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class Move {
     private ChessGame chessGame;
@@ -14,19 +15,17 @@ public class Move {
         this.chessGame = chessGame;
     }
 
-    public String makeMove(int player, String fieldId) throws Exception {
-
-        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
+    public Optional<String> makeMove(String fieldId) {
 
         Position positionWhereWeWantToMove = new Position(Field.valueOf(fieldId).getRow(), Field.valueOf(fieldId).getColumn());
         boolean isMovePossible = chessGame.movePieceAndSwitchColor(positionWhereWeWantToMove.getRow(), positionWhereWeWantToMove.getColumn());
 
         if (!isMovePossible) {
-            return "You can't make that move!";
+            return Optional.empty();
         }
         chessGame.getBoard().getBoardFieldAndCodes();
-        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().getBoardFieldAndCodes());
+        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>(chessGame.getBoard().getBoardFieldAndCodes());
 
-        return new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
+        return Optional.ofNullable(new Gson().toJson(codeOfTheFieldsWithPiecesOnThem));
     }
 }
