@@ -7,13 +7,13 @@ import pl.chessWebApp.chess.model.ChessGame;
 @Slf4j
 public class Mate {
     private ChessGame chessGame;
-    private String isMated;
 
     public Mate(ChessGame chessGame) {
         this.chessGame = chessGame;
     }
 
     public String mate() {
+        String isMated;
         if (chessGame.isKingMated()) {
             log.info("Check Mate! Game Over");
             isMated = "true";

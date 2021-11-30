@@ -15,14 +15,11 @@ public class NewGame {
         this.chessGame = chessGame;
     }
 
-    public String newGame(int player) throws Exception {
-        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>();
-
+    public String newGame(int player) {
         chessGame.getBoard().clearBoardAndSetPieceOnStartingPositions();
         chessGame.setWhoIsUpToMove(Color.WHITE);
         new ChessGame();
-
-        codeOfTheFieldsWithPiecesOnThem.putAll(chessGame.getBoard().getBoardFieldAndCodes());
+        HashMap<String, String> codeOfTheFieldsWithPiecesOnThem = new HashMap<>(chessGame.getBoard().getBoardFieldAndCodes());
         return new Gson().toJson(codeOfTheFieldsWithPiecesOnThem);
     }
 }

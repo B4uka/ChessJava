@@ -1,7 +1,6 @@
 package pl.chessWebApp.chess.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,78 +8,54 @@ import pl.chessWebApp.chess.communication.field.Field;
 import pl.chessWebApp.chess.model.ChessGame;
 import pl.chessWebApp.chess.service.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import static pl.chessWebApp.chess.ResponseHadler.ChessResponseEntityHandler.*;
+
+@CrossOrigin(origins = "Access-Control-Allow-Origin")
 @Slf4j
 @RestController
-@RequestMapping("/")
+@RequestMapping(path = "/",
+        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        method = {RequestMethod.GET, RequestMethod.POST})
 public class MainController {
 
     private ChessGame chessGame = new ChessGame();
 
-    @PutMapping(value = {"/selection"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> selection(@RequestParam int player, @RequestParam("fieldId") String fieldId) {
-
+    @PutMapping(value = {"/selection"})
+    public ResponseEntity<String> selectPieceForNextMove (@RequestParam @NotNull Integer player,
+                                                          @RequestParam("fieldId") @NotBlank String fieldId) {
         log.info("Selected " + chessGame.getBoard().getPieceNameByFieldID(Field.valueOf(fieldId)) + " on " + Field.valueOf(fieldId));
 
         Selection selection = new Selection(chessGame);
-        String jsonResponse = selection.select(player, fieldId);
-        if (jsonResponse.equals("It is not your move or you already lost!")) {
-            return ResponseEntity
-                    .status(403)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .body(jsonResponse);
-        }
-
-        return ResponseEntity.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .body(jsonResponse);
+        return getSelectionResponseEntity(player, fieldId, selection);
     }
 
-    @PostMapping(value = {"/move"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> move(@RequestParam int player, @RequestParam String fieldId) throws Exception {
-
+    @PostMapping(value = {"/move"})
+    public ResponseEntity<String> movePieceToGivenField (@RequestParam @NotBlank String fieldId) {
         Move nextMove = new Move(chessGame);
         log.info("Moved to " + fieldId);
-
-        String jsonResponse = nextMove.makeMove(player, fieldId);
-        if (jsonResponse.equals("You can't make that move!")) {
-            return ResponseEntity.status(403).
-                    header("Access-Control-Allow-Origin", "*").
-                    body("You cant make that move!");
-        }
-        return ResponseEntity.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .body(jsonResponse);
+        return getResponseForMoveMethod(fieldId, nextMove);
     }
 
-    @PostMapping(value = {"/mate"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> isMated(@RequestParam int player) {
-
+    @PostMapping(value = {"/mate"})
+    public ResponseEntity<String> evaluateMateOnTheBoard () {
         Mate test = new Mate(chessGame);
-
-        return ResponseEntity
-                .ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .body(test.mate());
+        return responseOk(test.mate());
     }
 
-    @PostMapping(value = {"/actualBoard"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> actualBoard(@RequestParam int player) throws Exception {
-
+    @PostMapping(value = {"/actualBoard"})
+    public ResponseEntity<String> actualBoard (@RequestParam @NotNull Integer player) {
         ActualPositionOnBoard actualPositionOnBoard = new ActualPositionOnBoard(chessGame);
-
-        return ResponseEntity.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .body(actualPositionOnBoard.getActualPiecesPositions(player));
+        return responseOk(actualPositionOnBoard.getActualPiecesPositions(player));
     }
 
-    @PostMapping(value = {"/newGame"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> newGame(@RequestParam int player) throws Exception {
-
+    @PostMapping(value = {"/newGame"})
+    public ResponseEntity<String> startNewGame (@RequestParam @NotNull Integer player) {
         NewGame nextGame = new NewGame(chessGame);
-        log.info("New Game had started");
-
-        return ResponseEntity.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .body(nextGame.newGame(player));
+        log.info("New game started");
+        return responseOk(nextGame.newGame(player));
     }
 }
