@@ -6,6 +6,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 import pl.chessWebApp.security.service.UserService;
 import pl.chessWebApp.security.entity.User;
+import pl.chessWebApp.security.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,12 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public CustomAuthenticationSuccessHandler (UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
