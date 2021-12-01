@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class AopExpressions {
 
-    // setup pointcut declarations  https://www.baeldung.com/spring-aop-pointcut-tutorial
     @Pointcut("execution(* pl.chessWebApp.security.controller.*.*(..))")
     private void forControllerPackage() {
     }

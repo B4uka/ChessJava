@@ -12,6 +12,11 @@ public class ChatMessage {
     private String userColor;
     private String localDateTime = localDateTimeToString(Instant.now().atOffset(ZoneOffset.UTC).toLocalDateTime());
 
+    private String localDateTimeToString(LocalDateTime accountCreationDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return accountCreationDate.format(formatter);
+    }
+
     public ChatMessage() {
     }
 
@@ -51,12 +56,4 @@ public class ChatMessage {
         this.localDateTime = localDateTime;
     }
 
-    private String localDateTimeToString(LocalDateTime accountCreationDate) {
-
-        // Custom format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        // Format LocalDateTime
-        return accountCreationDate.format(formatter);
-    }
 }

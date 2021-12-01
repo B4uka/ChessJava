@@ -18,8 +18,6 @@ public class CriticalEventLoggingAspect {
     // add @AfterReturn advice when someone successfully remove any account
     @AfterReturning("pl.chessWebApp.log.aop.pointcutExpression.AopExpressions.forSavingNewAccount()")
     public void afterDeletedAccount(JoinPoint joinPoint) {
-
-        // display method that we are returning
         LOGGER_ERR_WARN.warn("@AfterReturning: Account was successfully created by method: " + joinPoint.getSignature().toShortString());
     }
 }
