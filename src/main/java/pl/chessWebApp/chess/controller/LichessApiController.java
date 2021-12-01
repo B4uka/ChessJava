@@ -23,6 +23,4 @@ public class LichessApiController {
 
         return Arrays.copyOf(allStreamersFromLichess, 10);
     }
-
-
 }

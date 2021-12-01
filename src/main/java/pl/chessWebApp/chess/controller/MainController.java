@@ -19,7 +19,7 @@ import static pl.chessWebApp.chess.ResponseHadler.ChessResponseEntityHandler.*;
 @RequestMapping(path = "/",
         consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE,
-        method = {RequestMethod.GET, RequestMethod.POST})
+        method = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST})
 public class MainController {
 
     private ChessGame chessGame = new ChessGame();
